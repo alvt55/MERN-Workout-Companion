@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-
+import './ExerciseStyles.css'
 function Exercises() {
 
     const name = useRef("");
