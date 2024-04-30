@@ -22,26 +22,26 @@ function SessionFirst() {
 
     function updateDayPush() {
         setDay("Push");
-        document.getElementById("push-button").style.backgroundColor = "Blue";
-        document.getElementById("pull-button").style.backgroundColor = "white";
-        document.getElementById("legs-button").style.backgroundColor = "white";
+        document.getElementById("push-button").style.backgroundColor = "#c8b1e4";
+        document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
+        document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
 
 
     }
 
     function updateDayPull() {
         setDay("Pull");
-        document.getElementById("push-button").style.backgroundColor = "white";
-        document.getElementById("pull-button").style.backgroundColor = "Blue";
-        document.getElementById("legs-button").style.backgroundColor = "white";
+        document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
+        document.getElementById("pull-button").style.backgroundColor = "#c8b1e4";
+        document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
 
     }
 
     function updateDayLegs() {
         setDay("Legs");
-        document.getElementById("push-button").style.backgroundColor = "white";
-        document.getElementById("pull-button").style.backgroundColor = "white";
-        document.getElementById("legs-button").style.backgroundColor = "Blue";
+        document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
+        document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
+        document.getElementById("legs-button").style.backgroundColor = "#c8b1e4";
 
     }
 
@@ -50,7 +50,7 @@ function SessionFirst() {
 
 
         <div className="session">
-            <div className="container">
+            <div className="sf-container">
 
                 <div className="date">
                     <label htmlFor="">Date</label>

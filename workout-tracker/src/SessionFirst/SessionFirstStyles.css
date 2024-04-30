@@ -11,7 +11,7 @@
     
 }
 
-.container {
+.sf-container {
     display: flex; 
     flex-direction: row;
     align-items: center;
@@ -40,12 +40,15 @@
 
 
 
+
 .day-buttons button {
+    background-color: #1f1f1f;
+    color: white;
     font-size: 0.9rem;
     width: 80px;
     height: 41.2px;
     cursor: pointer;
-    transition: 0.2s ease-in; 
+    transition: 0.1s ease-in; 
     padding: 0%;
     border: none;
 }

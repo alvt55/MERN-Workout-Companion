@@ -1,4 +1,47 @@
-body {
-    height: 50px; 
+ .exercises{
+    width: 30%;
+    height: 60vh;
+    background-color: #1f1f1f;
+    font-size: 18px;
+    padding: 50px 40px;
+}
+
+.ex-container {
+    
+}
+
+
+.label-input {
+    font-size: 18px;
+    width: 430px;
+    display: flex; /*aligning input boxes to the end of 300px container*/
+    justify-content: space-between;
+    margin-bottom: 15px;
+    background-color: #2e81df;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.label-input label {
+    padding: 0 10px;
+    
+}
+
+
+
+
+.label-input input {
+    width: 250px;
+    font-size: 18px;
+    padding: 3px;
+    border-radius: 0px 10px 10px 0px;
+ 
+}
+
+.my-form {
    
 }
+
+
+
+

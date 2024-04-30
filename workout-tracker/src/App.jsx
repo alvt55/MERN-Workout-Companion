@@ -12,8 +12,9 @@ function App() {
   return (
     // delete break later 
     <> 
-      <SessionFirst></SessionFirst> <br /> 
+      <SessionFirst></SessionFirst> 
       <Exercises></Exercises>
+      
     </>
   ); 
 }
