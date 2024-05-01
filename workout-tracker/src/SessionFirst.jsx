@@ -1,5 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useContext, createContext } from 'react'
 import './SessionFirstStyles.css'
+import Exercises from './Exercises';
+
+
+
 
 // prompting for workout info beforehand - date and day of split 
 function SessionFirst() {
@@ -48,21 +52,23 @@ function SessionFirst() {
 
     return (
 
-
-        <div className="session">
-            <div className="sf-container">
-
-                <div className="date">
-                    <label htmlFor="">Date</label>
-                    <input value={date} onChange={updateDate}/>
-                </div>
+        <>
 
 
+            <div className="session">
+                <div className="sf-container">
+
+                    <div className="date">
+                        <label htmlFor="">Date</label>
+                        <input value={date} onChange={updateDate} />
+                    </div>
 
 
 
-                {/* radio instead of buttons  */}
-                {/* <label>Push</label>
+
+
+                    {/* radio instead of buttons  */}
+                    {/* <label>Push</label>
                 <input type="radio" value="Push" checked={day === "Push"} onChange={updateDay}/>
                 <label>Pull</label>
                 <input type="radio" value="Pull" checked={day === "Pull"} onChange={updateDay}/>
@@ -72,19 +78,25 @@ function SessionFirst() {
 
 
 
-       
+
                     <div className="day-buttons">
-                        
+
                         <button onClick={updateDayPush} id='push-button'>Push</button>
                         <button onClick={updateDayPull} id='pull-button'>Pull</button>
                         <button onClick={updateDayLegs} id='legs-button'>Legs</button>
                     </div>
-             
 
 
+
+
+                </div>
 
             </div>
-        </div>
+
+            
+                <Exercises date={date} day={day}></Exercises>
+
+        </>
     );
 }
 

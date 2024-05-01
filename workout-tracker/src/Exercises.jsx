@@ -1,6 +1,12 @@
-import { useState, useRef } from 'react'
+
+import { useState, useRef, createContext } from 'react'
 import './ExerciseStyles.css'
-function Exercises() {
+import DisplayExercises from './DisplayExercises';
+import Sessions from './Sessions';
+
+
+
+function Exercises(prop) {
 
     const name = useRef("");
     const weight = useRef(0);
@@ -54,11 +60,11 @@ function Exercises() {
 
 
     return (
-        <div className="exercises">
 
-            <div className="ex-container">
+        <>
+        <div className="ex-all">
 
-
+            <div className="exercises">
                 <form id="my-form" className='my-form'>
 
                     {/* .label-input represents a pair of label and inputs in a row */}
@@ -88,9 +94,17 @@ function Exercises() {
 
                 <button onClick={addExercise}>Add Exercise</button>
                 <p id="exercise-count">You have added {exercises.length} exercises</p>
-            </div>
 
-        </div >
+
+            </div >
+
+            <DisplayExercises exercises={exercises}></DisplayExercises>
+           
+        </div>
+        <Sessions exercises={exercises} date={prop.date} day={prop.day}></Sessions>
+        </>
+
+
     );
 
 

@@ -2,8 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
-import SessionFirst from './SessionFirst/SessionFirst'
-import Exercises from './Exercises/Exercises'
+import SessionFirst from './SessionFirst'
+import Exercises from './Exercises'
 import './index.css'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     // delete break later 
     <> 
       <SessionFirst></SessionFirst> 
-      <Exercises></Exercises>
+  
       
     </>
   ); 

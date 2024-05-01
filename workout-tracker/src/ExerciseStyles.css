@@ -1,3 +1,8 @@
+ 
+ .ex-all {
+    display: flex;
+ }
+ 
  .exercises{
     width: 30%;
     height: 60vh;
@@ -6,9 +11,6 @@
     padding: 50px 40px;
 }
 
-.ex-container {
-    
-}
 
 
 .label-input {
@@ -38,9 +40,21 @@
  
 }
 
-.my-form {
-   
+.exercises button {
+    padding: 10px; 
+    background-color: #1f1f1f;
+    color: white; 
+    border-radius: 10px;
+    cursor: pointer;
 }
+
+
+#exercise-count {
+    color: white; 
+}
+
+
+
 
 
 
