@@ -1,6 +1,7 @@
 import Exercises from "./Exercises";
 import { useState, useRef, useEffect} from 'react'
 import Sessions from "./Sessions";
+import './DisplayExercisesStyles.css'
 
 
 function DisplayExercises(props) {

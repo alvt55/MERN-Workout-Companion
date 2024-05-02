@@ -1,61 +1,65 @@
- 
  .ex-all {
-    display: flex;
+     display: flex;
+
+
  }
- 
- .exercises{
-    width: 30%;
-    height: 60vh;
-    background-color: #1f1f1f;
-    font-size: 18px;
-    padding: 50px 40px;
-}
+
+ .exercises {
+
+     width: 60%;
+     height: 60vh;
+     background-color: #1f1f1f;
+     font-size: 18px;
+
+ }
+
+ .my-form {
+     margin: 30px 0px;
+ }
 
 
+ .label-input {
+     margin: 0px 100px;
+     font-size: 18px;
+     width: 430px;
+     display: flex;
+     /*aligning input boxes to the end of 300px container*/
+     justify-content: space-between;
+     margin-bottom: 15px;
+     background-color: #2e81df;
+     align-items: center;
+     border-radius: 10px;
 
-.label-input {
-    font-size: 18px;
-    width: 430px;
-    display: flex; /*aligning input boxes to the end of 300px container*/
-    justify-content: space-between;
-    margin-bottom: 15px;
-    background-color: #2e81df;
-    align-items: center;
-    border-radius: 10px;
-}
+ }
 
-.label-input label {
-    padding: 0 10px;
-    
-}
+ .label-input label {
+     padding: 0 10px;
 
-
-
-
-.label-input input {
-    width: 250px;
-    font-size: 18px;
-    padding: 3px;
-    border-radius: 0px 10px 10px 0px;
- 
-}
-
-.exercises button {
-    padding: 10px; 
-    background-color: #1f1f1f;
-    color: white; 
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-
-#exercise-count {
-    color: white; 
-}
+ }
 
 
 
 
+ .label-input input {
+     width: 250px;
+     font-size: 18px;
+     padding: 3px;
+     border-radius: 0px 10px 10px 0px;
+
+ }
+
+ .exercises button {
+     margin: 10px 100px;
+     text-align: center;
+     padding: 10px;
+     background-color: #1f1f1f;
+     color: white;
+     border-radius: 10px;
+     cursor: pointer;
+ }
 
 
-
+ #exercise-count {
+     margin: 10px 100px;
+     color: white;
+ }
