@@ -7,54 +7,65 @@ function Sessions(props) {
     const [sessions, setSessions] = useState([]);
     const [currsession, setCurrSession] = useState(null);
 
-    useEffect(() => {
 
-    }, []);
+    // TODO: call displaysessions when sessions field updates 
+    
 
     function updateSessions() {
-        setCurrSession({
+        const currSession = {
             date: props.date,
             day: props.day,
             exercises: props.exercises
-        });
+        };
 
-        console.log(currsession); 
+        console.log(currSession); 
 
-        setSessions(s => [...s, currsession]); //!!!
-        console.log(sessions); 
+        setSessions(s => [...s, currSession]); 
+        console.log(sessions.length); // real length is +1 b/c useState is async 
+       
+        
+    
     }
 
 
     function displaySessions() {
-        // appendchild 
        
 
-        for (let i = 0; i < sessions.length, i++;) {
-             console.log("test");
+        // console.log(sessions[1].date); 
 
+       
+        for (let i = 0; i < sessions.length; i++) {
 
-            // let container = document.createElement('div'); 
-            // // TODO: assign a classname to container 
-            // let dateDay = document.createElement('h2'); 
-            // let dateDayNode = document.createTextNode(sessions[i].date + ": " + sessions[i].day); 
-            // dateDay.append(dateDayNode); 
+            let container = document.createElement('div'); 
 
-            // let exList = document.createElement('li'); 
-            // const sessionExercises = sessions[i].exercises;     // all exercises for sessions[i]
+            let dateDay = document.createElement('h2'); 
+            let dateDayNode = document.createTextNode(sessions[i].date + ": " + sessions[i].day); 
+            
+           
+            dateDay.appendChild(dateDayNode); 
+            container.appendChild(dateDay); 
 
-            // for (let e = 0; e < sessionExercises.length; e++) {
-            //     let currExercise = sessionExercises[e];
-            //     const currExerciseWeight = " (" + currExercise.weight + ") "; 
-            //     let temp = currExercise.sets + "x" + currExercise.reps + currExerciseWeight + currExercise.name + "\n";
-            //     let exerciseInfo = document.createTextNode(temp); 
-            //     exList.appendChild(exerciseInfo);
+            let exList = document.createElement('ul'); 
+            const sessionExercises = sessions[i].exercises;     // all exercises for sessions[i]
+
+            for (let e = 0; e < sessionExercises.length; e++) {
+                let exBulletPoint = document.createElement("li");
+                let currExercise = sessionExercises[e];
+
+                // text for exercise 
+                const currExerciseWeight = " (" + currExercise.weight + ") "; 
+                let exText = currExercise.sets + "x" + currExercise.reps + currExerciseWeight + currExercise.name + "\n";
+
+                let exerciseNode = document.createTextNode(exText); 
+                exBulletPoint.appendChild(exerciseNode);
+                exList.appendChild(exBulletPoint); 
                 
-            // }
+            }
 
-            // container.appendChild(dateDay);
-            // container.appendChild(exList); 
+           
+            container.appendChild(exList); 
 
-            // document.getElementById("sessions-text").appendChild(container); 
+            document.getElementById("sessions-text").prepend(container); // prepend adds new items to the top of list
 
         }
 
@@ -68,7 +79,7 @@ function Sessions(props) {
         <>
             <button onClick={updateSessions}>Add Session</button>
             <button onClick={displaySessions}>DisplaySessions</button>
-            <div id="sessions-text">uhu</div>
+            <div id="sessions-text">DIV HERE</div>
         </>
 
     );

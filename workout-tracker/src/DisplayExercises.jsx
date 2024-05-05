@@ -7,6 +7,8 @@ import './DisplayExercisesStyles.css'
 function DisplayExercises(props) {
     
 
+    // TODO: clear display when add session is clicked 
+    
     // calls display when exercises are added
     useEffect(() => {
         display() 

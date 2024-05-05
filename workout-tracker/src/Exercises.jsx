@@ -52,8 +52,6 @@ function Exercises(prop) {
         setExercises(e => [...e, currExercise]);
         document.getElementById('my-form').reset();
 
-
-
     }
 
 
