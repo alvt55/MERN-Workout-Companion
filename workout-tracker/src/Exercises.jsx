@@ -5,9 +5,11 @@ import DisplayExercises from './DisplayExercises';
 import Sessions from './Sessions';
 
 
+// exercise input, adding session button 
+function Exercises(props) {
 
-function Exercises(prop) {
 
+    // exercises 
     const name = useRef("");
     const weight = useRef(0);
     const reps = useRef(0);
@@ -15,6 +17,9 @@ function Exercises(prop) {
 
     let currExercise = useState(null);
     const [exercises, setExercises] = useState([]);
+
+    // sessions 
+    const [sessions, setSessions] = useState([]);
 
 
     // field updaters 
@@ -56,6 +61,27 @@ function Exercises(prop) {
 
 
 
+    function updateSessions() {
+        const currSession = {
+            date: props.date,
+            day: props.day,
+            exercises: exercises
+        };
+
+        setSessions(s => [...s, currSession]); 
+
+        setExercises([]); 
+        props.reset();
+
+
+        // for debugging 
+        console.log(exercises);
+        console.log(currSession); 
+        console.log(sessions.length); // real length is +1 b/c useState is async 
+    }
+
+
+
 
     return (
 
@@ -92,6 +118,9 @@ function Exercises(prop) {
 
                 <button onClick={addExercise}>Add Exercise</button>
                 <p id="exercise-count">You have added {exercises.length} exercises</p>
+                <button onClick={updateSessions}>Add session</button>
+
+                
 
 
             </div >
@@ -99,7 +128,7 @@ function Exercises(prop) {
             <DisplayExercises exercises={exercises}></DisplayExercises>
            
         </div>
-        <Sessions exercises={exercises} date={prop.date} day={prop.day}></Sessions>
+        <Sessions date={props.date} day={props.day} exercises={exercises} sessions={sessions}></Sessions>
         </>
 
 

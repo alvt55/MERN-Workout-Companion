@@ -12,16 +12,21 @@ function SessionFirst() {
     const [date, setDate] = useState("");
     const [day, setDay] = useState(""); // day of split 
 
-    function updateDate(event) {
-        setDate(event.target.value);
+
+    // clears all fields and DOM representation, called when session is added 
+    function reset() {
+        setDate("");
+
+        setDay("");
+        document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
+        document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
+        document.getElementById("legs-button").style.backgroundColor = "#1f1f1f"
 
     }
 
-
-    // function updateDay(event) {
-    //     setDay(event.target.value);
-
-    // }
+    function updateDate(event) {
+        setDate(event.target.value);
+    }
 
 
     function updateDayPush() {
@@ -67,18 +72,6 @@ function SessionFirst() {
 
 
 
-                    {/* radio instead of buttons  */}
-                    {/* <label>Push</label>
-                <input type="radio" value="Push" checked={day === "Push"} onChange={updateDay}/>
-                <label>Pull</label>
-                <input type="radio" value="Pull" checked={day === "Pull"} onChange={updateDay}/>
-                <label>Legs</label>
-                <input type="radio" value="Legs" checked={day === "Legs"} onChange={updateDay}/>  */}
-
-
-
-
-
                     <div className="day-buttons">
 
                         <button onClick={updateDayPush} id='push-button'>Push</button>
@@ -93,8 +86,10 @@ function SessionFirst() {
 
             </div>
 
-            
-                <Exercises date={date} day={day}></Exercises>
+
+            {/* resetDate wrapped in function to prevent auto calls  */}
+            {/* resetDate allows Exercises component to clear parent(this) field */}
+            <Exercises date={date} day={day} reset={() => reset()}></Exercises>
 
         </>
     );

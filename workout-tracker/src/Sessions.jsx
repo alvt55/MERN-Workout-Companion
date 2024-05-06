@@ -2,41 +2,30 @@
 import { useState, useRef, createContext, useEffect } from 'react'
 
 
+// displays sessions 
 function Sessions(props) {
 
-    const [sessions, setSessions] = useState([]);
-    const [currsession, setCurrSession] = useState(null);
+    
+    useEffect(() => {
+        displaySessions()
+    }, [props]); 
+
+
 
 
     // TODO: call displaysessions when sessions field updates 
     
-
-    function updateSessions() {
-        const currSession = {
-            date: props.date,
-            day: props.day,
-            exercises: props.exercises
-        };
-
-        console.log(currSession); 
-
-        setSessions(s => [...s, currSession]); 
-        console.log(sessions.length); // real length is +1 b/c useState is async 
-       
-        
     
-    }
+    const sessions = props.sessions; 
 
 
     function displaySessions() {
-       
-
-        // console.log(sessions[1].date); 
-
+    
+        // TODO : add the newly added session to the dom instead of the entire array of sessions 
        
         for (let i = 0; i < sessions.length; i++) {
 
-            let container = document.createElement('div'); 
+            let container = document.createElement('div'); // container for each session 
 
             let dateDay = document.createElement('h2'); 
             let dateDayNode = document.createTextNode(sessions[i].date + ": " + sessions[i].day); 
@@ -69,15 +58,16 @@ function Sessions(props) {
 
         }
 
-    
+        
+           
 
-
+ 
     }
 
     return (
 
         <>
-            <button onClick={updateSessions}>Add Session</button>
+            
             <button onClick={displaySessions}>DisplaySessions</button>
             <div id="sessions-text">DIV HERE</div>
         </>
