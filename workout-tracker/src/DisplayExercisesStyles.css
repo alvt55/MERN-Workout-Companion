@@ -2,10 +2,11 @@
 .displayEx-container {
     width: 40%;
     border: 1px red; 
-    background-color: rgb(116, 199, 181); /*change to #1f1f1f later*/
+    background-color: #1f1f1f; /*change to #1f1f1f later*/
     border-radius: 10px;
+    box-shadow: 0 0 10px #000000; 
     font-size: 18px; 
-    /* TODO: keep bg color but have a visible border + shadow */
+   
 }
 
 
@@ -14,5 +15,4 @@ pre {
     color: white; 
     margin: 25px 65px 0px; 
     text-wrap: balance;
-    
 }

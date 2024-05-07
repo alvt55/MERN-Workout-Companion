@@ -38,7 +38,7 @@ function DisplayExercises(props) {
             {/* pre keeps the new lines created by display()*/}
             <pre id="display-text"></pre>
 
-            <button>hi</button>
+            
         </div>
        
         </>

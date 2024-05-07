@@ -1,75 +1,75 @@
 
 import { useState, useRef, createContext, useEffect } from 'react'
+import './SessionsStyles.css';
 
 
 // displays sessions 
 function Sessions(props) {
 
-    
+
     useEffect(() => {
         displaySessions()
-    }, [props]); 
+    }, [props.sessions]);
 
 
 
 
-    // TODO: call displaysessions when sessions field updates 
-    
-    
-    const sessions = props.sessions; 
+
+
+
+    const sessions = props.sessions;
+
+
 
 
     function displaySessions() {
-    
-        // TODO : add the newly added session to the dom instead of the entire array of sessions 
+
        
-        for (let i = 0; i < sessions.length; i++) {
+        const idx = sessions.length - 1;
+        let latestSession = sessions[idx];
 
+
+        // prevents error - using .date operator when sessions is empty 
+        if (idx >= 0) {
             let container = document.createElement('div'); // container for each session 
+            container.classList.add("session-container");
 
-            let dateDay = document.createElement('h2'); 
-            let dateDayNode = document.createTextNode(sessions[i].date + ": " + sessions[i].day); 
-            
-           
-            dateDay.appendChild(dateDayNode); 
-            container.appendChild(dateDay); 
+            let dateDay = document.createElement('h3');
+            let dateDayNode = document.createTextNode(latestSession.date + ": " + latestSession.day);
 
-            let exList = document.createElement('ul'); 
-            const sessionExercises = sessions[i].exercises;     // all exercises for sessions[i]
+            dateDay.appendChild(dateDayNode);
+            container.appendChild(dateDay);
+
+            let exList = document.createElement('ul');
+            const sessionExercises = latestSession.exercises;     // all exercises for sessions[i]
 
             for (let e = 0; e < sessionExercises.length; e++) {
                 let exBulletPoint = document.createElement("li");
                 let currExercise = sessionExercises[e];
 
                 // text for exercise 
-                const currExerciseWeight = " (" + currExercise.weight + ") "; 
+                const currExerciseWeight = " (" + currExercise.weight + ") ";
                 let exText = currExercise.sets + "x" + currExercise.reps + currExerciseWeight + currExercise.name + "\n";
 
-                let exerciseNode = document.createTextNode(exText); 
+                let exerciseNode = document.createTextNode(exText);
                 exBulletPoint.appendChild(exerciseNode);
-                exList.appendChild(exBulletPoint); 
-                
+                exList.appendChild(exBulletPoint);
+
             }
 
-           
-            container.appendChild(exList); 
 
-            document.getElementById("sessions-text").prepend(container); // prepend adds new items to the top of list
-
+            container.appendChild(exList);
+            document.getElementById("sessions-text").prepend(container); // prepend adds to top of sessions
         }
 
-        
-           
 
- 
+
     }
 
     return (
 
         <>
-            
-            <button onClick={displaySessions}>DisplaySessions</button>
-            <div id="sessions-text">DIV HERE</div>
+            <div id="sessions-text"></div>
         </>
 
     );

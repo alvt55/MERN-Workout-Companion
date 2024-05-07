@@ -49,7 +49,7 @@
  }
 
  .exercises button {
-     margin: 10px 100px;
+     margin: 5px 100px;
      text-align: center;
      padding: 10px;
      background-color: #1f1f1f;
@@ -60,6 +60,12 @@
 
 
  #exercise-count {
-     margin: 10px 100px;
+     margin: 15px 100px 100px;
      color: white;
+ }
+
+
+ #sessions-button {
+    width: 50%; 
+   
  }

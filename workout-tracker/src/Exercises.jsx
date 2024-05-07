@@ -118,7 +118,7 @@ function Exercises(props) {
 
                 <button onClick={addExercise}>Add Exercise</button>
                 <p id="exercise-count">You have added {exercises.length} exercises</p>
-                <button onClick={updateSessions}>Add session</button>
+                <button onClick={updateSessions} id='sessions-button'>Add session</button>
 
                 
 
