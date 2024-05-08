@@ -36,7 +36,8 @@ function Sessions(props) {
 
             let dateDay = document.createElement('h3');
             let dateDayNode = document.createTextNode(latestSession.date + ": " + latestSession.day);
-
+            // TODO: display different colored highlights for cards depending on day of split 
+            // 
             dateDay.appendChild(dateDayNode);
             container.appendChild(dateDay);
 
@@ -47,8 +48,15 @@ function Sessions(props) {
                 let exBulletPoint = document.createElement("li");
                 let currExercise = sessionExercises[e];
 
+
                 // text for exercise 
-                const currExerciseWeight = " (" + currExercise.weight + ") ";
+                let weight = currExercise.weight; 
+
+                if (weight <= 0) {
+                    weight = "bw"; 
+                }
+
+                const currExerciseWeight = " (" + weight + ") ";
                 let exText = currExercise.sets + "x" + currExercise.reps + currExerciseWeight + currExercise.name + "\n";
 
                 let exerciseNode = document.createTextNode(exText);

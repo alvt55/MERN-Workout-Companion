@@ -22,7 +22,15 @@ function DisplayExercises(props) {
 
         for (let i = 0; i < props.exercises.length; i++) {
             const obj = props.exercises[i]; 
-            const objWeight = " (" + obj.weight + ") "; 
+
+
+            // changes weight to bodyweight if weight entered is 0 (or negative)
+            let weight = obj.weight; 
+            if (obj.weight <= 0) {
+                weight = "bw"; 
+            }
+
+            const objWeight = " (" + weight + ") "; 
             temp += obj.sets + "x" + obj.reps + objWeight + obj.name + "\n";
         }
 

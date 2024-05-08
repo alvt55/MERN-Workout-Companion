@@ -58,6 +58,14 @@
      cursor: pointer;
  }
 
+ #missing-exercise-text {
+    display: none; 
+    font-weight: bold;
+    color: #cc0000; 
+    margin: 10px 100px; 
+
+ }
+
 
  #exercise-count {
      margin: 15px 100px 100px;
@@ -67,5 +75,11 @@
 
  #sessions-button {
     width: 50%; 
-   
+ }
+
+ #missing-session-text {
+    display: none; 
+    font-weight: bold;
+    color: #cc0000; 
+    margin: 10px 100px; 
  }
