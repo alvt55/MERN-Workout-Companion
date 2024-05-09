@@ -1,5 +1,5 @@
 
-import { useState, useRef, createContext } from 'react'
+import { useState, useRef, createContext, useEffect } from 'react'
 import './ExerciseStyles.css'
 import DisplayExercises from './DisplayExercises';
 import Sessions from './Sessions';
@@ -7,6 +7,10 @@ import Sessions from './Sessions';
 
 // exercise input, adding session button 
 function Exercises(props) {
+
+   
+
+
 
 
     // exercises 
@@ -20,6 +24,22 @@ function Exercises(props) {
 
     // sessions 
     const [sessions, setSessions] = useState([]);
+
+
+    useEffect(() => {
+        const data = localStorage.getItem('my_sessions');
+        //TODO: map through data? find a way to have all sessions show 
+        if (data !== null) {
+            setSessions(JSON.parse(data));
+            console.log("sessions loaded");
+        }
+    }, []);
+
+
+     useEffect(() => {
+        localStorage.setItem("my_sessions", JSON.stringify(sessions));
+        console.log("session saved")
+    }, [sessions]);
 
 
     // field updaters 
@@ -52,7 +72,8 @@ function Exercises(props) {
         }
 
         else {
-            
+
+            //TODO: automatically capitalize first letter of name 
             currExercise = {
                 name: name.current,
                 weight: weight.current,
@@ -89,18 +110,21 @@ function Exercises(props) {
         }
 
         else {
+
+            //TODO: automatically capitalize first letter of date 
+
             const currSession = {
                 date: props.date,
                 day: props.day,
                 exercises: exercises
             };
-    
+
             setSessions(s => [...s, currSession]);
-    
+
             setExercises([]);
             props.reset();
-    
-    
+
+
             // for debugging 
             console.log(exercises);
             console.log(currSession);
@@ -109,7 +133,7 @@ function Exercises(props) {
             document.getElementById("missing-session-text").style.display = "none";
         }
 
-        
+
     }
 
 
