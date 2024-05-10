@@ -8,7 +8,7 @@ import Sessions from './Sessions';
 // exercise input, adding session button 
 function Exercises(props) {
 
-   
+
 
 
 
@@ -26,19 +26,19 @@ function Exercises(props) {
     const [sessions, setSessions] = useState([]);
 
 
+    // loading data every render 
     useEffect(() => {
         const data = localStorage.getItem('my_sessions');
-        //TODO: map through data? find a way to have all sessions show 
         if (data !== null) {
             setSessions(JSON.parse(data));
-            console.log("sessions loaded");
+            console.log(sessions);
         }
     }, []);
 
 
-     useEffect(() => {
+    // saving sessions to "my_sessions" everytime sessions changes 
+    useEffect(() => {
         localStorage.setItem("my_sessions", JSON.stringify(sessions));
-        console.log("session saved")
     }, [sessions]);
 
 
@@ -66,16 +66,22 @@ function Exercises(props) {
     // creating a current exercise, adding it to the list of exercises 
     function addExercise(event) {
 
-        if (name.current === "" || reps === 0 || sets === 0) {
+
+        // TODO: fix empty input detection 
+        if (name.current === "" || sets.current === 0 || reps.current === 0) {
             // reminder message 
             document.getElementById("missing-exercise-text").style.display = "inline-block";
+            console.log(name.current);
+            console.log(sets.current);
+            console.log(reps.current);
         }
 
         else {
 
-            //TODO: automatically capitalize first letter of name 
+            let nameCapitalized = name.current.charAt(0).toUpperCase() + name.current.slice(1);
+
             currExercise = {
-                name: name.current,
+                name: nameCapitalized,
                 weight: weight.current,
                 sets: sets.current,
                 reps: reps.current
@@ -87,16 +93,20 @@ function Exercises(props) {
             document.getElementById('my-form').reset();
 
 
+            // removes the reminder message 
+            document.getElementById("missing-exercise-text").style.display = "none";
+
             // resets all values after adding 
             name.current = "";
             weight.current = 0;
             sets.current = 0;
             reps.current = 0;
 
-            // removes the reminder message 
-            document.getElementById("missing-exercise-text").style.display = "none";
-
         }
+
+
+
+
 
     }
 
@@ -151,23 +161,23 @@ function Exercises(props) {
 
                         <div className="label-input">
                             <label >Name of Exercise</label>
-                            <input type="text" onChange={updateName} placeholder='ex. push ups' id="input" />
+                            <input type="text" className="name-input" onChange={updateName} placeholder='ex. push ups' />
                         </div>
 
                         <div className="label-input">
                             <label>Weight in lbs</label>
-                            <input type="number" onChange={updateWeight} placeholder='ex. 50lbs' />
+                            <input type="number" className="weight-input" onChange={updateWeight} placeholder='ex. 50lbs' />
                         </div>
 
 
                         <div className="label-input">
                             <label>Repetitions </label>
-                            <input type="number" onChange={updateReps} />
+                            <input type="number" className="rep-input" onChange={updateReps} />
                         </div>
 
                         <div className="label-input">
                             <label>Sets</label>
-                            <input type="number" onChange={updateSets} />
+                            <input type="number" className="set-input" onChange={updateSets} />
                         </div>
 
                     </form >
