@@ -14,10 +14,11 @@ function Exercises(props) {
 
 
     // exercises 
-    const name = useRef("");
-    const weight = useRef(0);
-    const reps = useRef(0);
-    const sets = useRef(0);
+    const [name, setName] = useState(""); 
+    const [weight, setWeight] = useState(0); 
+    const [sets, setSets] = useState(0); 
+    const [reps, setReps] = useState(0); 
+   
 
     let currExercise = useState(null);
     const [exercises, setExercises] = useState([]);
@@ -44,63 +45,71 @@ function Exercises(props) {
 
     // field updaters 
     function updateName(event) {
-        name.current = event.target.value;
-        console.log(name.current);
+       
+        setName(e => event.target.value);
+        console.log(name);
     }
 
     function updateWeight(event) {
-        weight.current = event.target.value;
-        console.log(weight.current);
+        
+        setWeight(e => event.target.value);
+        console.log(weight);
     }
 
     function updateReps(event) {
-        reps.current = event.target.value;
-        console.log(reps.current);
+       
+        setReps(r => event.target.value);
+        console.log(reps);
     }
 
     function updateSets(event) {
-        sets.current = event.target.value;
-        console.log(sets.current);
+       
+        setSets(e => event.target.value);
+        console.log(sets);
     }
 
     // creating a current exercise, adding it to the list of exercises 
-    function addExercise(event) {
-
+    function addExercise() {
 
         // TODO: fix empty input detection 
-        if (name.current === "" || sets.current === 0 || reps.current === 0) {
+        if (name === "" || sets < 1|| reps < 1) {
             // reminder message 
             document.getElementById("missing-exercise-text").style.display = "inline-block";
-            console.log(name.current);
-            console.log(sets.current);
-            console.log(reps.current);
+            console.log(name);
+            console.log(sets);
+            console.log(reps);
         }
 
         else {
 
-            let nameCapitalized = name.current.charAt(0).toUpperCase() + name.current.slice(1);
+            // capitalize first letter of exercise
+            let nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
             currExercise = {
                 name: nameCapitalized,
-                weight: weight.current,
-                sets: sets.current,
-                reps: reps.current
+                weight: weight,
+                sets: sets,
+                reps: reps
             };
 
-
+           
 
             setExercises(e => [...e, currExercise]);
             document.getElementById('my-form').reset();
 
 
+        
+
             // removes the reminder message 
             document.getElementById("missing-exercise-text").style.display = "none";
 
             // resets all values after adding 
-            name.current = "";
-            weight.current = 0;
-            sets.current = 0;
-            reps.current = 0;
+            setName(""); 
+            setWeight(0); 
+            setReps(0); 
+            setSets(0); 
+
+           
 
         }
 
