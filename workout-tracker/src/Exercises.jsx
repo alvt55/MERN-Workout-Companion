@@ -10,9 +10,6 @@ function Exercises(props) {
 
 
 
-
-
-
     // exercises 
     const [name, setName] = useState(""); 
     const [weight, setWeight] = useState(0); 
@@ -45,25 +42,22 @@ function Exercises(props) {
 
     // field updaters 
     function updateName(event) {
-       
         setName(e => event.target.value);
         console.log(name);
+        
     }
 
     function updateWeight(event) {
-        
         setWeight(e => event.target.value);
         console.log(weight);
     }
 
     function updateReps(event) {
-       
         setReps(r => event.target.value);
         console.log(reps);
     }
 
     function updateSets(event) {
-       
         setSets(e => event.target.value);
         console.log(sets);
     }
@@ -71,13 +65,12 @@ function Exercises(props) {
     // creating a current exercise, adding it to the list of exercises 
     function addExercise() {
 
+        
+
         // TODO: fix empty input detection 
-        if (name === "" || sets < 1|| reps < 1) {
+        if (name == "" || sets == 0 || reps == 0) {
             // reminder message 
             document.getElementById("missing-exercise-text").style.display = "inline-block";
-            console.log(name);
-            console.log(sets);
-            console.log(reps);
         }
 
         else {
@@ -92,33 +85,19 @@ function Exercises(props) {
                 reps: reps
             };
 
-           
-
             setExercises(e => [...e, currExercise]);
             document.getElementById('my-form').reset();
 
 
-        
-
             // removes the reminder message 
-            document.getElementById("missing-exercise-text").style.display = "none";
+            document.getElementById("missing-exercise-text").style.display = "none"; 
 
-            // resets all values after adding 
-            setName(""); 
-            setWeight(0); 
-            setReps(0); 
-            setSets(0); 
-
-           
+        
 
         }
 
 
-
-
-
     }
-
 
 
     function updateSessions() {
@@ -130,10 +109,12 @@ function Exercises(props) {
 
         else {
 
-            //TODO: automatically capitalize first letter of date 
+            
+            // capitalize first letter of date
+            let dateCapitalized = props.date.charAt(0).toUpperCase() + props.date.slice(1);
 
             const currSession = {
-                date: props.date,
+                date: dateCapitalized,
                 day: props.day,
                 exercises: exercises
             };
@@ -170,23 +151,23 @@ function Exercises(props) {
 
                         <div className="label-input">
                             <label >Name of Exercise</label>
-                            <input type="text" className="name-input" onChange={updateName} placeholder='ex. push ups' />
+                            <input type="text" onChange={updateName} placeholder='ex. push ups' />
                         </div>
 
                         <div className="label-input">
                             <label>Weight in lbs</label>
-                            <input type="number" className="weight-input" onChange={updateWeight} placeholder='ex. 50lbs' />
+                            <input type="number" onChange={updateWeight} placeholder='ex. 50lbs' />
                         </div>
 
 
                         <div className="label-input">
                             <label>Repetitions </label>
-                            <input type="number" className="rep-input" onChange={updateReps} />
+                            <input type="number" onChange={updateReps} />
                         </div>
 
                         <div className="label-input">
                             <label>Sets</label>
-                            <input type="number" className="set-input" onChange={updateSets} />
+                            <input type="number" onChange={updateSets} />
                         </div>
 
                     </form >

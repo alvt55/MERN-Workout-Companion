@@ -1,5 +1,5 @@
 #sessions-text {
-    margin-top: 40px;
+    margin-top: 70px;
     padding: 30px; 
     display: flex; 
     flex-wrap: wrap;
@@ -8,7 +8,9 @@
 }
 
 .session-container {
-    background-color: gray;
+    color: white; 
+    background-color: #1f1f1f;
+    box-shadow: 0 0 10px #000000; 
     text-align: left;
     width: 25%;
     padding: 5px 20px 25px 20px;
@@ -23,5 +25,18 @@
 
 .session-container ul li{
     margin: 8px;
+}
 
+/* styles based on the session day  */
+
+.push h3{
+    color: rgb(7, 167, 167); 
+}
+
+.pull h3 {
+    color: rgb(97, 9, 97); 
+}
+
+.legs h3 {
+    color: rgb(177, 20, 20);
 }
