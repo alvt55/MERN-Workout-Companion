@@ -7,16 +7,14 @@ import Exercises from './Exercises'
 import './index.css'
 
 function App() {
- 
+
 
   return (
-    
-    <> 
-      <SessionFirst></SessionFirst> 
-  
-      
+
+    <>
+      <SessionFirst></SessionFirst>
     </>
-  ); 
+  );
 }
 
 export default App

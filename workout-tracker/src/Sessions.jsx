@@ -9,25 +9,27 @@ function Sessions(props) {
 
     useEffect(() => {
         displayAllSessions()
-    }, [props.sessions]); 
+    }, [props.sessions]);
 
 
 
     const sessions = props.sessions;
 
 
-    // resets sessions div then adds all current sessions 
+    // resets sessions div then adds all sessions 
     function displayAllSessions() {
 
-        document.getElementById('sessions-text').innerHTML = ""; 
+        document.getElementById('sessions-text').innerHTML = "";
 
         for (let i = 0; i < sessions.length; i++) {
 
-            let currSession = sessions[i]; 
+            let currSession = sessions[i];
 
             let container = document.createElement('div'); // container for each session 
             container.classList.add("session-container");
 
+
+            // unique class based on day property 
             if (currSession.day == "Push") {
                 container.classList.add("push");
             } else if (currSession.day == "Pull") {
@@ -38,8 +40,7 @@ function Sessions(props) {
 
             let dateDay = document.createElement('h3');
             let dateDayNode = document.createTextNode(currSession.date + ": " + currSession.day);
-            // TODO: display different colored highlights for cards depending on day of split 
-            // 
+
             dateDay.appendChild(dateDayNode);
             container.appendChild(dateDay);
 
@@ -52,10 +53,10 @@ function Sessions(props) {
 
 
                 // text for exercise 
-                let weight = currExercise.weight; 
+                let weight = currExercise.weight;
 
                 if (weight <= 0) {
-                    weight = "bw"; 
+                    weight = "bw";
                 }
 
                 const currExerciseWeight = " (" + weight + ") ";
@@ -72,13 +73,13 @@ function Sessions(props) {
 
         }
 
-     
+
 
     }
 
 
 
-    
+
 
     return (
 

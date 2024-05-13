@@ -11,11 +11,11 @@ function Exercises(props) {
 
 
     // exercises 
-    const [name, setName] = useState(""); 
-    const [weight, setWeight] = useState(0); 
-    const [sets, setSets] = useState(0); 
-    const [reps, setReps] = useState(0); 
-   
+    const [name, setName] = useState("");
+    const [weight, setWeight] = useState(0);
+    const [sets, setSets] = useState(0);
+    const [reps, setReps] = useState(0);
+
 
     let currExercise = useState(null);
     const [exercises, setExercises] = useState([]);
@@ -44,7 +44,7 @@ function Exercises(props) {
     function updateName(event) {
         setName(e => event.target.value);
         console.log(name);
-        
+
     }
 
     function updateWeight(event) {
@@ -65,9 +65,7 @@ function Exercises(props) {
     // creating a current exercise, adding it to the list of exercises 
     function addExercise() {
 
-        
-
-        // TODO: fix empty input detection 
+        // empty input detection
         if (name == "" || sets == 0 || reps == 0) {
             // reminder message 
             document.getElementById("missing-exercise-text").style.display = "inline-block";
@@ -90,9 +88,9 @@ function Exercises(props) {
 
 
             // removes the reminder message 
-            document.getElementById("missing-exercise-text").style.display = "none"; 
+            document.getElementById("missing-exercise-text").style.display = "none";
 
-        
+
 
         }
 
@@ -102,6 +100,8 @@ function Exercises(props) {
 
     function updateSessions() {
 
+
+        // empty date/day detection 
         if (props.date === "" || props.day === "") {
             // reminder message 
             document.getElementById("missing-session-text").style.display = "inline-block";
@@ -109,7 +109,7 @@ function Exercises(props) {
 
         else {
 
-            
+
             // capitalize first letter of date
             let dateCapitalized = props.date.charAt(0).toUpperCase() + props.date.slice(1);
 
