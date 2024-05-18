@@ -17,6 +17,7 @@ function Exercises(props) {
     const [reps, setReps] = useState(0);
 
 
+
     let currExercise = useState(null);
     const [exercises, setExercises] = useState([]);
 
@@ -42,24 +43,20 @@ function Exercises(props) {
 
     // field updaters 
     function updateName(event) {
-        setName(e => event.target.value);
-        console.log(name);
+        setName(n => event.target.value);
 
     }
 
     function updateWeight(event) {
-        setWeight(e => event.target.value);
-        console.log(weight);
+        setWeight(w => event.target.value);
     }
 
     function updateReps(event) {
         setReps(r => event.target.value);
-        console.log(reps);
     }
 
     function updateSets(event) {
-        setSets(e => event.target.value);
-        console.log(sets);
+        setSets(s => event.target.value);
     }
 
     // creating a current exercise, adding it to the list of exercises 
@@ -91,6 +88,12 @@ function Exercises(props) {
             document.getElementById("missing-exercise-text").style.display = "none";
 
 
+            setName("");
+            setSets(0);
+            setReps(0);
+
+
+
 
         }
 
@@ -102,7 +105,7 @@ function Exercises(props) {
 
 
         // empty date/day detection 
-        if (props.date === "" || props.day === "") {
+        if (props.date === "" || props.day === "" || exercises.length === 0) {
             // reminder message 
             document.getElementById("missing-session-text").style.display = "inline-block";
         }
@@ -151,23 +154,23 @@ function Exercises(props) {
 
                         <div className="label-input">
                             <label >Name of Exercise</label>
-                            <input type="text" onChange={updateName} placeholder='ex. push ups' />
+                            <input type="text" onInput={updateName} placeholder='ex. push ups' />
                         </div>
 
                         <div className="label-input">
                             <label>Weight in lbs</label>
-                            <input type="number" onChange={updateWeight} placeholder='ex. 50lbs' />
+                            <input type="number" onInput={updateWeight} placeholder='ex. 50lbs' />
                         </div>
 
 
                         <div className="label-input">
                             <label>Repetitions </label>
-                            <input type="number" onChange={updateReps} />
+                            <input type="number" onInput={updateReps} />
                         </div>
 
                         <div className="label-input">
                             <label>Sets</label>
-                            <input type="number" onChange={updateSets} />
+                            <input type="number" onInput={updateSets} />
                         </div>
 
                     </form >
