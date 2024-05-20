@@ -9,6 +9,7 @@ import './index.css'
 
 function App() {
 
+  // TODO: refactor code so there is no prop drilling 
 
   return (
 

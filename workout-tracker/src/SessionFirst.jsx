@@ -31,6 +31,8 @@ function SessionFirst() {
 
     function updateDayPush() {
         setDay("Push");
+
+        // TODO: use state instead 
         document.getElementById("push-button").style.backgroundColor = "#c8b1e4";
         document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
         document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";

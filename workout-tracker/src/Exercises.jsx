@@ -10,15 +10,15 @@ function Exercises(props) {
 
 
 
-    // exercises 
-    const [name, setName] = useState("");
-    const [weight, setWeight] = useState(0);
-    const [sets, setSets] = useState(0);
-    const [reps, setReps] = useState(0);
+    const [currExercise, setCurrExercise] = useState(
+        {
+            name: "",
+            weight: 0,
+            sets: 0,
+            reps: 0
+        }
+    );
 
-
-
-    let currExercise = useState(null);
     const [exercises, setExercises] = useState([]);
 
     // sessions 
@@ -41,29 +41,25 @@ function Exercises(props) {
     }, [sessions]);
 
 
-    // field updaters 
-    function updateName(event) {
-        setName(n => event.target.value);
 
+    function handleExerciseFormChange(event) {
+        setCurrExercise(prev => {
+            return {
+                ...prev,
+                [event.target.name]: event.target.value
+            }
+        }
+
+
+        );
     }
 
-    function updateWeight(event) {
-        setWeight(w => event.target.value);
-    }
-
-    function updateReps(event) {
-        setReps(r => event.target.value);
-    }
-
-    function updateSets(event) {
-        setSets(s => event.target.value);
-    }
 
     // creating a current exercise, adding it to the list of exercises 
     function addExercise() {
 
         // empty input detection
-        if (name == "" || sets == 0 || reps == 0) {
+        if (currExercise.name == "" || currExercise.sets == 0 || currExercise.reps == 0) {
             // reminder message 
             document.getElementById("missing-exercise-text").style.display = "inline-block";
         }
@@ -71,14 +67,13 @@ function Exercises(props) {
         else {
 
             // capitalize first letter of exercise
-            let nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
-
-            currExercise = {
-                name: nameCapitalized,
-                weight: weight,
-                sets: sets,
-                reps: reps
-            };
+            let nameCapitalized = currExercise.name.charAt(0).toUpperCase() + currExercise.name.slice(1);
+            setCurrExercise(prev => {
+                return {
+                    ...prev,
+                    name: nameCapitalized
+                }
+            });
 
             setExercises(e => [...e, currExercise]);
             document.getElementById('my-form').reset();
@@ -88,12 +83,14 @@ function Exercises(props) {
             document.getElementById("missing-exercise-text").style.display = "none";
 
 
-            setName("");
-            setSets(0);
-            setReps(0);
 
-
-
+            // resets current exercise 
+            setCurrExercise({
+                name: "",
+                weight: 0,
+                sets: 0,
+                reps: 0
+            });
 
         }
 
@@ -112,7 +109,6 @@ function Exercises(props) {
 
         else {
 
-
             // capitalize first letter of date
             let dateCapitalized = props.date.charAt(0).toUpperCase() + props.date.slice(1);
 
@@ -126,12 +122,6 @@ function Exercises(props) {
 
             setExercises([]);
             props.reset();
-
-
-            // for debugging 
-            console.log(exercises);
-            console.log(currSession);
-            console.log(sessions.length); // real length is +1 b/c useState is async 
 
             document.getElementById("missing-session-text").style.display = "none";
         }
@@ -154,30 +144,35 @@ function Exercises(props) {
 
                         <div className="label-input">
                             <label >Name of Exercise</label>
-                            <input type="text" onInput={updateName} placeholder='ex. push ups' />
+                            <input type="text" onInput={handleExerciseFormChange} name="name" value={currExercise.name} placeholder='ex. push ups' />
                         </div>
 
                         <div className="label-input">
                             <label>Weight in lbs</label>
-                            <input type="number" onInput={updateWeight} placeholder='ex. 50lbs' />
+                            <input type="number" onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
                         </div>
 
 
                         <div className="label-input">
                             <label>Repetitions </label>
-                            <input type="number" onInput={updateReps} />
+                            <input type="number" onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
                         </div>
 
                         <div className="label-input">
                             <label>Sets</label>
-                            <input type="number" onInput={updateSets} />
+                            <input type="number" onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
                         </div>
 
                     </form >
 
+
+                    {/* submit exercise */}
                     <button onClick={addExercise}>Add Exercise</button> <br />
                     <p id="missing-exercise-text">Please fill in all exercise fields</p>
                     <p id="exercise-count">You have added {exercises.length} exercises</p>
+
+
+                    {/* submit session */}
                     <button onClick={updateSessions} id='sessions-button'>Add session</button>
                     <p id="missing-session-text">Please fill in all session fields</p>
 

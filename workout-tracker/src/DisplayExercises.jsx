@@ -32,6 +32,8 @@ function DisplayExercises(props) {
             temp += obj.sets + "x" + obj.reps + objWeight + obj.name + "\n";
         }
 
+
+        // TODO: use react states instead ex. <pre>{temp}</pre>
         document.getElementById("display-text").innerHTML = temp;
     }
 

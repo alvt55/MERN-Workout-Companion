@@ -19,6 +19,8 @@ function Sessions(props) {
     // resets sessions div then adds all sessions 
     function displayAllSessions() {
 
+
+        // TODO: create a seperate card component 
         document.getElementById('sessions-text').innerHTML = "";
 
         for (let i = 0; i < sessions.length; i++) {
