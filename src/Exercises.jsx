@@ -1,5 +1,5 @@
 
-import { useState, useRef, createContext, useEffect, useId} from 'react'
+import { useState, useRef, createContext, useEffect, useId } from 'react'
 import './ExerciseStyles.css'
 import DisplayExercises from './DisplayExercises';
 import Sessions from './Sessions';
@@ -21,29 +21,9 @@ function Exercises(props) {
 
     const [exercises, setExercises] = useState([]);
 
-    // sessions 
-    const [sessions, setSessions] = useState([]);
-
 
     // accessibility for keyboard users on exercise form 
-    const id = useId(); 
-
-
-    // loading data every render 
-    useEffect(() => {
-        const data = localStorage.getItem('my_sessions');
-        if (data !== null) {
-            setSessions(JSON.parse(data));
-            console.log(sessions);
-        }
-    }, []);
-
-
-    // saving sessions to "my_sessions" everytime sessions changes 
-    useEffect(() => {
-        localStorage.setItem("my_sessions", JSON.stringify(sessions));
-    }, [sessions]);
-
+    const id = useId();
 
 
     function handleExerciseFormChange(event) {
@@ -62,11 +42,11 @@ function Exercises(props) {
     // creating a current exercise, adding it to the list of exercises 
     function addExercise() {
 
-        
+
 
         // empty input detection
         if (currExercise.name == "" || currExercise.sets == 0 || currExercise.reps == 0) {
-            // reminder message 
+           // TODO: use react to make this conditionally render 
             document.getElementById("missing-exercise-text").style.display = "inline-block";
         }
 
@@ -82,7 +62,7 @@ function Exercises(props) {
             });
 
             setExercises(e => [...e, currExercise]);
-            
+
 
 
             // removes the reminder message 
@@ -106,31 +86,26 @@ function Exercises(props) {
     }
 
 
-    function updateSessions() {
+    function addSession() {
 
 
         // empty date/day detection 
         if (props.date === "" || props.day === "" || exercises.length === 0) {
-            // reminder message 
+            // TODO: use react to make this conditionally render 
             document.getElementById("missing-session-text").style.display = "inline-block";
         }
 
         else {
 
-            // capitalize first letter of date
-            let dateCapitalized = props.date.charAt(0).toUpperCase() + props.date.slice(1);
 
-            const currSession = {
-                date: dateCapitalized,
-                day: props.day,
-                exercises: exercises
-            };
-
-            setSessions(s => [...s, currSession]);
+            // call updateSEssions with exrecises here 
+            props.updateSessions(exercises)
 
             setExercises([]);
-            props.reset();
 
+
+
+            // TODO: use react to make this conditionally render 
             document.getElementById("missing-session-text").style.display = "none";
         }
 
@@ -149,13 +124,11 @@ function Exercises(props) {
                     <form id="my-form" className='my-form'>
 
                         {/* .label-input represents a pair of label and inputs in a row */}
-
                         <div className="label-input">
                             <label htmlFor={id + "-name"}>Name of Exercise</label>
                             <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} placeholder='ex. push ups' />
                         </div>
 
-                        {/* TODO: label with htmlFor and input with id */}
 
                         <div className="label-input">
                             <label htmlFor={id + "-weight"}>Weight in lbs</label>
@@ -183,10 +156,8 @@ function Exercises(props) {
 
 
                     {/* submit session */}
-                    <button onClick={updateSessions} id='sessions-button'>Add session</button>
+                    <button onClick={addSession} id='sessions-button'>Add session</button>
                     <p id="missing-session-text">Please fill in all session fields</p>
-
-
 
 
                 </div >
@@ -194,7 +165,7 @@ function Exercises(props) {
                 <DisplayExercises exercises={exercises}></DisplayExercises>
 
             </div>
-            <Sessions date={props.date} day={props.day} exercises={exercises} sessions={sessions}></Sessions>
+
         </>
 
 
