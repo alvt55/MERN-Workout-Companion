@@ -1,5 +1,5 @@
 
-import { useState, useRef, createContext, useEffect } from 'react'
+import { useState, useRef, createContext, useEffect, useId} from 'react'
 import './ExerciseStyles.css'
 import DisplayExercises from './DisplayExercises';
 import Sessions from './Sessions';
@@ -23,6 +23,10 @@ function Exercises(props) {
 
     // sessions 
     const [sessions, setSessions] = useState([]);
+
+
+    // accessibility for keyboard users on exercise form 
+    const id = useId(); 
 
 
     // loading data every render 
@@ -58,6 +62,8 @@ function Exercises(props) {
     // creating a current exercise, adding it to the list of exercises 
     function addExercise() {
 
+        
+
         // empty input detection
         if (currExercise.name == "" || currExercise.sets == 0 || currExercise.reps == 0) {
             // reminder message 
@@ -76,7 +82,7 @@ function Exercises(props) {
             });
 
             setExercises(e => [...e, currExercise]);
-            document.getElementById('my-form').reset();
+            
 
 
             // removes the reminder message 
@@ -91,6 +97,8 @@ function Exercises(props) {
                 sets: 0,
                 reps: 0
             });
+
+            document.getElementById('my-form').reset();
 
         }
 
@@ -143,24 +151,26 @@ function Exercises(props) {
                         {/* .label-input represents a pair of label and inputs in a row */}
 
                         <div className="label-input">
-                            <label >Name of Exercise</label>
-                            <input type="text" onInput={handleExerciseFormChange} name="name" value={currExercise.name} placeholder='ex. push ups' />
+                            <label htmlFor={id + "-name"}>Name of Exercise</label>
+                            <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} placeholder='ex. push ups' />
+                        </div>
+
+                        {/* TODO: label with htmlFor and input with id */}
+
+                        <div className="label-input">
+                            <label htmlFor={id + "-weight"}>Weight in lbs</label>
+                            <input type="number" id={id + "-weight"} onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
+                        </div>
+
+
+                        <div className="label-input">
+                            <label htmlFor={id + "-reps"}>Repetitions </label>
+                            <input type="number" id={id + "-reps"} onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
                         </div>
 
                         <div className="label-input">
-                            <label>Weight in lbs</label>
-                            <input type="number" onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
-                        </div>
-
-
-                        <div className="label-input">
-                            <label>Repetitions </label>
-                            <input type="number" onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
-                        </div>
-
-                        <div className="label-input">
-                            <label>Sets</label>
-                            <input type="number" onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
+                            <label htmlFor={id + "-sets"}>Sets</label>
+                            <input type="number" id={id + "-sets"} onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
                         </div>
 
                     </form >

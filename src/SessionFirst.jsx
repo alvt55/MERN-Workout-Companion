@@ -10,7 +10,7 @@ function SessionFirst() {
 
 
     const [date, setDate] = useState("");
-    const [day, setDay] = useState(""); // day of split 
+    const [day, setDay] = useState(""); 
 
 
     // clears all fields and DOM representation, called when session is added 
