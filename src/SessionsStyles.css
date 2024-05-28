@@ -1,4 +1,4 @@
-#sessions-text {
+.sessionsText {
     margin-top: 70px;
     padding: 30px;
     display: flex;
@@ -27,16 +27,16 @@
     margin: 8px;
 }
 
-/* styles based on the session day  */
+/* styles based on the session day  CAPITAL LETTERS*/
 
-.push h3 {
+.Push h3 {
     color: rgb(7, 167, 167);
 }
 
-.pull h3 {
+.Pull h3 {
     color: rgb(165, 21, 165);
 }
 
-.legs h3 {
+.Legs h3 {
     color: rgb(177, 20, 20);
 }

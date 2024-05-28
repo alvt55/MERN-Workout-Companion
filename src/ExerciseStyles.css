@@ -63,7 +63,7 @@
 }
 
 #missing-exercise-text {
-    display: none;
+    
     font-weight: bold;
     color: #cc0000;
     margin: 10px 100px;
@@ -82,7 +82,7 @@
 }
 
 #missing-session-text {
-    display: none;
+
     font-weight: bold;
     color: #cc0000;
     margin: 10px 100px;

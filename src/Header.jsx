@@ -1,12 +1,11 @@
 import { useState, useRef, useContext, createContext, useEffect } from 'react'
-import './SessionFirstStyles.css'
-import Exercises from './Exercises';
+import './HeaderStyles.css'
 
 
 
 
 // prompting for workout info beforehand - date and day of split 
-function SessionFirst(props) {
+function Header(props) {
 
 
     // TODO: use react to make color changing more declarative 
@@ -71,5 +70,5 @@ function SessionFirst(props) {
     );
 }
 
-export default SessionFirst
+export default Header
 

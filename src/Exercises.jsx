@@ -20,6 +20,8 @@ function Exercises(props) {
     );
 
     const [exercises, setExercises] = useState([]);
+    const [exFields, setExFields] = useState(true);
+    const [sessionFields, setSessionFields] = useState(true);
 
 
     // accessibility for keyboard users on exercise form 
@@ -39,15 +41,12 @@ function Exercises(props) {
     }
 
 
-    // creating a current exercise, adding it to the list of exercises 
+
     function addExercise() {
-
-
 
         // empty input detection
         if (currExercise.name == "" || currExercise.sets == 0 || currExercise.reps == 0) {
-           // TODO: use react to make this conditionally render 
-            document.getElementById("missing-exercise-text").style.display = "inline-block";
+            setExFields(false); 
         }
 
         else {
@@ -63,11 +62,7 @@ function Exercises(props) {
 
             setExercises(e => [...e, currExercise]);
 
-
-
-            // removes the reminder message 
-            document.getElementById("missing-exercise-text").style.display = "none";
-
+            setExFields(true); 
 
 
             // resets current exercise 
@@ -91,8 +86,7 @@ function Exercises(props) {
 
         // empty date/day detection 
         if (props.date === "" || props.day === "" || exercises.length === 0) {
-            // TODO: use react to make this conditionally render 
-            document.getElementById("missing-session-text").style.display = "inline-block";
+            setSessionFields(false); 
         }
 
         else {
@@ -103,10 +97,8 @@ function Exercises(props) {
 
             setExercises([]);
 
-
-
-            // TODO: use react to make this conditionally render 
-            document.getElementById("missing-session-text").style.display = "none";
+    
+            setSessionFields(true); 
         }
 
 
@@ -151,13 +143,14 @@ function Exercises(props) {
 
                     {/* submit exercise */}
                     <button onClick={addExercise}>Add Exercise</button> <br />
-                    <p id="missing-exercise-text">Please fill in all exercise fields</p>
+                    {!exFields && <p id="missing-exercise-text">Please fill in all exercise fields</p>}
+                    
                     <p id="exercise-count">You have added {exercises.length} exercises</p>
 
 
                     {/* submit session */}
                     <button onClick={addSession} id='sessions-button'>Add session</button>
-                    <p id="missing-session-text">Please fill in all session fields</p>
+                    {!sessionFields && <p id="missing-session-text">Please fill in all session fields</p>}
 
 
                 </div >

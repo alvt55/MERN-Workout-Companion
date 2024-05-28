@@ -2,20 +2,21 @@ import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
-import SessionFirst from './SessionFirst'
+import Header from './Header'
 import Exercises from './Exercises'
+import Sessions from './Sessions'
 import './index.css'
 
 
 function App() {
 
-  
+
   const [date, setDate] = useState("");
   const [day, setDay] = useState("");
   const [sessions, setSessions] = useState([]);
 
 
-  // loading data every render 
+  // load
   useEffect(() => {
     const data = localStorage.getItem('my_sessions');
     if (data !== null) {
@@ -25,14 +26,14 @@ function App() {
   }, []);
 
 
-  // saving sessions to "my_sessions" everytime sessions changes 
+  // save 
   useEffect(() => {
     localStorage.setItem("my_sessions", JSON.stringify(sessions));
   }, [sessions]);
-  
 
 
- 
+
+
   function resetDateDay() {
     setDate("");
     setDay("");
@@ -40,7 +41,6 @@ function App() {
 
   function updateDate(event) {
     setDate(event.target.value);
-    console.log(date)
   }
 
 
@@ -50,6 +50,7 @@ function App() {
       case "Push":
         setDay("Push")
         break;
+        
 
       case "Pull":
         setDay("Pull")
@@ -62,10 +63,9 @@ function App() {
     }
   }
 
+
   function updateSessions(exercises) {
 
-
-    // capitalize first letter of date
     let dateCapitalized = date.charAt(0).toUpperCase() + date.slice(1);
 
     const currSession = {
@@ -81,14 +81,16 @@ function App() {
   }
 
 
+  // TODO: refine UML diagram
+
   return (
 
     <>
-      <SessionFirst date={date} day={day} updateDate={updateDate}
-        updateDay={updateDay}></SessionFirst>
-      <Exercises 
-       updateSessions={updateSessions}></Exercises>
-       {/* refactor sessions and cards  */}
+      <Header date={date} day={day} updateDate={updateDate}
+        updateDay={updateDay}></Header>
+      <Exercises
+        updateSessions={updateSessions}></Exercises>
+      <Sessions sessions={sessions}></Sessions>
     </>
   );
 }
