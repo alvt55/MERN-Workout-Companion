@@ -89,7 +89,7 @@ function App() {
       <Header date={date} day={day} updateDate={updateDate}
         updateDay={updateDay}></Header>
       <Exercises
-        updateSessions={updateSessions}></Exercises>
+        updateSessions={updateSessions} date={date} day={day}></Exercises>
       <Sessions sessions={sessions}></Sessions>
     </>
   );

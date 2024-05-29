@@ -9,18 +9,38 @@ function Sessions(props) {
 
 
     const sessions = props.sessions;
+    const [selectedDay, setSelectedDay] = useState(); 
 
 
-    // TODO: reverse map 
-    const sessionElements = sessions.map((session, idx) => {
+  
+    const allSessionElements = sessions.map((session, idx) => {
         return <SessionCard key={idx} session={session} />
     }).reverse()
 
+    const getSessionElements = sessions.map((session, idx) => {
 
+        if (session.day === selectedDay) {
+            return <SessionCard key={idx} session={session} />
+        } else if (selectedDay === "All"){
+            return <SessionCard key={idx} session={session} />
+        }
+        
+    }).reverse()
+
+
+
+    
     return (
 
+        
+
         <div className="sessionsText">
-            {sessionElements}
+            <button onClick={() => setSelectedDay("All")}>All</button>
+            <button onClick={() => setSelectedDay("Push")}>Push</button>
+            <button onClick={() => setSelectedDay("Pull")}>Pull</button>
+            <button onClick={() => setSelectedDay("Legs")}>Legs</button>
+            {getSessionElements}
+            
         </div>
 
 

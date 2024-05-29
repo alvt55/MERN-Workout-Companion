@@ -8,7 +8,6 @@ import './HeaderStyles.css'
 function Header(props) {
 
 
-    // TODO: use react to make color changing more declarative 
     useEffect(() =>{
         switch(props.day) {
             case "":

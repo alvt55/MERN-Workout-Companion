@@ -16,8 +16,10 @@ function SessionCard(props) {
 
             <ul>
                 {session.exercises.map((e, idx) => {
+
+                    let weight = e.weight ? " (" + e.weight + ") " : " "; 
                         
-                    let exText = e.sets + "x" + e.reps + " (" + e.weight + ") " + e.name;
+                    let exText = e.sets + "x" + e.reps + weight + e.name;
                    return <li key={idx}>{exText}</li>
                 })}
             </ul>

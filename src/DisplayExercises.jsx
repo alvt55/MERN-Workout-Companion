@@ -21,20 +21,17 @@ function DisplayExercises(props) {
         for (let i = 0; i < props.exercises.length; i++) {
             const obj = props.exercises[i];
 
-
-            // changes weight to bodyweight if weight entered is 0 (or negative)
-            let weight = obj.weight;
+            // removes weight if 0 
+            let weight = " (" + obj.weight + ") ";
             if (obj.weight <= 0) {
-                weight = "bw";
+                weight = " ";
             }
 
-            const objWeight = " (" + weight + ") ";
-            temp += obj.sets + "x" + obj.reps + objWeight + obj.name + "\n";
+           
+            temp += obj.sets + "x" + obj.reps + weight + obj.name + "\n";
         }
 
-
-        // TODO: use react states instead ex. <pre>{temp}</pre>
-        document.getElementById("display-text").innerHTML = temp;
+        return temp;
     }
 
 
@@ -44,7 +41,7 @@ function DisplayExercises(props) {
 
             <div className="displayEx-container">
                 {/* pre keeps the new lines created by display()*/}
-                <pre id="display-text"></pre>
+                <pre id="display-text">{display()}</pre>
 
 
             </div>
