@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { Route, Routes } from 'react-router-dom'
 
 import Header from './Header'
 import Exercises from './Exercises'
 import Sessions from './Sessions'
+import Search from './Search'
 import './index.css'
 
 
@@ -50,7 +52,7 @@ function App() {
       case "Push":
         setDay("Push")
         break;
-        
+
 
       case "Pull":
         setDay("Pull")
@@ -81,17 +83,24 @@ function App() {
   }
 
 
-  // TODO: refine UML diagram
+
 
   return (
 
-    <>
-      <Header date={date} day={day} updateDate={updateDate}
-        updateDay={updateDay}></Header>
-      <Exercises
-        updateSessions={updateSessions} date={date} day={day}></Exercises>
-      <Sessions sessions={sessions}></Sessions>
-    </>
+    <Routes>
+
+      <Route path="/tracker" element={<>
+        <Header date={date} day={day} updateDate={updateDate}
+          updateDay={updateDay}></Header>
+        <Exercises
+          updateSessions={updateSessions} date={date} day={day}></Exercises>
+        <Sessions sessions={sessions}></Sessions>
+      </>} />
+
+      <Route path="/search" element={<Search></Search>} />
+
+    </Routes>
+
   );
 }
 
