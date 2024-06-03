@@ -17,7 +17,7 @@ function Sessions(props) {
         return <SessionCard key={idx} session={session} />
     }).reverse()
 
-    const getSessionElements = sessions.map((session, idx) => {
+    const createSessionElements = sessions.map((session, idx) => {
 
         if (session.day === selectedDay) {
             return <SessionCard key={idx} session={session} />
@@ -39,7 +39,7 @@ function Sessions(props) {
             <button onClick={() => setSelectedDay("Push")}>Push</button>
             <button onClick={() => setSelectedDay("Pull")}>Pull</button>
             <button onClick={() => setSelectedDay("Legs")}>Legs</button>
-            {getSessionElements}
+            {createSessionElements}
             
         </div>
 

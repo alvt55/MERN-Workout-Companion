@@ -1,7 +1,8 @@
-import Exercises from "./Exercises";
+
 import { useState, useRef, useEffect } from 'react'
 import Sessions from "./Sessions";
 import './DisplayExercisesStyles.css'
+import Exercises from "./Exercises";
 
 
 function DisplayExercises(props) {

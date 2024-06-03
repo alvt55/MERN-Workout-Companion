@@ -1,6 +1,7 @@
 import { useState, useRef, useContext, createContext, useEffect } from 'react'
 import './HeaderStyles.css'
-import { Link, Outlet } from 'react-router-dom'; 
+import Navbar from '../Navbar';
+
 
 
 
@@ -44,8 +45,8 @@ function Header(props) {
         <>
 
 
-            <Link to="/search">Search</Link>
-            <Outlet></Outlet>
+            <Navbar></Navbar>
+            
 
             <div className="session">
                 <div className="sf-container">

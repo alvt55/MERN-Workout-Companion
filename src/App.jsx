@@ -3,9 +3,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { Route, Routes } from 'react-router-dom'
 
-import Header from './Header'
-import Exercises from './Exercises'
-import Sessions from './Sessions'
+import Header from './Tracker/Header'
+import Exercises from './Tracker/Exercises'
+import Sessions from './Tracker/Sessions'
 import Search from './Search'
 import './index.css'
 
@@ -89,7 +89,7 @@ function App() {
 
     <Routes>
 
-      <Route path="/tracker" element={<>
+      <Route path="/" element={<>
         <Header date={date} day={day} updateDate={updateDate}
           updateDay={updateDay}></Header>
         <Exercises
