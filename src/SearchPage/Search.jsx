@@ -1,7 +1,10 @@
 import { useState, useRef, createContext, useEffect, useId } from 'react'
-import { Link, Outlet } from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from '../Navbar';
+import ExerciseCard from './ExerciseCard';
 import axios from 'axios';
+import key from '../../ApiKey';
+
+
 
 
 export default function Search() {
@@ -15,7 +18,7 @@ export default function Search() {
         url: 'https://exercisedb.p.rapidapi.com/exercises/bodyPart/back',
         params: {limit: '8'},
         headers: {
-          'X-RapidAPI-Key': '', // TODO: hide this key 
+          'X-RapidAPI-Key': key,
           'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
       };
@@ -24,20 +27,22 @@ export default function Search() {
         method: 'GET',
         url: 'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
         headers: {
-          'X-RapidAPI-Key': '',
+          'X-RapidAPI-Key': key,
           'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
       };
    
 
+
+      // requesting all possible body parts for searching 
       useEffect(() => {
         
-
         const bodyPartsFunction = async () => {
             try {
                 const response = await axios.request(optionsBodyParts);
                 let data = await response.data; 
                 setBodyParts(b => data); 
+                console.log(data)
             } catch(error) {
                 console.log(error); 
             }
@@ -47,6 +52,10 @@ export default function Search() {
       }, []);
 
 
+
+
+    
+    // requesting/storing all exercises related to search 
     async function handleSubmit() {
 
         if (bodyParts.includes(search)) {
@@ -57,8 +66,8 @@ export default function Search() {
                     
                 });
 
-                setBodyParts(b => response); 
-                
+                setExercises(b => response.data); 
+                console.log(response.data)
             } catch (error) {
                 console.error(error);
             }
@@ -67,13 +76,13 @@ export default function Search() {
     }
 
 
-    function createExerciseCards() {
+
 
         const allCards = exercises.map((exercise, idx) => {
-            return // TODO: create cards for each exercise with gifs 
+            return <ExerciseCard index={idx} name={exercise.name} />
+            // TODO: make exercise cards 
         })
-    }
-
+    
 
 
 
@@ -100,7 +109,7 @@ export default function Search() {
             <h1>exercise cards go here</h1>
 
         </div>
-
+        {allCards}
         </>
 
 

@@ -2,7 +2,7 @@
 import { useState, useRef, createContext, useEffect, useId } from 'react'
 import './ExerciseStyles.css'
 import DisplayExercises from './DisplayExercises';
-import Sessions from './Sessions';
+
 
 
 // exercise input, adding session button 

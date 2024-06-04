@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import { Route, Routes } from 'react-router-dom'
+import axios from 'axios'
 
 import Header from './Tracker/Header'
 import Exercises from './Tracker/Exercises'
 import Sessions from './Tracker/Sessions'
-import Search from './Search'
+import Search from './SearchPage/Search'
 import './index.css'
 
 
