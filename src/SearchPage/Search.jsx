@@ -13,10 +13,12 @@ export default function Search() {
     const [exercises, setExercises] = useState([]); 
     const [bodyParts, setBodyParts] = useState([]); 
 
+
+    // TODO: get random exercises instead of alphabetical 
     const optionsExercises = {
         method: 'GET',
         url: 'https://exercisedb.p.rapidapi.com/exercises/bodyPart/back',
-        params: {limit: '8'},
+        params: {limit: '12'},
         headers: {
           'X-RapidAPI-Key': key,
           'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
@@ -67,7 +69,7 @@ export default function Search() {
                 });
 
                 setExercises(b => response.data); 
-                console.log(response.data)
+                console.log(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -78,9 +80,9 @@ export default function Search() {
 
 
 
-        const allCards = exercises.map((exercise, idx) => {
-            return <ExerciseCard index={idx} name={exercise.name} />
-            // TODO: make exercise cards 
+        const allCards = exercises.map(exercise=> {
+            return <ExerciseCard key={exercise.id} exerciseObj={exercise}/>
+         
         })
     
 
@@ -106,10 +108,10 @@ export default function Search() {
         <button onClick={handleSubmit}>Submit</button>
 
         <div className="exercise-cards">
-            <h1>exercise cards go here</h1>
-
+            
+            {allCards}
         </div>
-        {allCards}
+        
         </>
 
 
