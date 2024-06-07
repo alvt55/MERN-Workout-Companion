@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import axios from 'axios'
 
 import Header from './Tracker/Header'
 import Exercises from './Tracker/Exercises'
 import Sessions from './Tracker/Sessions'
 import Search from './SearchPage/Search'
 import './index.css'
+import Navbar from './Navbar'
+import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
+
+
+
+
 
 
 function App() {
@@ -15,6 +20,11 @@ function App() {
   const [date, setDate] = useState("");
   const [day, setDay] = useState("");
   const [sessions, setSessions] = useState([]);
+
+
+  // color themes 
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
 
   // load
@@ -82,23 +92,42 @@ function App() {
   }
 
 
+  function toggleColorScheme() {
+    setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')
+  }
+
 
 
   return (
 
+
+
     <Routes>
 
-      <Route path="/" element={<>
-        <Header date={date} day={day} updateDate={updateDate}
-          updateDay={updateDay}></Header>
-        <Exercises
-          updateSessions={updateSessions} date={date} day={day}></Exercises>
-        <Sessions sessions={sessions}></Sessions>
+      <Route path="/" element={
+
+        <>
+
+          <Navbar toggleTheme={toggleColorScheme}></Navbar>
+          <Header date={date} day={day} updateDate={updateDate}
+            updateDay={updateDay} toggleTheme={toggleColorScheme}></Header>
+          <Exercises
+            updateSessions={updateSessions} date={date} day={day}></Exercises>
+          <Sessions sessions={sessions}></Sessions>
+
+        </>
+
+
+      } />
+
+      <Route path="/search" element={<>
+        <Navbar ></Navbar>
+        <Search></Search>
       </>} />
 
-      <Route path="/search" element={<Search></Search>} />
-
     </Routes>
+
+
 
   );
 }

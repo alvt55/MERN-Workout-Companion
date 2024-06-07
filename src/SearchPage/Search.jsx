@@ -94,7 +94,7 @@ export default function Search() {
 
         <>
 
-        <Navbar></Navbar>
+   
         
         <form>
             <input

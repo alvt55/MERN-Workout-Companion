@@ -9,7 +9,7 @@ function Sessions(props) {
 
 
     const sessions = props.sessions;
-    const [selectedDay, setSelectedDay] = useState(); 
+    const [selectedDay, setSelectedDay] = useState("All"); 
 
 
   

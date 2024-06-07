@@ -45,8 +45,7 @@ function Header(props) {
         <>
 
 
-            <Navbar></Navbar>
-            
+          
 
             <div className="session">
                 <div className="sf-container">
