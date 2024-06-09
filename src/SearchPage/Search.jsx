@@ -3,88 +3,89 @@ import Navbar from '../Navbar';
 import ExerciseCard from './ExerciseCard';
 import axios from 'axios';
 import key from '../../ApiKey';
+import './SearchStyles.css'
 
 
 
 
 export default function Search() {
 
-    const [search, setSearch] = useState(''); 
-    const [exercises, setExercises] = useState([]); 
-    const [bodyParts, setBodyParts] = useState([]); 
+    const [search, setSearch] = useState('');
+    const [exercises, setExercises] = useState([]);
+    const [bodyParts, setBodyParts] = useState([]);
 
 
     // TODO: get random exercises instead of alphabetical 
     const optionsExercises = {
         method: 'GET',
         url: 'https://exercisedb.p.rapidapi.com/exercises/bodyPart/back',
-        params: {limit: '12'},
+        params: { limit: '12' },
         headers: {
-          'X-RapidAPI-Key': key,
-          'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+            'X-RapidAPI-Key': key,
+            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
-      };
+    };
 
-      const optionsBodyParts = {
+    const optionsBodyParts = {
         method: 'GET',
         url: 'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
         headers: {
-          'X-RapidAPI-Key': key,
-          'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+            'X-RapidAPI-Key': key,
+            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
-      };
-   
+    };
 
 
-      // requesting all possible body parts for searching 
-      useEffect(() => {
-        
+
+    // requesting all possible body parts for searching 
+    useEffect(() => {
+
         const bodyPartsFunction = async () => {
             try {
                 const response = await axios.request(optionsBodyParts);
-                let data = await response.data; 
-                setBodyParts(b => data); 
+                let data = await response.data;
+                setBodyParts(b => data);
                 console.log(data)
-            } catch(error) {
-                console.log(error); 
+            } catch (error) {
+                console.log(error);
             }
         }
-      
-        bodyPartsFunction(); 
-      }, []);
+
+        bodyPartsFunction();
+    }, []);
 
 
 
 
-    
+
     // requesting/storing all exercises related to search 
     async function handleSubmit() {
 
         if (bodyParts.includes(search)) {
             try {
                 const response = await axios.request({
-                    ...optionsExercises, 
+                    ...optionsExercises,
                     url: `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${search}`
-                    
+
                 });
 
-                setExercises(b => response.data); 
+                setExercises(b => response.data);
                 console.log(response.data);
             } catch (error) {
                 console.error(error);
             }
         }
-        
+
     }
 
 
 
 
-        const allCards = exercises.map(exercise=> {
-            return <ExerciseCard key={exercise.id} exerciseObj={exercise}/>
-         
-        })
-    
+    const allCards = exercises.map(exercise => {
+        return <ExerciseCard key={exercise.id} exerciseObj={exercise} />
+
+    })
+
 
 
 
@@ -92,27 +93,35 @@ export default function Search() {
     return (
 
 
-        <>
+        <div className="search-container">
 
-   
-        
-        <form>
-            <input
-                type="text"
-                name="search"
-                onChange={(e) => setSearch(e.target.value.toLowerCase())}
-                value={search}
-            />
-            
-        </form>
-        <button onClick={handleSubmit}>Submit</button>
+            <form>
 
-        <div className="exercise-cards">
-            
-            {allCards}
+
+                <div className="label-input" id='search'>
+
+                    <label>Search</label>
+                    <input
+                        type="text"
+                        name="search"
+                        onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                        value={search}
+                    />
+                </div>
+
+            </form>
+            <button onClick={handleSubmit}>Submit</button>
+
+            <div className="exercise-cards">
+
+                {allCards}
+            </div>
         </div>
-        
-        </>
+
+
+
+
+
 
 
     );

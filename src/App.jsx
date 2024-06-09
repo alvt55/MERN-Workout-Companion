@@ -7,7 +7,7 @@ import Sessions from './Tracker/Sessions'
 import Search from './SearchPage/Search'
 import './index.css'
 import Navbar from './Navbar'
-import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
+
 
 
 
@@ -22,9 +22,7 @@ function App() {
   const [sessions, setSessions] = useState([]);
 
 
-  // color themes 
-  const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+
 
 
   // load
@@ -92,14 +90,12 @@ function App() {
   }
 
 
-  function toggleColorScheme() {
-    setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')
-  }
+ 
+ 
 
 
 
   return (
-
 
 
     <Routes>
@@ -107,13 +103,12 @@ function App() {
       <Route path="/" element={
 
         <>
-
-          <Navbar toggleTheme={toggleColorScheme}></Navbar>
+          <Navbar/> 
           <Header date={date} day={day} updateDate={updateDate}
-            updateDay={updateDay} toggleTheme={toggleColorScheme}></Header>
+            updateDay={updateDay} />
           <Exercises
-            updateSessions={updateSessions} date={date} day={day}></Exercises>
-          <Sessions sessions={sessions}></Sessions>
+            updateSessions={updateSessions} date={date} day={day}/>
+          <Sessions sessions={sessions}/>
 
         </>
 
@@ -121,12 +116,11 @@ function App() {
       } />
 
       <Route path="/search" element={<>
-        <Navbar ></Navbar>
-        <Search></Search>
+        <Navbar/>
+        <Search/>
       </>} />
 
     </Routes>
-
 
 
   );

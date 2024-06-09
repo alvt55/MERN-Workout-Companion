@@ -1,6 +1,7 @@
 import { useState, useRef, useContext, createContext, useEffect } from 'react'
 import './HeaderStyles.css'
 import Navbar from '../Navbar';
+import { TextInput } from '@mantine/core';
 
 
 
@@ -9,32 +10,32 @@ import Navbar from '../Navbar';
 function Header(props) {
 
 
-    useEffect(() =>{
-        switch(props.day) {
+    useEffect(() => {
+        switch (props.day) {
             case "":
                 document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
                 document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
                 document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
-                break; 
+                break;
             case "Push":
                 document.getElementById("push-button").style.backgroundColor = "#c8b1e4";
                 document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
                 document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
-              break;
-             
+                break;
+
             case "Pull":
                 document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
                 document.getElementById("pull-button").style.backgroundColor = "#c8b1e4";
                 document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
-              break;
-              
+                break;
+
             case "Legs":
                 document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
                 document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
                 document.getElementById("legs-button").style.backgroundColor = "#c8b1e4";
-              break;
-             
-          }
+                break;
+
+        }
     }, [props.day])
 
 
@@ -45,7 +46,7 @@ function Header(props) {
         <>
 
 
-          
+
 
             <div className="session">
                 <div className="sf-container">
@@ -53,6 +54,7 @@ function Header(props) {
                     <div className="date">
                         <label htmlFor="">Date</label>
                         <input value={props.date} onChange={props.updateDate} />
+                 
                     </div>
 
                     <div className="day-buttons">
