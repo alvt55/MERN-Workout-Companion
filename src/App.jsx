@@ -10,10 +10,6 @@ import Navbar from './Navbar'
 
 
 
-
-
-
-
 function App() {
 
 

@@ -8,6 +8,7 @@ import './SearchStyles.css'
 
 
 
+
 export default function Search() {
 
     const [search, setSearch] = useState('');
