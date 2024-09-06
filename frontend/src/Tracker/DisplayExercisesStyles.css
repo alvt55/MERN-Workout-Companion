@@ -1,0 +1,18 @@
+.displayEx-container {
+    width: 40%;
+    border: 1px red;
+    background-color: #1f1f1f;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #000000;
+    font-size: 18px;
+    margin-right: 80px;
+
+}
+
+
+
+pre {
+    color: white;
+    margin: 25px 65px 0px;
+    text-wrap: balance;
+}

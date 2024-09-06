@@ -1,0 +1,129 @@
+import { useState, useRef, createContext, useEffect, useId } from 'react'
+import Navbar from '../Navbar';
+import ExerciseCard from './ExerciseCard';
+import axios from 'axios';
+import apikey from '../ApiKey';
+import './SearchStyles.css'
+
+
+
+
+
+export default function Search() {
+
+    const [search, setSearch] = useState('');
+    const [exercises, setExercises] = useState([]);
+    const [bodyParts, setBodyParts] = useState([]);
+
+
+    // TODO: get random exercises instead of alphabetical 
+    const optionsExercises = {
+        method: 'GET',
+        url: 'https://exercisedb.p.rapidapi.com/exercises/target/abductors',
+        params: { limit: '12' },
+        headers: {
+            'X-RapidAPI-Key': apikey,
+            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+        }
+    };
+
+    const optionsBodyParts = {
+        method: 'GET',
+        url: 'https://exercisedb.p.rapidapi.com/exercises/targetList',
+        headers: {
+            'X-RapidAPI-Key': apikey,
+            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+        }
+    };
+
+
+
+    // requesting all possible body parts for searching 
+    useEffect(() => {
+
+        const bodyPartsFunction = async () => {
+            try {
+                const response = await axios.request(optionsBodyParts);
+                let data = await response.data;
+                setBodyParts(b => data);
+                console.log(`Body Parts Include...\n${data}`)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        bodyPartsFunction();
+    }, []);
+
+
+
+
+
+    // requesting/storing all exercises related to search 
+    async function handleSubmit() {
+
+        if (bodyParts.includes(search)) {
+            try {
+                const response = await axios.request({
+                    ...optionsExercises,
+                    url: `https://exercisedb.p.rapidapi.com/exercises/target/${search}`
+
+                });
+
+                setExercises(b => response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+    }
+
+
+
+
+    const allCards = exercises.map(exercise => {
+        return <ExerciseCard key={exercise.id} exerciseObj={exercise} />
+
+    })
+
+
+
+
+
+    return (
+
+
+        <div className="search-container">
+
+            <form>
+
+
+                <div className="label-input" id='search'>
+
+                    <label>Search</label>
+                    <input
+                        type="text"
+                        name="search"
+                        onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                        value={search}
+                    />
+                </div>
+
+            </form>
+            <button onClick={handleSubmit}>Submit</button>
+
+            <div className="exercise-cards">
+
+                {allCards}
+            </div>
+        </div>
+
+
+
+
+
+
+
+    );
+}
