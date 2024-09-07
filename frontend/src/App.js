@@ -16,7 +16,7 @@ function App() {
   
   const [date, setDate] = useState("");
   const [day, setDay] = useState("");
-  const [sessions, setSessions] = useState(null); 
+  const [sessions, setSessions] = useState([]); 
 
 
   useEffect(() => {
@@ -27,6 +27,7 @@ function App() {
       if (response.ok) {
         setSessions(s => json)
         console.log("setting sessions")
+        console.log(json)
                 
       }
     }

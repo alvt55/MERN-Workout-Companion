@@ -12,23 +12,24 @@ function Sessions(props) {
     const [selectedDay, setSelectedDay] = useState("All");
 
 
-    const createSessionElements = []
 
-if (sessions) {
-    const allSessionElements = sessions.map((session, idx) => {
-        return <SessionCard key={idx} session={session} />
-    }).reverse() 
 
-    const createSessionElements = sessions.map((session, idx) => {
 
-        if (session.day === selectedDay) {
-            return <SessionCard key={idx} session={session} />
-        } else if (selectedDay === "All") {
-            return <SessionCard key={idx} session={session} />
-        }
 
-    }).reverse()
-}
+        const createSessionElements = sessions.map((session, idx) => {
+    
+            if (session.day === selectedDay) {
+                return <SessionCard key={idx} session={session} />
+            } else if (selectedDay === "All") {
+                return <SessionCard key={idx} session={session} />
+            }
+    
+        }).reverse()
+    
+
+
+
+
     
 
 
