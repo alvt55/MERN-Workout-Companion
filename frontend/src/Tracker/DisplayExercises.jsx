@@ -1,5 +1,5 @@
 
-import {useEffect } from 'react'
+import { useEffect } from 'react'
 import './DisplayExercisesStyles.css'
 
 
@@ -13,7 +13,7 @@ function DisplayExercises(props) {
     }, [props]);
 
 
-
+    // displays exercises formatted in preview
     function display() {
 
         let temp = "";
@@ -27,7 +27,7 @@ function DisplayExercises(props) {
                 weight = " ";
             }
 
-           
+
             temp += obj.sets + "x" + obj.reps + weight + obj.name + "\n";
         }
 

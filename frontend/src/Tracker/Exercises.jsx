@@ -45,7 +45,7 @@ function Exercises(props) {
 
         // empty input detection
         if (currExercise.name == "" || currExercise.sets == 0 || currExercise.reps == 0) {
-            setExFields(false); 
+            setExFields(false);
         }
 
         else {
@@ -61,7 +61,7 @@ function Exercises(props) {
 
             setExercises(e => [...e, currExercise]);
 
-            setExFields(true); 
+            setExFields(true);
 
 
             // resets current exercise 
@@ -85,7 +85,7 @@ function Exercises(props) {
 
         // empty date/day detection 
         if (props.date === "" || props.day === "" || exercises.length === 0) {
-            setSessionFields(false); 
+            setSessionFields(false);
         }
 
         else {
@@ -96,8 +96,8 @@ function Exercises(props) {
 
             setExercises([]);
 
-    
-            setSessionFields(true); 
+
+            setSessionFields(true);
         }
 
 
@@ -143,7 +143,7 @@ function Exercises(props) {
                     {/* submit exercise */}
                     <button onClick={addExercise}>Add Exercise</button> <br />
                     {!exFields && <p id="missing-exercise-text">Please fill in all exercise fields</p>}
-                    
+
                     <p id="exercise-count">You have added {exercises.length} exercises</p>
 
 

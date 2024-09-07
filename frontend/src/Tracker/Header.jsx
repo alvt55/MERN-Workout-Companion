@@ -1,4 +1,4 @@
-import {useEffect } from 'react'
+import { useEffect } from 'react'
 import './HeaderStyles.css'
 
 
@@ -9,6 +9,7 @@ import './HeaderStyles.css'
 function Header(props) {
 
 
+    // TODO: refactor
     useEffect(() => {
         switch (props.day) {
             case "":
@@ -53,7 +54,7 @@ function Header(props) {
                     <div className="date">
                         <label htmlFor="">Date</label>
                         <input value={props.date} onChange={props.updateDate} />
-                 
+
                     </div>
 
                     <div className="day-buttons">

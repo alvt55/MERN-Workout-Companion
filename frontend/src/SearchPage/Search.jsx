@@ -16,7 +16,7 @@ export default function Search() {
     const [bodyParts, setBodyParts] = useState([]);
 
 
-    // TODO: get random exercises instead of alphabetical 
+    // exercises from external exercise API
     const optionsExercises = {
         method: 'GET',
         url: 'https://exercisedb.p.rapidapi.com/exercises/target/abductors',
@@ -27,6 +27,7 @@ export default function Search() {
         }
     };
 
+    // list of body parts (used for endpoints)
     const optionsBodyParts = {
         method: 'GET',
         url: 'https://exercisedb.p.rapidapi.com/exercises/targetList',
@@ -46,7 +47,7 @@ export default function Search() {
                 const response = await axios.request(optionsBodyParts);
                 let data = await response.data;
                 setBodyParts(b => data);
-                console.log(`Body Parts Include...\n${data}`)
+                console.log(`Body Parts Include...\n${data}`) // displayed in console for debugging
             } catch (error) {
                 console.log(error);
             }
@@ -81,7 +82,7 @@ export default function Search() {
 
 
 
-
+    // returns exercise cards formatted
     const allCards = exercises.map(exercise => {
         return <ExerciseCard key={exercise.id} exerciseObj={exercise} />
 

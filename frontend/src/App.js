@@ -9,16 +9,14 @@ import Search from './SearchPage/Search'
 
 function App() {
 
-  // TODO: 
-  // figure out json console error 
-  // do fetch/post data 
-  // save this to org repo 
-  
+
+
   const [date, setDate] = useState("");
   const [day, setDay] = useState("");
-  const [sessions, setSessions] = useState([]); 
+  const [sessions, setSessions] = useState([]);
 
 
+  // fetches sessions from DB
   useEffect(() => {
     const fetchWorkouts = async () => {
       const response = await fetch('api/workouts')
@@ -27,8 +25,7 @@ function App() {
       if (response.ok) {
         setSessions(s => json)
         console.log("setting sessions")
-        console.log(json)
-                
+
       }
     }
 
@@ -36,6 +33,7 @@ function App() {
   }, [])
 
 
+  // data persistence through local storage
   // // load
   // useEffect(() => {
   //   const data = localStorage.getItem('my_sessions');
@@ -82,15 +80,16 @@ function App() {
 
       default:
         setDay("")
-        break; 
+        break;
 
     }
   }
 
 
+  // posting workout session to DB using backend API
   async function updateSessions(exercises) {
 
-    
+
 
     let dateCapitalized = date.charAt(0).toUpperCase() + date.slice(1);
 
@@ -116,9 +115,9 @@ function App() {
     } else {
       console.log('workout posted')
     }
-    
 
-    
+
+
     console.log(sessions);
 
     resetDateDay()
@@ -126,36 +125,37 @@ function App() {
 
 
 
- 
- 
+
+
 
 
 
   return (
 
-<BrowserRouter>
-<Navbar/>
-    <Routes>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
 
-      <Route path="/" element={
+        <Route path="/" element={
+          // main page 
+          <>
 
-        <>
-           
-          <Header date={date} day={day} updateDate={updateDate}
-            updateDay={updateDay} />
-          <Exercises
-            updateSessions={updateSessions} date={date} day={day}/>
-          <Sessions sessions={sessions}/>
+            <Header date={date} day={day} updateDate={updateDate}
+              updateDay={updateDay} />
+            <Exercises
+              updateSessions={updateSessions} date={date} day={day} />
+            <Sessions sessions={sessions} />
 
-        </>
+          </>
 
 
-      } />
+        } />
 
-      <Route path="/search" element={ <Search/>} />
+        {/* search page */}
+        <Route path="/search" element={<Search />} />
 
-    </Routes>
-</BrowserRouter>
+      </Routes>
+    </BrowserRouter>
 
 
   );

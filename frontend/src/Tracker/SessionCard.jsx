@@ -10,6 +10,7 @@ function SessionCard(props) {
     const container = "session-container";
 
 
+    // formats session cards 
     return (
         <div className={`${container} ${session.day}`}>
             <h3>{props.session.date}: {props.session.day}</h3>
@@ -17,10 +18,10 @@ function SessionCard(props) {
             <ul>
                 {session.exercises.map((e, idx) => {
 
-                    let weight = e.weight ? " (" + e.weight + ") " : " "; 
-                        
+                    let weight = e.weight ? " (" + e.weight + ") " : " ";
+
                     let exText = e.sets + "x" + e.reps + weight + e.name;
-                   return <li key={idx}>{exText}</li>
+                    return <li key={idx}>{exText}</li>
                 })}
             </ul>
         </div>

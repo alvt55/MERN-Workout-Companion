@@ -15,26 +15,16 @@ function Sessions(props) {
 
 
 
+    // maps through all sessions - filters by day 
+    const createSessionElements = sessions.map((session, idx) => {
 
-        const createSessionElements = sessions.map((session, idx) => {
-    
-            if (session.day === selectedDay) {
-                return <SessionCard key={idx} session={session} />
-            } else if (selectedDay === "All") {
-                return <SessionCard key={idx} session={session} />
-            }
-    
-        }).reverse()
-    
+        if (session.day === selectedDay) {
+            return <SessionCard key={idx} session={session} />
+        } else if (selectedDay === "All") {
+            return <SessionCard key={idx} session={session} />
+        }
 
-
-
-
-    
-
-
-
-
+    }).reverse()
 
 
     return (
