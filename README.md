@@ -1,6 +1,6 @@
 This workout companion app was created with React, JS, Express, MongoDB and Nodejs. 
 
-Here is a video demo of the project: 
+Here is a video demo of the project: https://youtu.be/_sj8_LW1fTg
 
 
 
