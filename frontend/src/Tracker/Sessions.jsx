@@ -12,9 +12,6 @@ function Sessions(props) {
     const [selectedDay, setSelectedDay] = useState("All");
 
 
-
-
-
     // maps through all sessions - filters by day 
     const createSessionElements = sessions.map((session, idx) => {
 

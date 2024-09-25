@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import Navbar from './Navbar'
+import Navbar from './Navbar/Navbar'
 import Header from './Tracker/Header'
 import Exercises from './Tracker/Exercises'
 import Sessions from './Tracker/Sessions'
@@ -64,6 +64,7 @@ function App() {
 
   function updateDay(day) {
 
+    // TODO: switch statement unneccessary, just use setDay
     switch (day) {
       case "Push":
         setDay("Push")
@@ -101,12 +102,13 @@ function App() {
 
     const response = await fetch('/api/workouts', {
       method: 'POST',
-      body: JSON.stringify(currSession), // change this? 
+      body: JSON.stringify(currSession),
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    const json = await response.json()
+
+    // const json = await response.json()
 
     console.log("checkpoint")
 
@@ -136,18 +138,15 @@ function App() {
       <Navbar />
       <Routes>
 
+
+        {/* tracker page  */}
         <Route path="/" element={
-          // main page 
+
           <>
-
-            <Header date={date} day={day} updateDate={updateDate}
-              updateDay={updateDay} />
-            <Exercises
-              updateSessions={updateSessions} date={date} day={day} />
+            <Header date={date} day={day} updateDate={updateDate} updateDay={updateDay} />
+            <Exercises updateSessions={updateSessions} date={date} day={day} />
             <Sessions sessions={sessions} />
-
           </>
-
 
         } />
 

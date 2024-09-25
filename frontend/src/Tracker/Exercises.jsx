@@ -33,10 +33,7 @@ function Exercises(props) {
                 ...prev,
                 [event.target.name]: event.target.value
             }
-        }
-
-
-        );
+        });
     }
 
 
@@ -44,7 +41,7 @@ function Exercises(props) {
     function addExercise() {
 
         // empty input detection
-        if (currExercise.name == "" || currExercise.sets == 0 || currExercise.reps == 0) {
+        if (currExercise.name === "" || currExercise.sets === 0 || currExercise.reps === 0) {
             setExFields(false);
         }
 
@@ -72,6 +69,7 @@ function Exercises(props) {
                 reps: 0
             });
 
+            // TODO: test if this needed 
             document.getElementById('my-form').reset();
 
         }
@@ -89,18 +87,11 @@ function Exercises(props) {
         }
 
         else {
-
-
             // call updateSsssions with exercises here 
             props.updateSessions(exercises)
-
             setExercises([]);
-
-
             setSessionFields(true);
         }
-
-
     }
 
 
@@ -117,7 +108,7 @@ function Exercises(props) {
                         {/* .label-input represents a pair of label and inputs in a row */}
                         <div className="label-input">
                             <label htmlFor={id + "-name"}>Name of Exercise</label>
-                            <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} placeholder='ex. push ups' />
+                            <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} />
                         </div>
 
 

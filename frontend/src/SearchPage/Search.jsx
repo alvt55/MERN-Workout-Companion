@@ -1,5 +1,4 @@
-import { useState, useRef, createContext, useEffect, useId } from 'react'
-import Navbar from '../Navbar';
+import { useState, useEffect } from 'react'
 import ExerciseCard from './ExerciseCard';
 import axios from 'axios';
 import apikey from '../ApiKey';
@@ -13,7 +12,7 @@ export default function Search() {
 
     const [search, setSearch] = useState('');
     const [exercises, setExercises] = useState([]);
-    const [bodyParts, setBodyParts] = useState([]);
+    const [bodyParts, setBodyParts] = useState("");
 
 
     // exercises from external exercise API
@@ -40,6 +39,7 @@ export default function Search() {
 
 
     // requesting all possible body parts for searching 
+    // TODO: display this to the user instead of just in the console 
     useEffect(() => {
 
         const bodyPartsFunction = async () => {
@@ -57,10 +57,13 @@ export default function Search() {
     }, []);
 
 
+   
 
 
 
-    // requesting/storing all exercises related to search 
+
+
+    // requesting + storing all exercises related to search 
     async function handleSubmit() {
 
         if (bodyParts.includes(search)) {
@@ -99,25 +102,25 @@ export default function Search() {
 
             <form>
 
-
                 <div className="label-input" id='search'>
-
                     <label>Search</label>
                     <input
                         type="text"
                         name="search"
                         onChange={(e) => setSearch(e.target.value.toLowerCase())}
-                        value={search}
-                    />
-                </div>
+                        value={search} />
 
+                    
+                </div>
+                <pre>Body Parts Include... {bodyParts}</pre>
             </form>
+
             <button onClick={handleSubmit}>Submit</button>
 
             <div className="exercise-cards">
-
                 {allCards}
             </div>
+
         </div>
 
 

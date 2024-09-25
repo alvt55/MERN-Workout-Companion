@@ -5,13 +5,14 @@ import './HeaderStyles.css'
 
 
 
-// prompting for workout info beforehand - date and day of split 
+// prompting for date and day information 
 function Header(props) {
 
 
-    // TODO: refactor
+    // TODO: don't use props.day, connect this to the onclick functions in day-buttons instead 
     useEffect(() => {
-        switch (props.day) {
+
+        switch (props.day) { 
             case "":
                 document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
                 document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
@@ -54,11 +55,9 @@ function Header(props) {
                     <div className="date">
                         <label htmlFor="">Date</label>
                         <input value={props.date} onChange={props.updateDate} />
-
                     </div>
 
                     <div className="day-buttons">
-
                         <button onClick={() => props.updateDay("Push")} id='push-button'>Push</button>
                         <button onClick={() => props.updateDay("Pull")} id='pull-button'>Pull</button>
                         <button onClick={() => props.updateDay("Legs")} id='legs-button'>Legs</button>
