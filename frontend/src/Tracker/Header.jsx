@@ -9,44 +9,12 @@ import './HeaderStyles.css'
 function Header(props) {
 
 
-    // TODO: don't use props.day, connect this to the onclick functions in day-buttons instead 
-    useEffect(() => {
-
-        switch (props.day) { 
-            case "":
-                document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
-                document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
-                document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
-                break;
-            case "Push":
-                document.getElementById("push-button").style.backgroundColor = "#c8b1e4";
-                document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
-                document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
-                break;
-
-            case "Pull":
-                document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
-                document.getElementById("pull-button").style.backgroundColor = "#c8b1e4";
-                document.getElementById("legs-button").style.backgroundColor = "#1f1f1f";
-                break;
-
-            case "Legs":
-                document.getElementById("push-button").style.backgroundColor = "#1f1f1f";
-                document.getElementById("pull-button").style.backgroundColor = "#1f1f1f";
-                document.getElementById("legs-button").style.backgroundColor = "#c8b1e4";
-                break;
-
-        }
-    }, [props.day])
-
 
 
 
     return (
 
         <>
-
-
 
 
             <div className="session">
@@ -58,9 +26,9 @@ function Header(props) {
                     </div>
 
                     <div className="day-buttons">
-                        <button onClick={() => props.updateDay("Push")} id='push-button'>Push</button>
-                        <button onClick={() => props.updateDay("Pull")} id='pull-button'>Pull</button>
-                        <button onClick={() => props.updateDay("Legs")} id='legs-button'>Legs</button>
+                        <button onClick={() => props.updateDay("Push")} className = {props.day === "Push" ? 'active' : 'inactive'}>Push</button>
+                        <button onClick={() => props.updateDay("Pull")} className={props.day === "Pull" ? 'active' : 'inactive'}>Pull</button>
+                        <button onClick={() => props.updateDay("Legs")} className={props.day === "Legs" ? 'active' : 'inactive'}>Legs</button>
                     </div>
 
                 </div>

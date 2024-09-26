@@ -12,7 +12,7 @@ export default function Search() {
 
     const [search, setSearch] = useState('');
     const [exercises, setExercises] = useState([]);
-    const [bodyParts, setBodyParts] = useState("");
+    const [bodyParts, setBodyParts] = useState([]);
 
 
     // exercises from external exercise API
@@ -39,14 +39,13 @@ export default function Search() {
 
 
     // requesting all possible body parts for searching 
-    // TODO: display this to the user instead of just in the console 
     useEffect(() => {
 
         const bodyPartsFunction = async () => {
             try {
                 const response = await axios.request(optionsBodyParts);
                 let data = await response.data;
-                setBodyParts(b => data);
+                setBodyParts(data);
                 console.log(`Body Parts Include...\n${data}`) // displayed in console for debugging
             } catch (error) {
                 console.log(error);
@@ -57,9 +56,17 @@ export default function Search() {
     }, []);
 
 
-   
+    const displayBodyParts = bodyParts.map((i, idx) => {
+        
 
+        // removes comma from last element
+        if (idx !== bodyParts.length - 1) {
 
+            return i + ", "; 
+        }
+
+        return i; 
+    })
 
 
 
@@ -109,10 +116,11 @@ export default function Search() {
                         name="search"
                         onChange={(e) => setSearch(e.target.value.toLowerCase())}
                         value={search} />
-
+        
                     
                 </div>
-                <pre>Body Parts Include... {bodyParts}</pre>
+               <h1>Available search inputs: </h1>
+                {displayBodyParts}
             </form>
 
             <button onClick={handleSubmit}>Submit</button>
