@@ -7,12 +7,16 @@ import Exercises from './Tracker/Exercises'
 import Sessions from './Tracker/Sessions'
 import Search from './SearchPage/Search'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { updateDay } from './DaySlice'
+
 function App() {
 
 
-
+  const day = useSelector(state => state.day.value)
+  const dispatch = useDispatch();
   const [date, setDate] = useState("");
-  const [day, setDay] = useState("");
+  // const [day, setDay] = useState("");
   const [sessions, setSessions] = useState([]);
 
 
@@ -52,39 +56,39 @@ function App() {
 
 
 
-  function resetDateDay() {
-    setDate("");
-    setDay("");
-  }
+  // function resetDateDay() {
+  //   setDate("");
+  //   setDay("");
+  // }
 
   function updateDate(event) {
     setDate(event.target.value);
   }
 
 
-  function updateDay(day) {
+  // function updateDay(day) {
 
-    // TODO: switch statement unneccessary, just use setDay
-    switch (day) {
-      case "Push":
-        setDay("Push")
-        break;
+  //   // TODO: switch statement unneccessary, just use setDay
+  //   switch (day) {
+  //     case "Push":
+  //       setDay("Push")
+  //       break;
 
 
-      case "Pull":
-        setDay("Pull")
-        break;
+  //     case "Pull":
+  //       setDay("Pull")
+  //       break;
 
-      case "Legs":
-        setDay("Legs")
-        break;
+  //     case "Legs":
+  //       setDay("Legs")
+  //       break;
 
-      default:
-        setDay("")
-        break;
+  //     default:
+  //       setDay("")
+  //       break;
 
-    }
-  }
+  //   }
+  // }
 
 
   // posting workout session to DB using backend API
@@ -122,7 +126,13 @@ function App() {
 
     console.log(sessions);
 
-    resetDateDay()
+    // resetting date and day fields
+    // resetDateDay() without redux 
+
+    // TODO: reset date using redux 
+    dispatch(updateDay(""));
+
+
   }
 
 
@@ -136,6 +146,7 @@ function App() {
 
     <BrowserRouter>
       <Navbar />
+
       <Routes>
 
 
@@ -143,7 +154,8 @@ function App() {
         <Route path="/" element={
 
           <>
-            <Header date={date} day={day} updateDate={updateDate} updateDay={updateDay} />
+            {/* <Header date={date} day={day} updateDate={updateDate} updateDay={updateDay} /> */}
+            <Header date={date} day={day} updateDate={updateDate} />
             <Exercises updateSessions={updateSessions} date={date} day={day} />
             <Sessions sessions={sessions} />
           </>
