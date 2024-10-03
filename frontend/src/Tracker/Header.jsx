@@ -2,14 +2,14 @@ import { useEffect } from 'react'
 import './HeaderStyles.css'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { updateDay } from '../DaySlice';
+import { updateDay, updateDate } from '../SessionSlice';
 
 
 
 // prompting for date and day information 
 function Header(props) {
 
-    const day = useSelector(state => state.day.value)
+    const sessionSlice = useSelector(state => state.session)
     const dispatch = useDispatch() // access to store.dispatch without "store"
 
 
@@ -24,7 +24,7 @@ function Header(props) {
 
                     <div className="date">
                         <label htmlFor="">Date</label>
-                        <input value={props.date} onChange={props.updateDate} />
+                        <input value={sessionSlice.date} onChange={e => dispatch(updateDate(e.target.value))} />
                     </div>
 
                     <div className="day-buttons">
@@ -35,7 +35,8 @@ function Header(props) {
                         <button onClick={() => props.updateDay("Pull")} className={props.day === "Pull" ? 'active' : 'inactive'}>Pull</button>
                         <button onClick={() => props.updateDay("Legs")} className={props.day === "Legs" ? 'active' : 'inactive'}>Legs</button> */}
 
-                        {day}
+                        {sessionSlice.day}
+                        {sessionSlice.date}
                     </div>
 
                 </div>

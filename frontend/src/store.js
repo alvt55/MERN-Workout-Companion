@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import dayReducer from './DaySlice'
+import sessionReducer from './SessionSlice'
 
 export default configureStore({
     reducer: {
-        day: dayReducer
+        session: sessionReducer
     }
 })
 

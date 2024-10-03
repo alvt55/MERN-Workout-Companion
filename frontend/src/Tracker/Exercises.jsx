@@ -2,6 +2,8 @@ import { useState, useId } from 'react'
 import './ExerciseStyles.css'
 import DisplayExercises from './DisplayExercises';
 
+import {useSelector, useDispatch } from 'react-redux'
+import { addNewExercise, resetExerciseList} from '../SessionSlice';
 
 
 // exercise input, adding session button 
@@ -18,9 +20,13 @@ function Exercises(props) {
         }
     );
 
-    const [exercises, setExercises] = useState([]);
+    // const [exercises, setExercises] = useState([]);
     const [exFields, setExFields] = useState(true);
     const [sessionFields, setSessionFields] = useState(true);
+
+    const dispatch = useDispatch()
+    const exercises = useSelector(state => state.session.exercises)
+
 
 
     // accessibility for keyboard users on exercise form 
@@ -56,7 +62,9 @@ function Exercises(props) {
                 }
             });
 
-            setExercises(e => [...e, currExercise]);
+            // setExercises(e => [...e, currExercise]);
+            dispatch(addNewExercise(currExercise));
+
 
             setExFields(true);
 
@@ -89,7 +97,7 @@ function Exercises(props) {
         else {
             // call updateSsssions with exercises here 
             props.updateSessions(exercises)
-            setExercises([]);
+            dispatch(resetExerciseList())
             setSessionFields(true);
         }
     }

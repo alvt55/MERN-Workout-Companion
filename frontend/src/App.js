@@ -8,14 +8,16 @@ import Sessions from './Tracker/Sessions'
 import Search from './SearchPage/Search'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { updateDay } from './DaySlice'
+import { updateDay, updateDate } from './SessionSlice'
 
 function App() {
 
 
-  const day = useSelector(state => state.day.value)
+  const day = useSelector(state => state.session.day)
+  const date = useSelector(state => state.session.date)
+
   const dispatch = useDispatch();
-  const [date, setDate] = useState("");
+  // const [date, setDate] = useState("");
   // const [day, setDay] = useState("");
   const [sessions, setSessions] = useState([]);
 
@@ -61,9 +63,9 @@ function App() {
   //   setDay("");
   // }
 
-  function updateDate(event) {
-    setDate(event.target.value);
-  }
+  // function updateDate(event) {
+  //   setDate(event.target.value);
+  // }
 
 
   // function updateDay(day) {
@@ -112,9 +114,7 @@ function App() {
       }
     })
 
-    // const json = await response.json()
 
-    console.log("checkpoint")
 
     if (!response.ok) {
       console.log('failed to post session')
@@ -129,8 +129,9 @@ function App() {
     // resetting date and day fields
     // resetDateDay() without redux 
 
-    // TODO: reset date using redux 
+
     dispatch(updateDay(""));
+    dispatch(updateDate(""));
 
 
   }
@@ -155,7 +156,7 @@ function App() {
 
           <>
             {/* <Header date={date} day={day} updateDate={updateDate} updateDay={updateDay} /> */}
-            <Header date={date} day={day} updateDate={updateDate} />
+            <Header />
             <Exercises updateSessions={updateSessions} date={date} day={day} />
             <Sessions sessions={sessions} />
           </>
