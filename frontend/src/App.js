@@ -8,13 +8,14 @@ import Sessions from './Tracker/Sessions'
 import Search from './SearchPage/Search'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { updateDay, updateDate } from './SessionSlice'
+import { updateDay, updateDate, resetExerciseList } from './SessionSlice'
 
 function App() {
 
 
   const day = useSelector(state => state.session.day)
   const date = useSelector(state => state.session.date)
+  const exercises = useSelector(state => state.session.exercises)
 
   const dispatch = useDispatch();
   // const [date, setDate] = useState("");
@@ -94,8 +95,7 @@ function App() {
 
 
   // posting workout session to DB using backend API
-  async function updateSessions(exercises) {
-
+  async function updateSessions() {
 
 
     let dateCapitalized = date.charAt(0).toUpperCase() + date.slice(1);
@@ -126,13 +126,11 @@ function App() {
 
     console.log(sessions);
 
-    // resetting date and day fields
-    // resetDateDay() without redux 
-
-
+   
+    // resets all fields for current session in store 
     dispatch(updateDay(""));
     dispatch(updateDate(""));
-
+    dispatch(resetExerciseList()); 
 
   }
 
@@ -157,7 +155,7 @@ function App() {
           <>
             {/* <Header date={date} day={day} updateDate={updateDate} updateDay={updateDay} /> */}
             <Header />
-            <Exercises updateSessions={updateSessions} date={date} day={day} />
+            <Exercises updateSessions={updateSessions} />
             <Sessions sessions={sessions} />
           </>
 

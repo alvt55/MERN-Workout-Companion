@@ -2,8 +2,8 @@ import { useState, useId } from 'react'
 import './ExerciseStyles.css'
 import DisplayExercises from './DisplayExercises';
 
-import {useSelector, useDispatch } from 'react-redux'
-import { addNewExercise, resetExerciseList} from '../SessionSlice';
+import { useSelector, useDispatch } from 'react-redux'
+import { addNewExercise } from '../SessionSlice';
 
 
 // exercise input, adding session button 
@@ -88,18 +88,9 @@ function Exercises(props) {
 
     function addSession() {
 
-
-        // empty date/day detection 
-        if (props.date === "" || props.day === "" || exercises.length === 0) {
-            setSessionFields(false);
-        }
-
-        else {
             // call updateSsssions with exercises here 
-            props.updateSessions(exercises)
-            dispatch(resetExerciseList())
-            setSessionFields(true);
-        }
+            props.updateSessions()
+            setSessionFields(true);  
     }
 
 
@@ -153,7 +144,7 @@ function Exercises(props) {
 
                 </div >
 
-                <DisplayExercises exercises={exercises}></DisplayExercises>
+                <DisplayExercises/>
 
             </div>
 

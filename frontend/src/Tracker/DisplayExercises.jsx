@@ -1,16 +1,14 @@
 
-import { useEffect } from 'react'
 import './DisplayExercisesStyles.css'
 
+import { useSelector } from 'react-redux';
 
 
-function DisplayExercises(props) {
 
+function DisplayExercises() {
 
-    // calls display when exercises are added
-    useEffect(() => {
-        display()
-    }, [props]);
+    const exercises = useSelector(state => state.session.exercises)
+
 
 
     // displays exercises formatted in preview
@@ -18,8 +16,8 @@ function DisplayExercises(props) {
 
         let temp = "";
 
-        for (let i = 0; i < props.exercises.length; i++) {
-            const obj = props.exercises[i];
+        for (let i = 0; i < exercises.length; i++) {
+            const obj = exercises[i];
 
             // removes weight if 0 
             let weight = " (" + obj.weight + ") ";
