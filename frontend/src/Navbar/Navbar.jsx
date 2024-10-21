@@ -12,6 +12,8 @@ export default function Navbar(props) {
 
 
     return (
+
+        
         <div className="navbar-container">
 
             <h1>Companion <FontAwesomeIcon icon={faDumbbell}/></h1>
@@ -23,9 +25,15 @@ export default function Navbar(props) {
             <Link to="/">Contact Us</Link>
             </div>
 
-       
-
-
         </div>
+
+
+
+
+
+
+
+        
+        
     )
 }

@@ -10,6 +10,23 @@ function SessionCard(props) {
     const container = "session-container";
 
 
+    const deleteSession = async ()=> {
+
+        const response = await fetch(`/api/workouts/${session._id}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+
+          if (response) {
+            console.log("client side delete works")
+          } else {
+            console.log('client delete null')
+          }
+    }
+
+
     // formats session cards 
     return (
         <div className={`${container} ${session.day}`}>
@@ -24,6 +41,8 @@ function SessionCard(props) {
                     return <li key={idx}>{exText}</li>
                 })}
             </ul>
+
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={deleteSession}> Delete</button>
         </div>
     )
 }

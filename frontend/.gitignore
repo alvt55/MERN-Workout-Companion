@@ -23,4 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 
-ApiKey.js 
+ApiKey.js
+
+.misc

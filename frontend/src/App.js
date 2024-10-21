@@ -10,6 +10,7 @@ import Search from './SearchPage/Search'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateDay, updateDate, resetExerciseList } from './SessionSlice'
 
+
 function App() {
 
 
@@ -26,12 +27,14 @@ function App() {
   // fetches sessions from DB
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('api/workouts')
-      const json = await response.json()
+      const response = await fetch('api/workouts') // returns response obj 
+      const json = await response.json() // convert obj into js 
+
+      // self note: .parse() is used for JSON strings 
 
       if (response.ok) {
         setSessions(s => json)
-        console.log("setting sessions")
+        console.log("setting sessions to ", json)
 
       }
     }
@@ -143,6 +146,8 @@ function App() {
 
   return (
 
+
+    
     <BrowserRouter>
       <Navbar />
 
@@ -166,6 +171,8 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+
+    
 
 
   );

@@ -1,7 +1,9 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './SessionsStyles.css';
 import SessionCard from './SessionCard';
+
+
 
 
 // displays sessions 
@@ -12,17 +14,24 @@ function Sessions(props) {
     const [selectedDay, setSelectedDay] = useState("All");
 
 
+
     // maps through all sessions - filters by day 
     const createSessionElements = sessions.map((session, idx) => {
 
         if (session.day === selectedDay) {
-            return <SessionCard key={idx} session={session} />
+            return <SessionCard key={session._id} session={session} /> // key = session.id 
         } else if (selectedDay === "All") {
-            return <SessionCard key={idx} session={session} />
+            return <SessionCard key={session._id} session={session} />
         }
+
+        return "";
 
     }).reverse()
 
+
+
+
+    
 
     return (
 
