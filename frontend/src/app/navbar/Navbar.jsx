@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+'use client'
+import Link from 'next/link'
 import './NavbarStyles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +9,7 @@ import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
 
 
 // navbar that is always accessible 
-export default function Navbar(props) {
+export default function Navbar() {
 
 
     return (
@@ -20,9 +21,11 @@ export default function Navbar(props) {
             
             <div className="navbar-links">
 
-            <Link to="/" className='navbar-link'>Gym Tracker</Link>
-            <Link to="/search" className='navbar-link'>Exercise Search</Link>
-            <Link to="/">Contact Us</Link>
+            <Link href="/tracker" className='navbar-link'>Gym Tracker</Link>
+            <Link href="/searchpage" className='navbar-link'>Exercise Search</Link>
+            {/* <Link href="/">Contact Us</Link> */}
+
+
             </div>
 
         </div>

@@ -1,14 +1,17 @@
+'use client'
+
 import { useState, useEffect } from 'react'
 import ExerciseCard from './ExerciseCard';
 import axios from 'axios';
-import apikey from '../ApiKey';
+import apikey from '../../ApiKey';
+import Navbar from '../Navbar/Navbar';
 import './SearchStyles.css'
 
 
 
 
 
-export default function Search() {
+export default function Page() {
 
     const [search, setSearch] = useState('');
     const [exercises, setExercises] = useState([]);
@@ -57,24 +60,27 @@ export default function Search() {
 
 
     const displayBodyParts = bodyParts.map((i, idx) => {
-        
+
 
         // removes comma from last element
         if (idx !== bodyParts.length - 1) {
 
-            return i + ", "; 
+            return i + ", ";
         }
 
-        return i; 
+        return i;
     })
 
 
 
     // requesting + storing all exercises related to search 
     async function handleSubmit() {
-
+        console.log("trying")
+        
         if (bodyParts.includes(search)) {
             try {
+
+                
                 const response = await axios.request({
                     ...optionsExercises,
                     url: `https://exercisedb.p.rapidapi.com/exercises/target/${search}`
@@ -104,36 +110,40 @@ export default function Search() {
 
     return (
 
+        <>
 
-        <div className="search-container">
+            <Navbar />
 
-            <form>
 
-                <div className="label-input" id='search'>
-                    <label>Search</label>
-                    <input
-                        type="text"
-                        name="search"
-                        onChange={(e) => setSearch(e.target.value.toLowerCase())}
-                        value={search} />
-        
-                    
+            <div className="search-container">
+
+                <form>
+
+                    <div className="label-input" id='search'>
+                        <label>Search</label>
+                        <input
+                            type="text"
+                            name="search"
+                            onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                            value={search} />
+
+
+                    </div>
+                    <h1>Available search inputs: </h1>
+                    {displayBodyParts}
+                </form>
+
+                <button onClick={handleSubmit}>Submit</button>
+
+                <div className="exercise-cards">
+                    {allCards}
                 </div>
-               <h1>Available search inputs: </h1>
-                {displayBodyParts}
-            </form>
 
-            <button onClick={handleSubmit}>Submit</button>
-
-            <div className="exercise-cards">
-                {allCards}
             </div>
 
-        </div>
 
 
-
-
+        </>
 
 
 

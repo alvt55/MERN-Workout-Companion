@@ -1,7 +1,7 @@
 import './HeaderStyles.css'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { updateDay, updateDate } from '../SessionSlice';
+import { updateDay, updateDate } from '../../SessionSlice';
 
 
 

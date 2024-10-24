@@ -1,17 +1,17 @@
+'use client';
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import Navbar from './Navbar/Navbar'
-import Header from './Tracker/Header'
-import Exercises from './Tracker/Exercises'
-import Sessions from './Tracker/Sessions'
-import Search from './SearchPage/Search'
+import Navbar from '../Navbar/Navbar';
+import Header from './Header'
+import Sessions from './Sessions'
+import Exercises from './Exercises'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { updateDay, updateDate, resetExerciseList } from './SessionSlice'
+import { useSelector, useDispatch, Provider } from 'react-redux'
+import { updateDay, updateDate, resetExerciseList }  from '../../SessionSlice' 
 
 
-function App() {
+function Temp() {
 
 
   const day = useSelector(state => state.session.day)
@@ -129,11 +129,11 @@ function App() {
 
     console.log(sessions);
 
-   
+
     // resets all fields for current session in store 
     dispatch(updateDay(""));
     dispatch(updateDate(""));
-    dispatch(resetExerciseList()); 
+    dispatch(resetExerciseList());
 
   }
 
@@ -147,37 +147,45 @@ function App() {
   return (
 
 
-    
-    <BrowserRouter>
+
+    // <BrowserRouter>
+    //   <Navbar />
+
+    //   <Routes>
+
+
+    //     {/* tracker page  */}
+    //     <Route path="/" element={
+
+
+
+    //     } />
+
+    //     {/* search page */}
+    //     <Route path="/search" element={<Search />} />
+
+    //   </Routes>
+    // </BrowserRouter>
+
+
+
+    <>
+
       <Navbar />
+      <Header />
+      <Exercises updateSessions={updateSessions} />
+      <Sessions sessions={sessions} />
+    </>
 
-      <Routes>
 
 
-        {/* tracker page  */}
-        <Route path="/" element={
 
-          <>
-            {/* <Header date={date} day={day} updateDate={updateDate} updateDay={updateDay} /> */}
-            <Header />
-            <Exercises updateSessions={updateSessions} />
-            <Sessions sessions={sessions} />
-          </>
 
-        } />
-
-        {/* search page */}
-        <Route path="/search" element={<Search />} />
-
-      </Routes>
-    </BrowserRouter>
-
-    
 
 
   );
 }
 
-export default App
+export default Temp
 
 

@@ -3,7 +3,7 @@ import './ExerciseStyles.css'
 import DisplayExercises from './DisplayExercises';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { addNewExercise } from '../SessionSlice';
+import { addNewExercise } from '../../SessionSlice';
 
 
 // exercise input, adding session button 
