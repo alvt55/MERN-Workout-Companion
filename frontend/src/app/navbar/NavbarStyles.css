@@ -12,15 +12,22 @@
   
 }
 
+a {
+    text-decoration: none;
+    color: white; 
+}
+
 h1 {
     margin: 0; 
-    
+    text-decoration: none;
 }
 
 .navbar-links {
     display: flex; 
     justify-content: space-evenly;
     width: 80%; 
+    text-decoration: none;
+
 }
 .navbar-links a{
     color: white; 

@@ -17,7 +17,7 @@ export default function Navbar() {
         
         <div className="navbar-container">
 
-            <h1>Companion <FontAwesomeIcon icon={faDumbbell}/></h1>
+            <Link href="/"><h1>Companion <FontAwesomeIcon icon={faDumbbell}/></h1></Link>
             
             <div className="navbar-links">
 
