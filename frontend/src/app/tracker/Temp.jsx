@@ -27,7 +27,7 @@ function Temp() {
   // fetches sessions from DB
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('api/workouts') // returns response obj 
+      const response = await fetch('http://localhost:4000/api/workouts') // returns response obj 
       const json = await response.json() // convert obj into js 
 
       // self note: .parse() is used for JSON strings 
@@ -100,6 +100,7 @@ function Temp() {
   // posting workout session to DB using backend API
   async function updateSessions() {
 
+    console.log("adding session");
 
     let dateCapitalized = date.charAt(0).toUpperCase() + date.slice(1);
 
@@ -109,7 +110,7 @@ function Temp() {
       exercises: exercises
     };
 
-    const response = await fetch('/api/workouts', {
+    const response = await fetch('http://localhost:4000/api/workouts', {
       method: 'POST',
       body: JSON.stringify(currSession),
       headers: {
@@ -171,7 +172,7 @@ function Temp() {
 
     <>
 
-      <Navbar />
+      {/* <Navbar /> */}
       <Header />
       <Exercises updateSessions={updateSessions} />
       <Sessions sessions={sessions} />

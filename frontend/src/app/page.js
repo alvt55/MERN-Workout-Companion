@@ -1,15 +1,16 @@
 
 import Navbar from "./Navbar/Navbar"
-import '../index.css'
+
 import workoutimg from '../../public/workoutimg.jpg'
 
 
+// entry point of application 
 export default function Page() {
 
 
     return (
         <>
-            <Navbar />
+            
 
             <div className='homepage'>
                 <h1>Welcome</h1>

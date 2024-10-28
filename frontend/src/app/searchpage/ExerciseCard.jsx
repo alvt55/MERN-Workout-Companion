@@ -1,4 +1,4 @@
-import './SearchStyles.css'
+import styles from '../styles/searchpage.module.css'
 
 export default function ExerciseCard(props) {
 
@@ -13,10 +13,10 @@ export default function ExerciseCard(props) {
 
 
     return (
-        <div className="exercise-card">
+        <div className={styles.exercisecard}>
             <h3>{capital}</h3>
 
-            <div className="exercise-info">
+            <div className={styles.exerciseinfo}>
 
                 <img src={props.exerciseObj.gifUrl} />
 

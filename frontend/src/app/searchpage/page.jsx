@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import ExerciseCard from './ExerciseCard';
 import axios from 'axios';
 import apikey from '../../ApiKey';
-import Navbar from '../Navbar/Navbar';
-import './SearchStyles.css'
+
+import styles from '../styles/searchpage.module.css'
 
 
 
@@ -112,14 +112,14 @@ export default function Page() {
 
         <>
 
-            <Navbar />
+            {/* <Navbar /> */}
 
 
-            <div className="search-container">
+            <div className={styles.container}>
 
                 <form>
 
-                    <div className="label-input" id='search'>
+                    <div className={styles.labelinput}>
                         <label>Search</label>
                         <input
                             type="text"
@@ -135,9 +135,9 @@ export default function Page() {
 
                 <button onClick={handleSubmit}>Submit</button>
 
-                <div className="exercise-cards">
+                
                     {allCards}
-                </div>
+                
 
             </div>
 
