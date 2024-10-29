@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react'
-import './SessionsStyles.css';
+import styles from '../styles/sessions.module.css'
 import SessionCard from './SessionCard';
 
 
@@ -36,14 +36,14 @@ function Sessions(props) {
     return (
 
         <>
-            <div className="session-sort">
+            <div className={styles.sessionsort}>
 
                 <button onClick={() => setSelectedDay("All")}>All</button>
                 <button onClick={() => setSelectedDay("Push")}>Push</button>
                 <button onClick={() => setSelectedDay("Pull")}>Pull</button>
                 <button onClick={() => setSelectedDay("Legs")}>Legs</button>
             </div>
-            <div className="sessionsText">
+            <div className={styles.sessionsText}>
 
 
 

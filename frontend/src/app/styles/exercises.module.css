@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+
+.exall {
+    margin-top: 30px;
+    display: flex;
+}
+
+.exercises {
+
+    width: 60%;
+    height: 60vh;
+    /* background-color: #1f1f1f; */
+    font-size: 18px;
+
+}
+
+.myform {
+    margin: 30px 0px;
+}
+
+
+.labelinput {
+    color: white;
+    margin: 0px 100px;
+    font-size: 18px;
+    width: 430px;
+    display: flex;
+    /*aligning input boxes to the end of 300px container*/
+    justify-content: space-between;
+    margin-bottom: 15px;
+    background-color: #2e81df;
+    align-items: center;
+    border-radius: 10px;
+
+}
+
+.labelinput label {
+    padding: 0 10px;
+
+}
+
+
+
+
+.labelinput input {
+    width: 250px;
+    font-size: 18px;
+    padding: 3px;
+    border-radius: 0px 10px 10px 0px;
+
+}
+
+.exercises button {
+    font-family: "Inconsolata", monospace;
+    font-size: 16px;
+    margin: 5px 100px;
+    text-align: center;
+    padding: 10px;
+    background-color: #1f1f1f;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#missingexercise {
+    
+    font-weight: bold;
+    color: #cc0000;
+    margin: 10px 100px;
+
+}
+
+
+#exercisecount {
+    margin: 15px 100px 100px;
+    color: white;
+}
+
+
+#sessionsbutton {
+    width: 50%;
+}
+
+#missingsessiontext {
+
+    font-weight: bold;
+    color: #cc0000;
+    margin: 10px 100px;
+}

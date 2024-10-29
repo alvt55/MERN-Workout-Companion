@@ -1,4 +1,4 @@
-import './HeaderStyles.css'
+import styles from '../styles/header.module.css'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { updateDay, updateDate } from '../../SessionSlice';
@@ -19,18 +19,18 @@ function Header(props) {
         <>
 
 
-            <div className="session">
-                <div className="sf-container">
+            <div className={styles.session}>
+                <div className={styles.sfcontainer}>
 
-                    <div className="date">
+                    <div className={styles.date}>
                         <label htmlFor="">Date</label>
                         <input value={date} onChange={e => dispatch(updateDate(e.target.value))} />
                     </div>
 
-                    <div className="day-buttons">
-                        <button onClick={() => dispatch(updateDay("Push"))} className={day === "Push" ? 'active' : 'inactive'}>Push</button>
-                        <button onClick={() => dispatch(updateDay("Pull"))} className={day === "Pull" ? 'active' : 'inactive'}>Pull</button>
-                        <button onClick={() => dispatch(updateDay("Legs"))} className={day === "Legs" ? 'active' : 'inactive'}>Legs</button>
+                    <div className={styles.daybuttons}>
+                        <button onClick={() => dispatch(updateDay("Push"))} className={day === "Push" ? styles.active : styles.inactive}>Push</button>
+                        <button onClick={() => dispatch(updateDay("Pull"))} className={day === "Pull" ? styles.active : styles.inactive}>Pull</button>
+                        <button onClick={() => dispatch(updateDay("Legs"))} className={day === "Legs" ? styles.active : styles.inactive}>Legs</button>
                         {/* <button onClick={() => props.updateDay("Push")} className={props.day === "Push" ? 'active' : 'inactive'}>Push</button>
                         <button onClick={() => props.updateDay("Pull")} className={props.day === "Pull" ? 'active' : 'inactive'}>Pull</button>
                         <button onClick={() => props.updateDay("Legs")} className={props.day === "Legs" ? 'active' : 'inactive'}>Legs</button> */}

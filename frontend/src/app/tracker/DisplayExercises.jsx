@@ -1,5 +1,5 @@
 
-import './DisplayExercisesStyles.css'
+import styles from '../styles/displayexercises.module.css'
 
 import { useSelector } from 'react-redux';
 
@@ -37,7 +37,7 @@ function DisplayExercises() {
 
         <>
 
-            <div className="displayEx-container">
+            <div className={styles.displayExcontainer}>
                 {/* pre keeps the new lines created by display()*/}
                 <pre id="display-text">{display()}</pre>
 

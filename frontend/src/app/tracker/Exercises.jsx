@@ -1,5 +1,5 @@
 import { useState, useId } from 'react'
-import './ExerciseStyles.css'
+import styles from '../styles/exercises.module.css'
 import DisplayExercises from './DisplayExercises';
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -26,6 +26,8 @@ function Exercises(props) {
 
     const dispatch = useDispatch()
     const exercises = useSelector(state => state.session.exercises)
+    const date = useSelector(state => state.session.date)
+    const day = useSelector(state => state.session.day)
 
 
 
@@ -89,6 +91,14 @@ function Exercises(props) {
     function addSession() {
 
             // call updateSsssions with exercises here 
+            if (date == "" || day == "" || exercises.length == 0) {
+                console.log(date, day, exercises)
+                setSessionFields(false); 
+                return; 
+            }
+
+
+
             props.updateSessions()
             setSessionFields(true);  
     }
@@ -99,30 +109,30 @@ function Exercises(props) {
     return (
 
         <>
-            <div className="ex-all">
+            <div className={styles.exall}>
 
-                <div className="exercises">
-                    <form id="my-form" className='my-form'>
+                <div className={styles.exercises}>
+                    <form id={styles.myform} className={styles.myform}>
 
                         {/* .label-input represents a pair of label and inputs in a row */}
-                        <div className="label-input">
+                        <div className={styles.labelinput}>
                             <label htmlFor={id + "-name"}>Name of Exercise</label>
                             <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} />
                         </div>
 
 
-                        <div className="label-input">
+                        <div className={styles.labelinput}>
                             <label htmlFor={id + "-weight"}>Weight in lbs</label>
                             <input type="number" id={id + "-weight"} onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
                         </div>
 
 
-                        <div className="label-input">
+                        <div className={styles.labelinput}>
                             <label htmlFor={id + "-reps"}>Repetitions </label>
                             <input type="number" id={id + "-reps"} onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
                         </div>
 
-                        <div className="label-input">
+                        <div className={styles.labelinput}>
                             <label htmlFor={id + "-sets"}>Sets</label>
                             <input type="number" id={id + "-sets"} onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
                         </div>
@@ -132,14 +142,14 @@ function Exercises(props) {
 
                     {/* submit exercise */}
                     <button onClick={addExercise}>Add Exercise</button> <br />
-                    {!exFields && <p id="missing-exercise-text">Please fill in all exercise fields</p>}
+                    {!exFields && <p id={styles.missingexercise}>Please fill in all exercise fields</p>}
 
-                    <p id="exercise-count">You have added {exercises.length} exercises</p>
+                    <p id={styles.exercisecount}>You have added {exercises.length} exercises</p>
 
 
                     {/* submit session */}
-                    <button onClick={addSession} id='sessions-button'>Add session</button>
-                    {!sessionFields && <p id="missing-session-text">Please fill in all session fields</p>}
+                    <button onClick={addSession} id={styles.sessionsbutton}>Add session</button>
+                    {!sessionFields && <p id={styles.missingsessiontext}>Please fill in all session fields</p>}
 
 
                 </div >

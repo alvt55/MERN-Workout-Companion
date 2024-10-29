@@ -6,11 +6,11 @@ const Schema = mongoose.Schema
 const workoutSchema = new Schema({
     date: {
         type: String, 
-        required: true
+        required: [true, 'Enter a valid date']
     }, 
     day: {
         type: String, 
-        required: true
+        required: [true, 'Enter a valid day']
     }, 
     exercises: {
         type: Array, 

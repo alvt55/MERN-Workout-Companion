@@ -1,13 +1,12 @@
 import { useState, useRef, createContext, useEffect } from 'react'
-import './SessionsStyles.css';
-
+import styles from '../styles/sessions.module.css'
 
 function SessionCard(props) {
 
 
     const session = props.session;
-
-    const container = "session-container";
+    const day = session.day; 
+    const container = styles.sessioncontainer;
 
 
     const deleteSession = async ()=> {
@@ -25,11 +24,11 @@ function SessionCard(props) {
             console.log('client delete null')
           }
     }
-
+//
 
     // formats session cards 
     return (
-        <div className={`${container} ${session.day}`}>
+        <div className={`${styles.sessioncontainer} ${styles[day]}`}>
             <h3>{props.session.date}: {props.session.day}</h3>
 
             <ul>
