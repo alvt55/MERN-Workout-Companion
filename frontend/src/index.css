@@ -6,7 +6,7 @@
 body {
     margin: 0;
     font-family: "Inconsolata", monospace;
-    background-color: #1f1f1f;
+    background-color: #1f1f1d;
 }
 
 
@@ -28,4 +28,5 @@ body {
     padding: 2rem; 
     border-radius: 15px;
 }
+
 

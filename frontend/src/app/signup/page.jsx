@@ -1,6 +1,6 @@
 'use client'
 
-import styles from '../styles/signup.module.css' // uses the same css as signup
+import styles from '../styles/signup.module.css'
 
 export default function Page() {
 
@@ -20,7 +20,7 @@ export default function Page() {
 
 
             <form onSubmit={signup} className={styles.form}>
-                <h2>Login</h2>
+                <h2>Sign up</h2>
                 <div className={styles.labelinput}>
                     <label htmlFor="email">Email</label>
                     <input name="email" type="text" required />
