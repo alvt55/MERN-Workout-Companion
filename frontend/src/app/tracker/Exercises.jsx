@@ -115,24 +115,24 @@ function Exercises(props) {
                     <form id={styles.myform} className={styles.myform}>
 
                         {/* .label-input represents a pair of label and inputs in a row */}
-                        <div className={styles.labelinput}>
+                        <div className='labelinput'>
                             <label htmlFor={id + "-name"}>Name of Exercise</label>
                             <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} />
                         </div>
 
 
-                        <div className={styles.labelinput}>
+                        <div className='labelinput'>
                             <label htmlFor={id + "-weight"}>Weight in lbs</label>
                             <input type="number" id={id + "-weight"} onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
                         </div>
 
 
-                        <div className={styles.labelinput}>
+                        <div className='labelinput'>
                             <label htmlFor={id + "-reps"}>Repetitions </label>
                             <input type="number" id={id + "-reps"} onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
                         </div>
 
-                        <div className={styles.labelinput}>
+                        <div className='labelinput'>
                             <label htmlFor={id + "-sets"}>Sets</label>
                             <input type="number" id={id + "-sets"} onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
                         </div>
@@ -141,14 +141,14 @@ function Exercises(props) {
 
 
                     {/* submit exercise */}
-                    <button onClick={addExercise}>Add Exercise</button> <br />
+                    <button onClick={addExercise} id='button'>Add Exercise</button> <br />
                     {!exFields && <p id={styles.missingexercise}>Please fill in all exercise fields</p>}
 
                     <p id={styles.exercisecount}>You have added {exercises.length} exercises</p>
 
 
                     {/* submit session */}
-                    <button onClick={addSession} id={styles.sessionsbutton}>Add session</button>
+                    <button onClick={addSession} id='sessionbutton'>Add session</button>
                     {!sessionFields && <p id={styles.missingsessiontext}>Please fill in all session fields</p>}
 
 

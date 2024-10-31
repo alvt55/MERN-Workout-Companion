@@ -1,8 +1,12 @@
 const Workout = require('../models/WorkoutModel')
 const mongoose = require('mongoose')
 const User = require('../models/UserModel')
+const jwt = require('jsonwebtoken')
 
 
+require('dotenv').config() 
+
+const maxAge = 3 * 24 * 60 * 60;
 
 const handleErrors = (err) => {
     console.log(err.message, err.code)
@@ -25,6 +29,12 @@ const handleErrors = (err) => {
 
 }
 
+const createToken = (id) => {
+    return jwt.sign({ id }, 'testingsecretchangelater', {
+      expiresIn: maxAge
+    });
+  };
+
 // Get all workouts
 const loginPost = async (req, res) => {
     const {email, password} = req.body 
@@ -36,14 +46,17 @@ const loginPost = async (req, res) => {
 
 const signupPost = async (req, res) => {
      
-    const {email, password} = req.body 
+    const { email, password } = req.body;
 
     try {
-        const user = await User.create({email, password}) 
-        res.status(201).json(user)
-    } catch (err) {
-       const errors = handleErrors(err)
-       res.status(400).json({errors})
+      const user = await User.create({ email, password });
+      const token = createToken(user._id);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000});
+      res.status(201).json({ user: user._id });
+    }
+    catch(err) {
+      const errors = handleErrors(err);
+      res.status(400).json({ errors });
     }
     
 }

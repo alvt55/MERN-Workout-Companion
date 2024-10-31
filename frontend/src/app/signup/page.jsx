@@ -5,13 +5,27 @@ import styles from '../styles/signup.module.css'
 export default function Page() {
 
 
-    const signup = (e) => {
+     const signup = async (e) => {
 
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
 
-        console.log(email, password);
+
+        try {
+            const res = await fetch('http://localhost:4000/auth/signup', {
+                method: 'POST',
+                body: JSON.stringify({email, password}),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            }); 
+            
+        } catch (err) {
+            console.log(err); 
+        }
+        
     }
 
 
@@ -21,15 +35,15 @@ export default function Page() {
 
             <form onSubmit={signup} className={styles.form}>
                 <h2>Sign up</h2>
-                <div className={styles.labelinput}>
+                <div className='labelinput'>
                     <label htmlFor="email">Email</label>
                     <input name="email" type="text" required />
                 </div>
-                <div className={styles.labelinput}>
+                <div className='labelinput'>
                     <label htmlFor="password">Password</label>
                     <input name="password" type="password" required />
                 </div>
-                <button type="submit">Sign up</button>
+                <button type="submit" id="button">Sign up</button>
             </form>
         </div>
     );

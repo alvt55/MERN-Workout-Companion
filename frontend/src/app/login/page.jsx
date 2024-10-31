@@ -21,15 +21,15 @@ export default function Page() {
 
             <form onSubmit={signup} className={styles.form}>
                 <h2>Login</h2>
-                <div className={styles.labelinput}>
+                <div className='labelinput'>
                     <label htmlFor="email">Email</label>
                     <input name="email" type="text" required />
                 </div>
-                <div className={styles.labelinput}>
+                <div className='labelinput'>
                     <label htmlFor="password">Password</label>
                     <input name="password" type="password" required />
                 </div>
-                <button type="submit">Sign up</button>
+                <button type="submit" id="button">Sign up</button>
             </form>
         </div>
     );
