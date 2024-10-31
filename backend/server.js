@@ -3,6 +3,7 @@ const workoutRoutes = require('./routes/workouts')
 const authRoutes = require('./routes/auth')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const {authMiddleware} = require('./middleware/authMiddleware')
 
 // attaches dotenv variables to process.env obj 
 require('dotenv').config() 
@@ -32,7 +33,6 @@ app.use((req, res, next) => {
 
 app.use('/api/workouts', workoutRoutes)
 app.use('/auth', authRoutes)
-
 
 
 

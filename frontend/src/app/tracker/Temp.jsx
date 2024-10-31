@@ -9,6 +9,7 @@ import Exercises from './Exercises'
 
 import { useSelector, useDispatch, Provider } from 'react-redux'
 import { updateDay, updateDate, resetExerciseList }  from '../../SessionSlice' 
+import { redirect } from 'next/navigation'
 
 
 function Temp() {
@@ -27,17 +28,29 @@ function Temp() {
   // fetches sessions from DB
   useEffect(() => {
     const fetchWorkouts = async () => {
-      const response = await fetch('http://localhost:4000/api/workouts') // returns response obj 
+      const response = await fetch('http://localhost:4000/api/workouts', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      }) // returns response obj 
+      
       const json = await response.json() // convert obj into js 
 
-      // self note: .parse() is used for JSON strings 
+      if (json.errors) {
+        redirect('/login')
+      } 
 
       if (response.ok) {
         setSessions(s => json)
         console.log("setting sessions to ", json)
-
-      }
+    } else {
+      redirect('/login')
     }
+
+  }
+
 
     fetchWorkouts()
   }, [])
@@ -99,6 +112,8 @@ function Temp() {
 
   // posting workout session to DB using backend API
   async function updateSessions() {
+
+    // remember to include credentials 
 
     console.log("adding session");
 

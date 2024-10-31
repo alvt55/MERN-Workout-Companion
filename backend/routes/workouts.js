@@ -5,11 +5,12 @@ const {
   createWorkout, 
   deleteWorkout
 } = require('../controllers/workoutController')
+const {requireAuth} = require('../middleware/authMiddleware')
 
 const router = express.Router()
 
 // GET all workouts
-router.get('/', getWorkouts)
+router.get('/', requireAuth, getWorkouts)
 
 // POST a new workout
 router.post('/', createWorkout)
