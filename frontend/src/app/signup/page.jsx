@@ -2,6 +2,8 @@
 
 import styles from '../styles/signup.module.css'
 
+import { useState } from 'react';
+
 export default function Page() {
 
 
@@ -11,6 +13,8 @@ export default function Page() {
         const email = e.target.email.value;
         const password = e.target.password.value;
 
+        setEmailError('');
+        setPasswordError('');
 
         try {
             const res = await fetch('http://localhost:4000/auth/signup', {
@@ -21,12 +25,29 @@ export default function Page() {
                 },
                 credentials: 'include'
             }); 
+
+            const data = await res.json(); 
+            console.log(data)
+
+            if (data.errors) {
+                console.log(data.errors, "we reached here")
+                setEmailError(data.errors.email);
+                setPasswordError(data.errors.password);
+            }
+            
+            if (data.user) {
+                console.log(data.user); 
+                location.assign('/tracker')
+            }
             
         } catch (err) {
             console.log(err); 
         }
         
     }
+
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
 
     return (
@@ -43,6 +64,8 @@ export default function Page() {
                     <label htmlFor="password">Password</label>
                     <input name="password" type="password" required />
                 </div>
+                <div className="emailerror">{emailError}</div>
+                <div className="passworderror" >{passwordError}</div>
                 <button type="submit" id="button">Sign up</button>
             </form>
         </div>

@@ -15,20 +15,37 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please enter a password'],
     minlength: [6, 'Minimum password length is 6 characters'],
   }
-}, {timestamps: true});
+}, { timestamps: true });
 
 
 
 // hashing password before saving it 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
 
-  const salt = await bcrypt.genSalt(); 
+  const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
 
 
   console.log(this)
   next()
 });
+
+
+
+// static method - logging in user 
+userSchema.statics.login = async function (email, password) {
+
+  const user = await this.findOne({ email });
+
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error('incorrect password');
+  }
+  throw Error('incorrect email');
+}
 
 const User = mongoose.model('user', userSchema);
 
