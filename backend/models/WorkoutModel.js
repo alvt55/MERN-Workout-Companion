@@ -15,7 +15,11 @@ const workoutSchema = new Schema({
     exercises: {
         type: Array, 
         required: true
-    }, 
+    },
+    sessionuser: {
+        type: String, 
+        required: true 
+    }
 }, {timestamps: true})
 
 

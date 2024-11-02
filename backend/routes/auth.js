@@ -4,7 +4,8 @@ const express = require('express')
 
 const {
   loginPost,
-  signupPost 
+  signupPost,
+  logout
 } = require('../controllers/authController')
 
 const authRouter = express.Router()
@@ -14,6 +15,7 @@ authRouter.post('/signup', signupPost)
 
 // POST a new workout
 authRouter.post('/login', loginPost)
+authRouter.get('/logout', logout)
   
 
 module.exports = authRouter

@@ -44,7 +44,6 @@ function Temp() {
 
       if (response.ok) {
         setSessions(s => json)
-        console.log("setting sessions to ", json)
     } else {
       redirect('/login')
     }
@@ -56,58 +55,6 @@ function Temp() {
   }, [])
 
 
-  // data persistence through local storage
-  // // load
-  // useEffect(() => {
-  //   const data = localStorage.getItem('my_sessions');
-  //   if (data !== null) {
-  //     setSessions(JSON.parse(data));
-  //     console.log(sessions);
-  //   }
-  // }, []);
-
-
-  // // save 
-  // useEffect(() => {
-  //   localStorage.setItem("my_sessions", JSON.stringify(sessions));
-  // }, [sessions]);
-
-
-
-
-  // function resetDateDay() {
-  //   setDate("");
-  //   setDay("");
-  // }
-
-  // function updateDate(event) {
-  //   setDate(event.target.value);
-  // }
-
-
-  // function updateDay(day) {
-
-  //   // TODO: switch statement unneccessary, just use setDay
-  //   switch (day) {
-  //     case "Push":
-  //       setDay("Push")
-  //       break;
-
-
-  //     case "Pull":
-  //       setDay("Pull")
-  //       break;
-
-  //     case "Legs":
-  //       setDay("Legs")
-  //       break;
-
-  //     default:
-  //       setDay("")
-  //       break;
-
-  //   }
-  // }
 
 
   // posting workout session to DB using backend API
@@ -130,8 +77,15 @@ function Temp() {
       body: JSON.stringify(currSession),
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include' 
     })
+
+    const json = await response.json(); 
+
+    if (json.errors) {
+      redirect('/login')
+    } 
 
 
 
@@ -163,28 +117,6 @@ function Temp() {
   return (
 
 
-
-    // <BrowserRouter>
-    //   <Navbar />
-
-    //   <Routes>
-
-
-    //     {/* tracker page  */}
-    //     <Route path="/" element={
-
-
-
-    //     } />
-
-    //     {/* search page */}
-    //     <Route path="/search" element={<Search />} />
-
-    //   </Routes>
-    // </BrowserRouter>
-
-
-
     <>
 
       {/* <Navbar /> */}
@@ -192,11 +124,6 @@ function Temp() {
       <Exercises updateSessions={updateSessions} />
       <Sessions sessions={sessions} />
     </>
-
-
-
-
-
 
 
   );

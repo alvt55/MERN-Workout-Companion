@@ -79,8 +79,8 @@ function Exercises(props) {
                 reps: 0
             });
 
-            // TODO: test if this needed 
-            document.getElementById('my-form').reset();
+         
+            
 
         }
 
