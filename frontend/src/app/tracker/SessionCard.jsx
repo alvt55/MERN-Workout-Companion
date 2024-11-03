@@ -1,5 +1,8 @@
-import { useState, useRef, createContext, useEffect } from 'react'
+
 import styles from '../styles/sessions.module.css'
+import { redirect } from 'next/navigation'
+
+
 
 function SessionCard(props) {
 
@@ -9,19 +12,31 @@ function SessionCard(props) {
     const container = styles.sessioncontainer;
 
 
-    const deleteSession = async ()=> {
 
-        const response = await fetch(`/api/workouts/${session._id}`, {
+    const deleteSession = async () => {
+
+        const response = await fetch(`http://localhost:4000/api/workouts/${session._id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
-            }
+            }, 
+            credentials: 'include'
           })
 
-          if (response) {
-            console.log("client side delete works")
+          const json = await response.json(); 
+
+
+          // auth error handling 
+          if (json.authError) {
+            console.log(json.authError)
+            redirect('/login')
+          } 
+
+          // delete errors 
+          if (json.error) {
+            console.log(json.error)
           } else {
-            console.log('client delete null')
+            console.log('delete successful')
           }
     }
 //

@@ -11,14 +11,13 @@ const requireAuth = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.JWTSECRET, (err, decodedToken) => {
       if (err) {
-        res.status(400).send({error: 'not authenticated'})
+        res.status(400).send({authError: 'jwt is not verified'})
       } else {
-        console.log(decodedToken, "request was authenticated");
         next();
       }
     });
   } else {
-    res.status(400).send({error: 'not authenticated'})
+    res.status(400).json({authError: 'jwt sent to server is null'})
   }
 };
 

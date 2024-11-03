@@ -8,7 +8,7 @@ import Sessions from './Sessions'
 import Exercises from './Exercises'
 
 import { useSelector, useDispatch, Provider } from 'react-redux'
-import { updateDay, updateDate, resetExerciseList }  from '../../SessionSlice' 
+import { updateDay, updateDate, resetExerciseList } from '../../SessionSlice'
 import { redirect } from 'next/navigation'
 
 
@@ -23,36 +23,41 @@ function Temp() {
   // const [date, setDate] = useState("");
   // const [day, setDay] = useState("");
   const [sessions, setSessions] = useState([]);
+  const [numSessions, setNumSessions] = useState(0); 
 
 
   // fetches sessions from DB
   useEffect(() => {
+
     const fetchWorkouts = async () => {
       const response = await fetch('http://localhost:4000/api/workouts', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         credentials: 'include'
-      }) // returns response obj 
-      
+      })
+
       const json = await response.json() // convert obj into js 
 
-      if (json.errors) {
+      if (json.authError) {
+        console.log(json.authError)
         redirect('/login')
-      } 
+      }
 
-      if (response.ok) {
+      if (json.error) {
+        console.log(json.error)
+      } else {
+        console.log('fetch workout successful')
         setSessions(s => json)
-    } else {
-      redirect('/login')
-    }
 
-  }
+      }
+
+    }
 
 
     fetchWorkouts()
-  }, [])
+  }, [numSessions])
 
 
 
@@ -61,8 +66,6 @@ function Temp() {
   async function updateSessions() {
 
     // remember to include credentials 
-
-    console.log("adding session");
 
     let dateCapitalized = date.charAt(0).toUpperCase() + date.slice(1);
 
@@ -78,32 +81,32 @@ function Temp() {
       headers: {
         'Content-Type': 'application/json'
       },
-      credentials: 'include' 
+      credentials: 'include'
     })
 
-    const json = await response.json(); 
+    const json = await response.json();
 
-    if (json.errors) {
+    if (json.authError) {
+      console.log(json.authError)
       redirect('/login')
-    } 
-
+    }
 
 
     if (!response.ok) {
       console.log('failed to post session')
     } else {
       console.log('workout posted')
+
+      setNumSessions(s => s + 1); 
+
+      dispatch(updateDay(""));
+      dispatch(updateDate(""));
+      dispatch(resetExerciseList());
     }
 
 
-
-    console.log(sessions);
-
-
     // resets all fields for current session in store 
-    dispatch(updateDay(""));
-    dispatch(updateDate(""));
-    dispatch(resetExerciseList());
+
 
   }
 

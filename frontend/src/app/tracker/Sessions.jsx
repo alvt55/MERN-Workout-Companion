@@ -6,13 +6,15 @@ import SessionCard from './SessionCard';
 
 
 
+
 // displays sessions 
 function Sessions(props) {
 
 
     const sessions = props.sessions;
     const [selectedDay, setSelectedDay] = useState("All");
-
+    
+    
 
 
     // maps through all sessions - filters by day 

@@ -30,7 +30,6 @@ export default function Page() {
             console.log(data)
 
             if (data.errors) {
-                console.log(data.errors, "we reached here")
                 setEmailError(data.errors.email);
                 setPasswordError(data.errors.password);
             }

@@ -10,8 +10,13 @@ const getWorkouts = async (req, res) => {
     const token = req.cookies.jwt  
     const decoded = jwt.verify(token, process.env.JWTSECRET)
 
-    const workouts = await Workout.find({sessionuser: decoded.id}).sort({ createdAt: -1 })
-    res.status(200).json(workouts)
+    try {
+        const workouts = await Workout.find({sessionuser: decoded.id}).sort({ createdAt: -1 })
+        res.status(200).json(workouts)
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
+    
 }
 
 
