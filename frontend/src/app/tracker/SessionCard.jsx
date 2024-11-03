@@ -1,7 +1,8 @@
 
 import styles from '../styles/sessions.module.css'
 import { redirect } from 'next/navigation'
-
+import {addOrRemove, updateAddOrRemove} from '../../SessionSlice'
+import { useDispatch } from 'react-redux';
 
 
 function SessionCard(props) {
@@ -10,6 +11,7 @@ function SessionCard(props) {
     const session = props.session;
     const day = session.day; 
     const container = styles.sessioncontainer;
+    const dispatch = useDispatch(); 
 
 
 
@@ -36,6 +38,7 @@ function SessionCard(props) {
           if (json.error) {
             console.log(json.error)
           } else {
+            dispatch(updateAddOrRemove()); 
             console.log('delete successful')
           }
     }

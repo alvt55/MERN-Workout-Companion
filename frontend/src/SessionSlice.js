@@ -5,7 +5,8 @@ export const sessionSlice = createSlice({
   initialState: {
     date: "",
     day: "",
-    exercises: []
+    exercises: [],
+    addOrRemove: false 
     
   },
   reducers: {
@@ -23,6 +24,10 @@ export const sessionSlice = createSlice({
 
     resetExerciseList: state => {
       state.exercises = []
+    },
+
+    updateAddOrRemove: state => {
+      state.addOrRemove = !state.addOrRemove
     }
 
     
@@ -30,6 +35,6 @@ export const sessionSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { updateDay, updateDate, addNewExercise, resetExerciseList} = sessionSlice.actions
+export const { updateDay, updateDate, addNewExercise, resetExerciseList, updateAddOrRemove} = sessionSlice.actions
 
 export default sessionSlice.reducer

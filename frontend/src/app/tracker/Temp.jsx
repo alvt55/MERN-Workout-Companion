@@ -8,7 +8,7 @@ import Sessions from './Sessions'
 import Exercises from './Exercises'
 
 import { useSelector, useDispatch, Provider } from 'react-redux'
-import { updateDay, updateDate, resetExerciseList } from '../../SessionSlice'
+import { updateDay, updateDate, resetExerciseList, addOrRemove, updateAddOrRemove } from '../../SessionSlice'
 import { redirect } from 'next/navigation'
 
 
@@ -18,12 +18,13 @@ function Temp() {
   const day = useSelector(state => state.session.day)
   const date = useSelector(state => state.session.date)
   const exercises = useSelector(state => state.session.exercises)
+  const addOrRemove = useSelector(state => state.session.addOrRemove)
 
   const dispatch = useDispatch();
   // const [date, setDate] = useState("");
   // const [day, setDay] = useState("");
   const [sessions, setSessions] = useState([]);
-  const [numSessions, setNumSessions] = useState(0); 
+  // const [addOrRemove, setAddOrRemove] = useState(false); 
 
 
   // fetches sessions from DB
@@ -57,7 +58,7 @@ function Temp() {
 
 
     fetchWorkouts()
-  }, [numSessions])
+  }, [addOrRemove])
 
 
 
@@ -97,7 +98,7 @@ function Temp() {
     } else {
       console.log('workout posted')
 
-      setNumSessions(s => s + 1); 
+      dispatch(updateAddOrRemove());
 
       dispatch(updateDay(""));
       dispatch(updateDate(""));

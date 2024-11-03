@@ -35,6 +35,7 @@ function Exercises(props) {
     const id = useId();
 
 
+
     function handleExerciseFormChange(event) {
         setCurrExercise(prev => {
             return {
