@@ -37,6 +37,7 @@ app.use('/auth', authRoutes)
 
 
 
+
 mongoose.connect(process.env.MONG_URI)
 .then(() => {
     app.listen(process.env.PORT, () => {

@@ -1,5 +1,9 @@
-import Navbar from "./Navbar/Navbar"
+
+
+import Navbar from './navbarpage/Navbar'
 import '../index.css'
+import ClientProvider from "./ClientProvider"
+
 
 export const metadata = {
   title: 'Next.js',
@@ -11,8 +15,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
 
       <body>
-        <Navbar></Navbar>
-        {children}
+        <ClientProvider>
+
+          <Navbar></Navbar>
+          {children}
+        </ClientProvider>
       </body>
     </html>
   )

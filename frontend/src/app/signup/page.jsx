@@ -1,7 +1,7 @@
 'use client'
 
 import styles from '../styles/signup.module.css'
-
+import Link from 'next/link'
 import { useState } from 'react';
 
 export default function Page() {
@@ -67,7 +67,10 @@ export default function Page() {
                 <div className="passworderror" >{passwordError}</div>
                 <button type="submit" id="button">Sign up</button>
             </form>
+
+            <Link href="login">Have an account? Sign in here.</Link>
         </div>
+        
     );
 
 

@@ -3,18 +3,25 @@ import Link from 'next/link'
 import styles from '../styles/navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
-import { redirect } from 'next/navigation'
+
+
+import { usePathname } from 'next/navigation'
 
 
 
 
 
 // navbar that is always accessible 
-export default function Navbar() {
+export default function Navbar(props) {
 
-    const logout = async (e) => {
 
-    
+
+    const path = usePathname();
+
+
+    const logoutRequest = async (e) => {
+
+
         try {
             const res = await fetch('http://localhost:4000/auth/logout', {
                 method: 'GET',
@@ -22,16 +29,16 @@ export default function Navbar() {
                     'Content-Type': 'application/json'
                 },
                 credentials: 'include'
-            }); 
+            });
 
 
-           
+
             location.assign('/login')
-            
-            
-            
+
+
+
         } catch (err) {
-            console.log(err); 
+            console.log(err);
         }
 
     }
@@ -40,18 +47,28 @@ export default function Navbar() {
 
 
 
+    // idea: dynamically render login/logout buttons based on the current page
+
+
     return (
 
 
         <div className={styles.navbarcontainer}>
 
-            <Link href="/"><h1>Companion {}<FontAwesomeIcon icon={faDumbbell}/></h1></Link>
+            <Link href="/"><h1>Companion { }<FontAwesomeIcon icon={faDumbbell} /></h1></Link>
 
             <div className={styles.navbarlinks}>
 
                 <Link href="/tracker" className={styles.navbarlink}>Gym Tracker</Link>
                 <Link href="/searchpage" className={styles.navbarlink}>Exercise Search</Link>
-                <button onClick={logout}>logout</button>
+
+                {path === '/tracker' ?
+                    <button onClick={logoutRequest}>logout</button> :
+                    <Link href="/login" className={styles.navbarlink}>Login</Link>}
+
+                
+              
+
 
 
             </div>

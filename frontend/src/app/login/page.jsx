@@ -2,11 +2,18 @@
 
 import styles from '../styles/signup.module.css' // uses the same css as signup
 import { useState } from 'react';
+import Link from 'next/link'
+import { useDispatch, useSelector} from 'react-redux';
+import { login } from '../../AuthSlice';
 
 export default function Page() {
 
 
-    const signup = async (e) => {
+    const dispatch = useDispatch(); 
+    const isLoggedIn = useSelector(state => state.auth.loggedIn)
+
+
+    const loginRequest = async (e) => {
 
         e.preventDefault();
         const email = e.target.email.value;
@@ -36,7 +43,11 @@ export default function Page() {
             
             if (data.user) {
                 console.log(data.user); 
+              
                 location.assign('/tracker')
+                
+                
+
             }
             
         } catch (err) {
@@ -53,7 +64,7 @@ export default function Page() {
         <div className={styles.container}>
 
 
-            <form onSubmit={signup} className={styles.form}>
+            <form onSubmit={loginRequest} className={styles.form}>
                 <h2>Login</h2>
                 <div className='labelinput'>
                     <label htmlFor="email">Email</label>
@@ -67,6 +78,8 @@ export default function Page() {
                 <div className="passworderror" >{passwordError}</div>
                 <button type="submit" id="button">Login</button>
             </form>
+
+            <Link href="signup">Don't have an account? Sign up here.</Link>
         </div>
     );
 
