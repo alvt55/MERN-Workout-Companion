@@ -76,11 +76,11 @@ export default function Page() {
     // requesting + storing all exercises related to search 
     async function handleSubmit() {
         console.log("trying")
-        
+
         if (bodyParts.includes(search)) {
             try {
 
-                
+
                 const response = await axios.request({
                     ...optionsExercises,
                     url: `https://exercisedb.p.rapidapi.com/exercises/target/${search}`
@@ -110,15 +110,10 @@ export default function Page() {
 
     return (
 
-        <>
-
-            {/* <Navbar /> */}
-
-
+        
             <div className={styles.container}>
 
                 <form>
-
                     <div className={styles.labelinput}>
                         <label>Search</label>
                         <input
@@ -135,15 +130,12 @@ export default function Page() {
 
                 <button onClick={handleSubmit}>Submit</button>
 
-                
-                    {allCards}
-                
-
+                {allCards}
             </div>
 
 
 
-        </>
+        
 
 
 

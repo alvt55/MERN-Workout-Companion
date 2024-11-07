@@ -21,7 +21,6 @@ export default function Navbar(props) {
 
     const logoutRequest = async (e) => {
 
-
         try {
             const res = await fetch('http://localhost:4000/auth/logout', {
                 method: 'GET',
@@ -31,11 +30,7 @@ export default function Navbar(props) {
                 credentials: 'include'
             });
 
-
-
             location.assign('/login')
-
-
 
         } catch (err) {
             console.log(err);
@@ -44,31 +39,22 @@ export default function Navbar(props) {
     }
 
 
-
-
-
-    // idea: dynamically render login/logout buttons based on the current page
-
-
     return (
 
 
         <div className={styles.navbarcontainer}>
 
-            <Link href="/"><h1>Companion { }<FontAwesomeIcon icon={faDumbbell} /></h1></Link>
+            <Link href="/"><h1>Companion <FontAwesomeIcon icon={faDumbbell} /></h1></Link>
 
             <div className={styles.navbarlinks}>
 
                 <Link href="/tracker" className={styles.navbarlink}>Gym Tracker</Link>
                 <Link href="/searchpage" className={styles.navbarlink}>Exercise Search</Link>
 
+                {/* displays login or logout based on current url */}
                 {path === '/tracker' ?
                     <button onClick={logoutRequest}>logout</button> :
                     <Link href="/login" className={styles.navbarlink}>Login</Link>}
-
-                
-              
-
 
 
             </div>
