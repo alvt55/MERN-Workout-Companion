@@ -3,14 +3,9 @@
 import styles from '../styles/signup.module.css' // uses the same css as signup
 import { useState } from 'react';
 import Link from 'next/link'
-import { useDispatch, useSelector} from 'react-redux';
-import { login } from '../../AuthSlice';
 
 export default function Page() {
 
-
-    const dispatch = useDispatch(); 
-    const isLoggedIn = useSelector(state => state.auth.loggedIn)
 
 
     const loginRequest = async (e) => {
@@ -33,20 +28,14 @@ export default function Page() {
             }); 
 
             const data = await res.json(); 
-            console.log(data)
 
             if (data.errors) {
-                console.log(data.errors)
                 setEmailError(data.errors.email);
                 setPasswordError(data.errors.password);
             }
             
             if (data.user) {
-                console.log(data.user); 
-              
                 location.assign('/tracker')
-                
-                
 
             }
             

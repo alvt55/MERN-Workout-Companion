@@ -27,7 +27,6 @@ export default function Page() {
             }); 
 
             const data = await res.json(); 
-            console.log(data)
 
             if (data.errors) {
                 setEmailError(data.errors.email);
@@ -35,7 +34,6 @@ export default function Page() {
             }
             
             if (data.user) {
-                console.log(data.user); 
                 location.assign('/tracker')
             }
             

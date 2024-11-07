@@ -1,20 +1,20 @@
 'use client';
 import { useState, useEffect } from 'react'
 
-import Header from './Header'
 import Sessions from './Sessions'
 import Exercises from './Exercises'
 
 import { useSelector, useDispatch, Provider } from 'react-redux'
 import { updateDay, updateDate, resetExerciseList, addOrRemove, updateAddOrRemove } from '../../SessionSlice'
 import { redirect } from 'next/navigation'
+import headerStyles from '../styles/header.module.css'
 
 
-function Temp() {
+export default function Page() {
 
 
-  const day = useSelector(state => state.session.day)
-  const date = useSelector(state => state.session.date)
+  const [day, setDay] = useState(""); 
+  const [date, setDate] = useState(""); 
   const exercises = useSelector(state => state.session.exercises)
   const addOrRemove = useSelector(state => state.session.addOrRemove)
 
@@ -49,7 +49,7 @@ function Temp() {
       } else {
         console.log('fetch workout successful');
         setSessions(s => json)
-       
+
       }
 
     }
@@ -111,7 +111,7 @@ function Temp() {
 
 
 
-
+console.log(day)
 
 
 
@@ -120,8 +120,24 @@ function Temp() {
 
     <>
 
-      {/* <Navbar /> */}
-      <Header />
+      <div className={headerStyles.session}>
+        <div className={headerStyles.sfcontainer}>
+
+          <div className={headerStyles.date}>
+            <label htmlFor="">Date</label>
+            <input value={date} onChange={e => setDate(e.target.value)} />
+          </div>
+
+          <div className={headerStyles.daybuttons}>
+            <button onClick={() => setDay(s => "Push")} className={day === "Push" ? headerStyles.active : headerStyles.inactive}>Push</button>
+            <button onClick={() => setDay(s => "Pull")} className={day === "Pull" ? headerStyles.active : headerStyles.inactive}>Pull</button>
+            <button onClick={() => setDay(s => "Legs")} className={day === "Legs" ? headerStyles.active : headerStyles.inactive}>Legs</button>
+
+          </div>
+
+        </div>
+
+      </div>
       <Exercises updateSessions={updateSessions} />
       <Sessions sessions={sessions} />
     </>
@@ -130,6 +146,5 @@ function Temp() {
   );
 }
 
-export default Temp
 
 
