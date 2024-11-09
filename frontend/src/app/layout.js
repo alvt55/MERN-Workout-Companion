@@ -2,7 +2,6 @@
 
 import Navbar from './navbarpage/Navbar'
 import '../index.css'
-import ClientProvider from "./ClientProvider"
 
 
 export const metadata = {
@@ -15,11 +14,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
 
       <body>
-        <ClientProvider>
 
           <Navbar></Navbar>
           {children}
-        </ClientProvider>
       </body>
     </html>
   )

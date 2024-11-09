@@ -1,28 +1,27 @@
 'use client';
 import { useState, useEffect, useId } from 'react'
 
-import Sessions from './Sessions'
-import Exercises from './Exercises'
 
 import { redirect } from 'next/navigation'
 import headerStyles from '../styles/header.module.css'
 import exerciseStyles from '../styles/exercises.module.css'
-import DisplayExercises from './DisplayExercises';
+import sessionStyles from '../styles/sessions.module.css'
 
+import DisplayExercises from './DisplayExercises';
+import SessionCard from './SessionCard';
 
 export default function Page() {
 
 
+  // Header
   const [day, setDay] = useState("");
   const [date, setDate] = useState("");
 
+  // Add exercises/session
   const [exercises, setExercises] = useState([]);
   const [exFields, setExFields] = useState(true);
   const [sessionFields, setSessionFields] = useState(true);
   const id = useId(); // accessibility for keyboard users 
-
-  // detects updates to changes in sessions (add or remove)
-  const [update, setUpdate] = useState(false) 
 
   const [currExercise, setCurrExercise] = useState(
     {
@@ -33,9 +32,14 @@ export default function Page() {
     }
   );
 
+
+  // display sessions 
   const [sessions, setSessions] = useState([]);
+  const [selectedDay, setSelectedDay] = useState("All");
 
 
+  // detects updates to changes in sessions (add or remove)
+  const [update, setUpdate] = useState(false)
 
   // fetches sessions from DB
   useEffect(() => {
@@ -114,12 +118,7 @@ export default function Page() {
         sets: 0,
         reps: 0
       });
-
-
-
-
     }
-
 
   }
 
@@ -127,7 +126,7 @@ export default function Page() {
 
 
   // posting workout session to DB using backend API
-  async function updateSessions() {
+  async function addSession() {
 
 
     if (date == "" || day == "" || exercises.length == 0) {
@@ -186,6 +185,25 @@ export default function Page() {
   }
 
 
+  function removeUpdate() {
+    setUpdate(s => !s); 
+    console.log(update); 
+  }
+
+
+
+  const createSessionElements = sessions.map((session, idx) => {
+
+    if (session.day === selectedDay) {
+      return <SessionCard key={session._id} session={session} remove={removeUpdate}/> // key = session.id 
+    } else if (selectedDay === "All") {
+      return <SessionCard key={session._id} session={session} remove={removeUpdate}/>
+    }
+
+    return "";
+
+  }).reverse()
+
 
 
 
@@ -194,6 +212,7 @@ export default function Page() {
 
     <>
 
+      {/* header */}
       <div className={headerStyles.session}>
         <div className={headerStyles.sfcontainer}>
 
@@ -214,55 +233,67 @@ export default function Page() {
       </div>
 
 
+      {/* track exercises/sessions */}
       <div className={exerciseStyles.exall}>
 
-                <div className={exerciseStyles.exercises}>
-                    <form id={exerciseStyles.myform} className={exerciseStyles.myform}>
+        <div className={exerciseStyles.exercises}>
+          <form id={exerciseStyles.myform} className={exerciseStyles.myform}>
 
-                        {/* .label-input represents a pair of label and inputs in a row */}
-                        <div className='labelinput'>
-                            <label htmlFor={id + "-name"}>Name of Exercise</label>
-                            <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} />
-                        </div>
-
-
-                        <div className='labelinput'>
-                            <label htmlFor={id + "-weight"}>Weight in lbs</label>
-                            <input type="number" id={id + "-weight"} onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
-                        </div>
-
-
-                        <div className='labelinput'>
-                            <label htmlFor={id + "-reps"}>Repetitions </label>
-                            <input type="number" id={id + "-reps"} onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
-                        </div>
-
-                        <div className='labelinput'>
-                            <label htmlFor={id + "-sets"}>Sets</label>
-                            <input type="number" id={id + "-sets"} onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
-                        </div>
-
-                    </form >
-
-
-                    {/* submit exercise */}
-                    <button onClick={addExercise} id='button'>Add Exercise</button> <br />
-                    {!exFields && <p id={exerciseStyles.missingexercise}>Please fill in all exercise fields</p>}
-
-                    <p id={exerciseStyles.exercisecount}>You have added {exercises.length} exercises</p>
-
-
-                    {/* submit session */}
-                    <button onClick={updateSessions} id='sessionbutton'>Add session</button>
-                    {!sessionFields && <p id={exerciseStyles.missingsessiontext}>Please fill in all session fields</p>}
-
-
-                </div >
-
-                <DisplayExercises exercises={exercises}/>
-
+            <div className='labelinput'>
+              <label htmlFor={id + "-name"}>Name of Exercise</label>
+              <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} />
             </div>
-      <Sessions sessions={sessions} />
+
+
+            <div className='labelinput'>
+              <label htmlFor={id + "-weight"}>Weight in lbs</label>
+              <input type="number" id={id + "-weight"} onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
+            </div>
+
+
+            <div className='labelinput'>
+              <label htmlFor={id + "-reps"}>Repetitions </label>
+              <input type="number" id={id + "-reps"} onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
+            </div>
+
+            <div className='labelinput'>
+              <label htmlFor={id + "-sets"}>Sets</label>
+              <input type="number" id={id + "-sets"} onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
+            </div>
+
+          </form >
+
+
+          <button onClick={addExercise} id='button'>Add Exercise</button> <br />
+          {!exFields && <p id={exerciseStyles.missingexercise}>Please fill in all exercise fields</p>}
+
+          <p id={exerciseStyles.exercisecount}>You have added {exercises.length} exercises</p>
+
+
+          {/* submit session */}
+          <button onClick={addSession} id='sessionbutton'>Add session</button>
+          {!sessionFields && <p id={exerciseStyles.missingsessiontext}>Please fill in all session fields</p>}
+
+
+        </div >
+        {/* exercises preview */}
+        <DisplayExercises exercises={exercises} />
+
+      </div>
+
+
+      {/* display sessions */}
+      <div className={sessionStyles.sessionsort}>
+
+        <button onClick={() => setSelectedDay("All")}>All</button>
+        <button onClick={() => setSelectedDay("Push")}>Push</button>
+        <button onClick={() => setSelectedDay("Pull")}>Pull</button>
+        <button onClick={() => setSelectedDay("Legs")}>Legs</button>
+      </div>
+
+      <div className={sessionStyles.sessionsText}>
+        {createSessionElements}
+      </div>
     </>
 
 
