@@ -1,14 +1,12 @@
 
 import styles from '../styles/displayexercises.module.css'
 
-import { useSelector } from 'react-redux';
 
 
 
-function DisplayExercises() {
+function DisplayExercises(props) {
 
-    const exercises = useSelector(state => state.session.exercises)
-
+    const exercises = props.exercises; 
 
 
     // displays exercises formatted in preview

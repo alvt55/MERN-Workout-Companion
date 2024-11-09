@@ -91,7 +91,7 @@ function Exercises(props) {
 
     function addSession() {
 
-            // call updateSsssions with exercises here 
+            // TODO: this might not work 
             if (date == "" || day == "" || exercises.length == 0) {
                 console.log(date, day, exercises)
                 setSessionFields(false); 
