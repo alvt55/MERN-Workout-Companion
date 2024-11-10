@@ -87,3 +87,17 @@ body {
 }
 
 
+.missingfields {
+    font-weight: bold;
+    color: #cc0000;
+    margin: 10px 100px;
+
+}
+
+
+.switchAuthPage {
+    margin-left: 100px; 
+    text-decoration: underline;
+    color: white
+}
+
