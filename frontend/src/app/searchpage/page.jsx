@@ -7,7 +7,7 @@ import apikey from '../../ApiKey';
 
 import styles from '../styles/searchpage.module.css'
 
-
+import { useSelector } from 'react-redux';
 
 
 
@@ -18,6 +18,9 @@ export default function Page() {
     const [bodyParts, setBodyParts] = useState([]);
 
 
+    const sessions = useSelector(state => state.session.value)
+
+    console.log(sessions)
     // exercises from external exercise API
     const optionsExercises = {
         method: 'GET',

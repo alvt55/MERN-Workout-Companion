@@ -17,7 +17,9 @@ function SessionCard(props) {
 
   function shareSession() {
 
-    socket.emit('sharedSession', session); 
+    const recievers = ['a@gmail.com']
+ 
+    socket.emit('sharedSession', recievers, session); 
   }
 
 
@@ -55,13 +57,14 @@ function SessionCard(props) {
   }
 
   
+  
   //
 
   // formats session cards 
   return (
     <div className={`${styles.sessioncontainer} ${styles[day]}`}>
       <h3>{props.session.date}: {props.session.day}</h3>
-
+      <h3>From {props.from}</h3>
       <ul>
         {session.exercises.map((e, idx) => {
 

@@ -100,8 +100,6 @@ const findEmail = async (req, res) => {
   const token = req.cookies.jwt  
   const decoded = jwt.verify(token, process.env.JWTSECRET)
 
-  console.log(decoded.id) 
-
   try {
     const user = await User.findById(decoded.id)
     res.status(200).json(user.email)

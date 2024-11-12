@@ -24,18 +24,36 @@ const io = new Server(server, {
 });
 
 
+const userSockets = {}
 
 io.on("connect", (socket) => {
     console.log('Client connected:', socket.id);
 
-    socket.on('sharedSession', (s) => {
+    socket.on('register', email => {
+        userSockets[email] = socket; 
+        console.log(email, 'registered on socket.io')
+    })
+
+    socket.on('sharedSession', (receivers, s) => {
         console.log('Received "sharedSession" from client:', s);
-        io.emit('sharedSession', s);  // Broadcast to all clients
-        console.log('Broadcasted "sharedSession" to all clients');
+
+        receivers.map(email => {
+            const userSocket = userSockets[email];
+
+            if (userSocket) {
+                userSocket.emit('sharedSession', s)
+            }
+        })
     });
 
     socket.on("disconnect", () => {
-        console.log("Client disconnected:", socket.id);
+        for (let email in userSockets) {
+            if (userSockets[email] === socket) {
+              delete userSockets[email];
+              console.log(`${email} disconnected`);
+              break;
+            }
+          }
     });
 });
 

@@ -10,6 +10,9 @@ import sessionStyles from '../styles/sessions.module.css'
 import DisplayExercises from './DisplayExercises';
 import SessionCard from './SessionCard';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { updateSessions } from '../../SessionSlice';
+
 import { socket } from '../../socket';
 
 export default function Page() {
@@ -24,8 +27,9 @@ export default function Page() {
   const [sessionFields, setSessionFields] = useState(true);
   const id = useId(); // accessibility for keyboard users 
 
-  let userEmail = ""; 
+//  const [email, setEmail] = useState('')
 
+  const [email, setEmail] = useState('')
   const [currExercise, setCurrExercise] = useState(
     {
       name: "",
@@ -37,7 +41,8 @@ export default function Page() {
 
 
   // display sessions section
-  const [sessions, setSessions] = useState([]);
+  const dispatch = useDispatch()
+  const sessions = useSelector(state => state.session.value) 
   const [selectedDay, setSelectedDay] = useState("All");
 
 
@@ -46,8 +51,6 @@ export default function Page() {
 
 
   // socket.io
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [fooEvents, setFooEvents] = useState([]);
   const [sharedSessions, setSharedSessions] = useState([]);
 
 
@@ -78,7 +81,9 @@ export default function Page() {
         console.log(json.error)
       } else {
         console.log('fetch workout successful');
-        setSessions(s => json)
+        // setSessions(s => json)
+
+        dispatch(updateSessions(json))
 
       }
 
@@ -89,28 +94,18 @@ export default function Page() {
   }, [update])
 
 
-  async function findEmail() {
-
-
-    const response = await fetch('http://localhost:4000/auth/findEmail', {
-      method: 'GET',
-      credentials: 'include'
-    })
-
-    const json = await response.json()
-
-    userEmail = json; 
-
-  }
+  
 
   useEffect(() => {
 
     async function main() {
       socket.connect();
 
-      socket.on('connect', () => {
-          console.log(socket.id, "has connected");
-      });
+      await findEmail(); 
+      console.log(email); 
+
+      socket.emit('register', email);
+
   
       function addSharedSession(s) {
         console.log('Received shared session from server:', s);
@@ -118,10 +113,6 @@ export default function Page() {
       }
   
       socket.on('sharedSession', addSharedSession);
-  
-  
-      await findEmail(); 
-      console.log('user email', userEmail)
 
 
     }
@@ -129,15 +120,12 @@ export default function Page() {
    main(); 
 
     return () => {
-        socket.off('sharedSession', addSharedSession);
+        socket.off('sharedSession');
         socket.disconnect();
     };
-}, []);
+}, [email]);
 
-  function testEmit() {
-    console.log('testing emit')
-    socket.emit('sharedSession', sessions[0]); 
-  }
+
  
 
 
@@ -240,7 +228,7 @@ export default function Page() {
       resetSessionValues();
 
     }
-
+s
     // cancels warning text
     setSessionFields(true);
 
@@ -272,9 +260,9 @@ export default function Page() {
   const createSessionElements = sessions.map((session, idx) => {
 
     if (session.day === selectedDay) {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
+      return <SessionCard key={session._id} session={session} remove={removeUpdate}/>
     } else if (selectedDay === "All") {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
+      return <SessionCard key={session._id} session={session} remove={removeUpdate}/>
     }
 
     return "";
@@ -294,6 +282,20 @@ export default function Page() {
 
   }).reverse()
 
+  async function findEmail() {
+    const response = await fetch('http://localhost:4000/auth/findEmail', {
+      method: 'GET',
+      credentials: 'include'
+    })
+
+    const json = await response.json()
+
+    setEmail(json)
+
+    console.log('fetched email:', email)
+
+  }
+
   
 
 
@@ -303,7 +305,7 @@ export default function Page() {
 
 
     <>
-
+      <h1 > Welcome back {email}</h1>
       {/* header */}
       <div className={headerStyles.session}>
         <div className={headerStyles.sfcontainer}>
