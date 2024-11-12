@@ -19,6 +19,14 @@
 
 
 
+#missingexercise {
+    
+    font-weight: bold;
+    color: #cc0000;
+    margin: 10px 100px;
+
+}
+
 
 #exercisecount {
     margin: 15px 100px 100px;
@@ -30,3 +38,9 @@
     width: 50%;
 }
 
+#missingsessiontext {
+
+    font-weight: bold;
+    color: #cc0000;
+    margin: 10px 100px;
+}

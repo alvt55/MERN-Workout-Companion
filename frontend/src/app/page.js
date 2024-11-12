@@ -10,11 +10,15 @@ export default function Page() {
 
     return (
         <>
+            
+        
             <div className='homepage'>
                 <h1>Welcome</h1>
                 <img src={workoutimg.src} />
                 <Link href="login">Login here</Link>
             </div>
+
+
         </>
     )
 }

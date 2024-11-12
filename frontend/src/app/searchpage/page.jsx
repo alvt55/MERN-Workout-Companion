@@ -49,9 +49,7 @@ export default function Page() {
                 const response = await axios.request(optionsBodyParts);
                 let data = await response.data;
                 setBodyParts(data);
-                console.log(`Body Parts Include...\n${data}`) // displayed in console for 
-                
-                
+                console.log(`Body Parts Include...\n${data}`) // displayed in console for debugging
             } catch (error) {
                 console.log(error);
             }
@@ -77,6 +75,7 @@ export default function Page() {
 
     // requesting + storing all exercises related to search 
     async function handleSubmit() {
+        console.log("trying")
 
         if (bodyParts.includes(search)) {
             try {

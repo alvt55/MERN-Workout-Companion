@@ -61,12 +61,12 @@ export default function Page() {
                     <label htmlFor="password">Password</label>
                     <input name="password" type="password" required />
                 </div>
-                <div className='missingfields'>{emailError}</div>
-                <div className='missingfields' >{passwordError}</div>
+                <div className="emailerror">{emailError}</div>
+                <div className="passworderror" >{passwordError}</div>
                 <button type="submit" id="button">Sign up</button>
             </form>
 
-            <Link href="login" className='switchAuthPage'>Have an account? Sign in here.</Link>
+            <Link href="login">Have an account? Sign in here.</Link>
         </div>
         
     );

@@ -35,7 +35,6 @@ export default function Page() {
             }
             
             if (data.user) {
-                
                 location.assign('/tracker')
 
             }
@@ -64,12 +63,12 @@ export default function Page() {
                     <label htmlFor="password">Password</label>
                     <input name="password" type="password" required />
                 </div>
-                <div className='missingfields'>{emailError}</div>
-                <div className='missingfields' >{passwordError}</div>
+                <div className="emailerror">{emailError}</div>
+                <div className="passworderror" >{passwordError}</div>
                 <button type="submit" id="button">Login</button>
             </form>
 
-            <Link href="signup" className="switchAuthPage">Don't have an account? Sign up here.</Link>
+            <Link href="signup">Don't have an account? Sign up here.</Link>
         </div>
     );
 
