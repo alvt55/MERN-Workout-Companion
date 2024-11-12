@@ -5,17 +5,18 @@ const express = require('express')
 const {
   loginPost,
   signupPost,
-  logout
+  logout,
+  findEmail
 } = require('../controllers/authController')
 
 const authRouter = express.Router()
 
-// GET all workouts
 authRouter.post('/signup', signupPost)
 
-// POST a new workout
+
 authRouter.post('/login', loginPost)
 authRouter.get('/logout', logout)
+authRouter.get('/findEmail', findEmail)
   
 
 module.exports = authRouter

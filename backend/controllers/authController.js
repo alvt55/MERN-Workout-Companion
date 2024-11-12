@@ -95,10 +95,27 @@ const logout = async (req, res) => {
 
 }
 
+const findEmail = async (req, res) => {
+
+  const token = req.cookies.jwt  
+  const decoded = jwt.verify(token, process.env.JWTSECRET)
+
+  console.log(decoded.id) 
+
+  try {
+    const user = await User.findById(decoded.id)
+    res.status(200).json(user.email)
+  } catch (err) {
+    res.status(400).json({ err });
+
+  }
+}
+
 
 
 module.exports = {
   loginPost,
   signupPost,
-  logout
+  logout,
+  findEmail
 }

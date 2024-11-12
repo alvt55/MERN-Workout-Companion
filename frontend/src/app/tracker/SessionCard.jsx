@@ -1,67 +1,81 @@
 
 import styles from '../styles/sessions.module.css'
 import { redirect } from 'next/navigation'
+import { useEffect } from 'react';
 
+import { socket } from '../../socket';
 
 function SessionCard(props) {
 
 
-    const session = props.session;
-    const day = session.day; 
-    const container = styles.sessioncontainer;
-   
+  const session = props.session;
+  const day = session.day;
+  const container = styles.sessioncontainer;
 
 
+  
 
-    const deleteSession = async () => {
+  function shareSession() {
 
-        const response = await fetch(`http://localhost:4000/api/workouts/${session._id}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            }, 
-            credentials: 'include'
-          })
-
-          const json = await response.json(); 
+    socket.emit('sharedSession', session); 
+  }
 
 
-          // auth error handling 
-          if (json.authError) {
-            console.log(json.authError)
-            redirect('/login')
-          } 
+  
 
-          // delete errors 
-          if (json.error) {
-            console.log(json.error)
-          } else {
-            props.remove(); 
-            console.log('delete successful')
-          }
 
-    
+  const deleteSession = async () => {
+
+    const response = await fetch(`http://localhost:4000/api/workouts/${session._id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+
+    const json = await response.json();
+
+
+    // auth error handling 
+    if (json.authError) {
+      console.log(json.authError)
+      redirect('/login')
     }
-//
 
-    // formats session cards 
-    return (
-        <div className={`${styles.sessioncontainer} ${styles[day]}`}>
-            <h3>{props.session.date}: {props.session.day}</h3>
+    // delete errors 
+    if (json.error) {
+      console.log(json.error)
+    } else {
+      props.remove();
+      console.log('delete successful')
+    }
 
-            <ul>
-                {session.exercises.map((e, idx) => {
 
-                    let weight = e.weight ? " (" + e.weight + ") " : " ";
+  }
 
-                    let exText = e.sets + "x" + e.reps + weight + e.name;
-                    return <li key={idx}>{exText}</li>
-                })}
-            </ul>
+  
+  //
 
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={deleteSession}> Delete</button>
-        </div>
-    )
+  // formats session cards 
+  return (
+    <div className={`${styles.sessioncontainer} ${styles[day]}`}>
+      <h3>{props.session.date}: {props.session.day}</h3>
+
+      <ul>
+        {session.exercises.map((e, idx) => {
+
+          let weight = e.weight ? " (" + e.weight + ") " : " ";
+
+          let exText = e.sets + "x" + e.reps + weight + e.name;
+          return <li key={idx}>{exText}</li>
+        })}
+      </ul>
+
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={deleteSession}> Delete</button>
+        <button onClick={shareSession}>share</button>
+    </div>
+  )
 }
 
 export default SessionCard

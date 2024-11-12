@@ -10,7 +10,7 @@ import sessionStyles from '../styles/sessions.module.css'
 import DisplayExercises from './DisplayExercises';
 import SessionCard from './SessionCard';
 
-
+import { socket } from '../../socket';
 
 export default function Page() {
 
@@ -23,6 +23,8 @@ export default function Page() {
   const [exFields, setExFields] = useState(true);
   const [sessionFields, setSessionFields] = useState(true);
   const id = useId(); // accessibility for keyboard users 
+
+  let userEmail = ""; 
 
   const [currExercise, setCurrExercise] = useState(
     {
@@ -41,6 +43,13 @@ export default function Page() {
 
   // detects updates to changes in sessions (add or remove)
   const [update, setUpdate] = useState(false)
+
+
+  // socket.io
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [fooEvents, setFooEvents] = useState([]);
+  const [sharedSessions, setSharedSessions] = useState([]);
+
 
 
   // gets all user workouts from DB
@@ -62,7 +71,7 @@ export default function Page() {
         window.alert('Please login first')
         redirect('/login')
 
-        
+
       }
 
       if (json.error) {
@@ -80,7 +89,61 @@ export default function Page() {
   }, [update])
 
 
-// handles form changes 
+  async function findEmail() {
+
+
+    const response = await fetch('http://localhost:4000/auth/findEmail', {
+      method: 'GET',
+      credentials: 'include'
+    })
+
+    const json = await response.json()
+
+    userEmail = json; 
+
+  }
+
+  useEffect(() => {
+
+    async function main() {
+      socket.connect();
+
+      socket.on('connect', () => {
+          console.log(socket.id, "has connected");
+      });
+  
+      function addSharedSession(s) {
+        console.log('Received shared session from server:', s);
+        setSharedSessions((prev) => [...prev, s]); 
+      }
+  
+      socket.on('sharedSession', addSharedSession);
+  
+  
+      await findEmail(); 
+      console.log('user email', userEmail)
+
+
+    }
+  
+   main(); 
+
+    return () => {
+        socket.off('sharedSession', addSharedSession);
+        socket.disconnect();
+    };
+}, []);
+
+  function testEmit() {
+    console.log('testing emit')
+    socket.emit('sharedSession', sessions[0]); 
+  }
+ 
+
+
+
+
+  // handles form changes 
   function handleExerciseFormChange(event) {
     setCurrExercise(prev => {
       return {
@@ -174,8 +237,8 @@ export default function Page() {
       // triggers rerender for displaying sessions 
       setUpdate(s => !s)
 
-      resetSessionValues(); 
-     
+      resetSessionValues();
+
     }
 
     // cancels warning text
@@ -199,8 +262,8 @@ export default function Page() {
 
   // updates displaying sessions, passed to SessionCard as a prop 
   function removeUpdate() {
-    setUpdate(s => !s); 
-    console.log(update); 
+    setUpdate(s => !s);
+    console.log(update);
   }
 
 
@@ -209,14 +272,29 @@ export default function Page() {
   const createSessionElements = sessions.map((session, idx) => {
 
     if (session.day === selectedDay) {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate}/> 
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
     } else if (selectedDay === "All") {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate}/>
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
     }
 
     return "";
 
   }).reverse()
+
+
+  const createSharedElements = sharedSessions.map((session, idx) => {
+
+    if (session.day === selectedDay) {
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
+    } else if (selectedDay === "All") {
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
+    }
+
+    return "";
+
+  }).reverse()
+
+  
 
 
 
@@ -305,9 +383,15 @@ export default function Page() {
         <button onClick={() => setSelectedDay("Legs")}>Legs</button>
       </div>
 
+      <button onClick={findEmail}>findemail</button>
+
       <div className={sessionStyles.sessionsText}>
         {createSessionElements}
+        <h1>SHARED IS UNDER HERE</h1>
+        {createSharedElements}
       </div>
+
+
     </>
 
 
