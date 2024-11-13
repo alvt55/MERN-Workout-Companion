@@ -1,6 +1,5 @@
 'use client'
 
-import styles from '../styles/signup.module.css'
 import Link from 'next/link'
 import { useState } from 'react';
 import { Box, Input, Stack, Button, Heading} from '@chakra-ui/react';
@@ -38,7 +37,7 @@ export default function Page() {
             }
 
             if (data.user) {
-                location.assign('/tracker')
+                window.location.assign('/tracker')
             }
 
         } catch (err) {

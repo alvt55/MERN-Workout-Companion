@@ -4,7 +4,7 @@ import styles from '../styles/navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
 
-import { Box, Flex, Text, IconButton, Button, Stack, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Button} from '@chakra-ui/react';
 import { usePathname } from 'next/navigation'
 
 
@@ -30,7 +30,10 @@ export default function Navbar(props) {
                 credentials: 'include'
             });
 
-            location.assign('/login')
+            if (res) {
+                window.location.assign('/login')
+            }
+            
 
         } catch (err) {
             console.log(err);
@@ -40,7 +43,7 @@ export default function Navbar(props) {
 
 
     const loginRequest = () => {
-        location.assign('/login')
+        window.location.assign('/login')
     }
 
     return (

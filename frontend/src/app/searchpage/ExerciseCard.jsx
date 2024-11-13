@@ -18,7 +18,7 @@ export default function ExerciseCard(props) {
 
             <div className={styles.exerciseinfo}>
 
-                <img src={props.exerciseObj.gifUrl} />
+                <img src={props.exerciseObj.gifUrl} alt=""/>
 
                 <ol>
                     {steps}

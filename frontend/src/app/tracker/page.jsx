@@ -129,7 +129,7 @@ export default function Page() {
   async function addSession() {
 
 
-    if (date == "" || day == "" || exercises.length == 0) {
+    if (date === "" || day === "" || exercises.length === 0) {
       console.log(date, day, exercises)
       setSessionFields(false);
       return;

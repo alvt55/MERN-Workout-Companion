@@ -55,7 +55,7 @@ export default function Page() {
         }
 
         bodyPartsFunction();
-    }, []);
+    });
 
 
     const displayBodyParts = bodyParts.map((i, idx) => {

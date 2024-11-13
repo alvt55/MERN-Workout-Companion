@@ -1,6 +1,6 @@
 'use client'
 
-import  {ChakraProvider, defaultSystem, createSystem, extendTheme, defineConfig}  from '@chakra-ui/react';
+import  {ChakraProvider, defaultSystem}  from '@chakra-ui/react';
 import Navbar from './navbarpage/Navbar';
 import '../index.css';
 

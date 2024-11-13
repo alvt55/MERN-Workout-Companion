@@ -8,7 +8,6 @@ function SessionCard(props) {
 
     const session = props.session;
     const day = session.day; 
-    const container = styles.sessioncontainer;
    
 
 

@@ -1,8 +1,5 @@
 
-import Link from 'next/link'
-
-import workoutimg from '../../public/workoutimg.jpg'
-import { Box, Center, Image, Heading, Text, Button, Flex} from "@chakra-ui/react"
+import { Box, Center, Heading, Text} from "@chakra-ui/react"
 
 
 // entry point of application 
