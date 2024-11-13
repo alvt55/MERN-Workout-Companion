@@ -10,6 +10,8 @@ frontend/coverage
 
 # production
 frontend/build
+frontend/next
+frontend/.next
 
 # misc
 .DS_Store
