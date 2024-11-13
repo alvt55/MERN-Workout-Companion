@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import ExerciseCard from './ExerciseCard';
 import axios from 'axios';
-import apikey from '../../ApiKey';
 
 import styles from '../styles/searchpage.module.css'
 
@@ -24,7 +23,7 @@ export default function Page() {
         url: 'https://exercisedb.p.rapidapi.com/exercises/target/abductors',
         params: { limit: '12' },
         headers: {
-            'X-RapidAPI-Key': apikey,
+            'X-RapidAPI-Key': process.env.NEXT_PUBLIC_EXERCISEDB_KEY,
             'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
     };
@@ -34,7 +33,7 @@ export default function Page() {
         method: 'GET',
         url: 'https://exercisedb.p.rapidapi.com/exercises/targetList',
         headers: {
-            'X-RapidAPI-Key': apikey,
+            'X-RapidAPI-Key': process.env.NEXT_PUBLIC_EXERCISEDB_KEY,
             'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
         }
     };

@@ -15,7 +15,7 @@ function SessionCard(props) {
 
     const deleteSession = async () => {
 
-        const response = await fetch(`http://localhost:4000/api/workouts/${session._id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/workouts/${session._id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'

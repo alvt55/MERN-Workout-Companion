@@ -21,8 +21,11 @@ export default function Page() {
         setEmailError('');
         setPasswordError('');
 
+    
+
+
         try {
-            const res = await fetch('http://localhost:4000/auth/login', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: {
@@ -51,7 +54,7 @@ export default function Page() {
 
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-
+    
 
     return (
         // <div className={styles.container}>

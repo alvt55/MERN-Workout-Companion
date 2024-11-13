@@ -18,7 +18,7 @@ const app = express()
 
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
     credentials: true // accepts credentials sent by the client 
 }));
 
@@ -33,7 +33,6 @@ app.use((req, res, next) => {
 
 app.use('/api/workouts', workoutRoutes)
 app.use('/auth', authRoutes)
-
 
 
 
