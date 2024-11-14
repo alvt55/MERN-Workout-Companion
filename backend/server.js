@@ -35,6 +35,9 @@ app.use('/api/workouts', workoutRoutes)
 app.use('/auth', authRoutes)
 
 
+app.get('/', (req, res) => {
+    res.status(200).json({ msg: "hello" });
+});
 
 
 mongoose.connect(process.env.MONG_URI)
@@ -46,5 +49,7 @@ mongoose.connect(process.env.MONG_URI)
 .catch((error) => {
    console.log(error)
 })
+
+module.exports = app; 
 
 
