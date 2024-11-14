@@ -42,7 +42,7 @@ export default function Page() {
             }
 
             if (data.user) {
-                window.location.reload().assign('/tracker')
+                window.location.assign('/tracker')
 
             }
 
