@@ -25,7 +25,7 @@ export default function Page() {
 
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/login`, {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: {

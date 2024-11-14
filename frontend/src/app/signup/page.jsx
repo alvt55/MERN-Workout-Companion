@@ -20,7 +20,7 @@ export default function Page() {
 
         
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/signup`, {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
                 headers: {
