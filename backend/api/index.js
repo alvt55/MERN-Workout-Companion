@@ -1,6 +1,6 @@
 
-const workoutRoutes = require('./routes/workouts')
-const authRoutes = require('./routes/auth')
+const workoutRoutes = require('../routes/workouts')
+const authRoutes = require('../routes/auth')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
@@ -36,7 +36,7 @@ app.use('/auth', authRoutes)
 
 
 app.get('/', (req, res) => {
-    res.status(200).json({ msg: "hello" });
+    res.send('express test')
 });
 
 
@@ -50,6 +50,6 @@ mongoose.connect(process.env.MONG_URI)
    console.log(error)
 })
 
-// module.exports = app; 
+module.exports = app; 
 
 
