@@ -1,6 +1,6 @@
 
-const workoutRoutes = require('../routes/workouts')
-const authRoutes = require('../routes/auth')
+const workoutRoutes = require('./routes/workouts')
+const authRoutes = require('./routes/auth')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 

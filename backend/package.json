@@ -5,14 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon ./api/index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@vercel/node": "^3.2.24",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -22,5 +21,8 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.6.0",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.2.24"
   }
 }
