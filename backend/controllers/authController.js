@@ -14,7 +14,7 @@ const handleErrors = (err) => {
 
 
   // login errors
-  if (err.message === 'incorrect email') {
+  if (err.message === 'unregistered email') {
     errors.email = 'That email is not registered';
   }
   if (err.message === 'incorrect password') {
@@ -78,7 +78,7 @@ const signupPost = async (req, res) => {
   }
   catch (err) {
     const errors = handleErrors(err);
-    res.status(400).json({ errors });
+    res.status(409).json({ errors });
   }
 
 }
