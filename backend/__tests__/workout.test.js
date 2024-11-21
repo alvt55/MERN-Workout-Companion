@@ -66,14 +66,14 @@ afterAll(async () => {
 
 
 
-describe('GET /api/getWorkouts', () => {
+describe('GET /workouts/getWorkouts', () => {
 
     describe("given the correct email and password are provided", () => {
 
         it('200, should return list of workouts', async () => {
          
             const token = jwt.sign({ id: user._id }, process.env.JWTSECRET)
-            response = await request(app).get('/api/workouts/').set("Cookie", [`jwt=${token}`]);
+            response = await request(app).get('/workouts/getWorkouts').set("Cookie", [`jwt=${token}`]);
             
 
           
@@ -97,7 +97,7 @@ describe('GET /api/getWorkouts', () => {
         it('400, should return verify error', async () => {
          
             const token = jwt.sign({ id: user._id }, "incorrectsecret")
-            response = await request(app).get('/api/workouts/').set("Cookie", [`jwt=${token}`]);
+            response = await request(app).get('/workouts/getWorkouts').set("Cookie", [`jwt=${token}`]);
         
           
             expect(response.statusCode).toBe(400);
@@ -108,7 +108,7 @@ describe('GET /api/getWorkouts', () => {
         
         it('400, should return missing jwt error', async () => {
          
-            response = await request(app).get('/api/workouts/')
+            response = await request(app).get('/workouts/getWorkouts')
         
           
             expect(response.statusCode).toBe(400);
@@ -120,7 +120,7 @@ describe('GET /api/getWorkouts', () => {
 })
 
 
-describe('POST /api/workouts/', () => {
+describe('POST /workouts/createWorkout', () => {
 
     describe("given the correct email and password are provided", () => {
 
@@ -128,7 +128,7 @@ describe('POST /api/workouts/', () => {
 
          
             const token = jwt.sign({ id: user._id }, process.env.JWTSECRET)
-            response = await request(app).post('/api/workouts/')
+            response = await request(app).post('/workouts/createWorkout')
             .set("Cookie", [`jwt=${token}`])
             .send(testWorkout3);
      
@@ -147,7 +147,7 @@ describe('POST /api/workouts/', () => {
         it('400, should return verify error', async () => {
          
             const token = jwt.sign({ id: user._id }, "incorrectsecret")
-            response = await request(app).post('/api/workouts/').set("Cookie", [`jwt=${token}`]).send(testWorkout3);
+            response = await request(app).post('/workouts/createWorkout').set("Cookie", [`jwt=${token}`]).send(testWorkout3);
     
             expect(response.statusCode).toBe(400);
             expect(response.body).toEqual({"authError": "jwt is not verified"})
@@ -157,7 +157,7 @@ describe('POST /api/workouts/', () => {
 
         it('400, should return missing jwt error', async () => {
          
-            response = await request(app).post('/api/workouts/')
+            response = await request(app).post('/workouts/createWorkout')
         
             expect(response.statusCode).toBe(400);
             expect(response.body).toEqual({ authError: "jwt sent to server is null" });
@@ -178,7 +178,7 @@ describe('DELETE /api/workouts/', () => {
 
          
             const token = jwt.sign({ id: user._id }, process.env.JWTSECRET)
-            response = await request(app).delete(`/api/workouts/${workout1._id.toString()}`)
+            response = await request(app).delete(`/workouts/${workout1._id.toString()}`)
             .set("Cookie", [`jwt=${token}`])
     
             expect(response.statusCode).toBe(200);
@@ -194,7 +194,7 @@ describe('DELETE /api/workouts/', () => {
 
          
             const token = jwt.sign({ id: user._id }, process.env.JWTSECRET)
-            response = await request(app).delete('/api/workouts/invalidid')
+            response = await request(app).delete('/workouts/invalidid')
             .set("Cookie", [`jwt=${token}`])
      
           
@@ -210,7 +210,7 @@ describe('DELETE /api/workouts/', () => {
         it('400, should return verify error', async () => {
          
             const token = jwt.sign({ id: user._id }, "incorrectsecret");
-            response = await request(app).delete('/api/workouts/idishere').set("Cookie", [`jwt=${token}`]);
+            response = await request(app).delete('/workouts/idishere').set("Cookie", [`jwt=${token}`]);
     
             expect(response.statusCode).toBe(400);
             expect(response.body).toEqual({"authError": "jwt is not verified"})
@@ -220,7 +220,7 @@ describe('DELETE /api/workouts/', () => {
 
         it('400, should return missing jwt error', async () => {
          
-            response = await request(app).post('/api/workouts/')
+            response = await request(app).delete('/workouts/randid')
         
             expect(response.statusCode).toBe(400);
             expect(response.body).toEqual({ authError: "jwt sent to server is null" });

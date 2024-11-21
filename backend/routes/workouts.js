@@ -10,10 +10,10 @@ const {requireAuth} = require('../middleware/authMiddleware')
 const router = express.Router()
 
 // GET all workouts
-router.get('/', requireAuth, getWorkouts)
+router.get('/getWorkouts', requireAuth, getWorkouts)
 
 // POST a new workout
-router.post('/', requireAuth, createWorkout)
+router.post('/createWorkout', requireAuth, createWorkout)
 
 // DELETE a workout 
 router.delete('/:id', requireAuth, deleteWorkout); 

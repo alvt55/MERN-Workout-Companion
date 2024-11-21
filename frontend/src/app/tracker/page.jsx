@@ -45,7 +45,7 @@ export default function Page() {
   useEffect(() => {
 
     const fetchWorkouts = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/workouts`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/getWorkouts`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -143,7 +143,7 @@ export default function Page() {
       exercises: exercises
     };
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/workouts`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/createWorkout`, {
       method: 'POST',
       body: JSON.stringify(currSession),
       headers: {
