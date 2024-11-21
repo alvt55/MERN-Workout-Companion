@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ExerciseCard from './ExerciseCard';
 import axios from 'axios';
 
@@ -14,86 +14,45 @@ export default function Page() {
 
     const [search, setSearch] = useState('');
     const [exercises, setExercises] = useState([]);
-    const [bodyParts, setBodyParts] = useState([]);
 
+    const bodyParts = [
+        "back",
+        "cardio",
+        "chest",
+        "lower arms",
+        "lower legs",
+        "neck",
+        "shoulders",
+        "upper arms",
+        "upper legs",
+        "waist"
+    ];
 
-    // exercises from external exercise API
-    const optionsExercises = {
-        method: 'GET',
-        url: 'https://exercisedb.p.rapidapi.com/exercises/target/abductors',
-        params: { limit: '12' },
-        headers: {
-            'X-RapidAPI-Key': process.env.NEXT_PUBLIC_EXERCISEDB_KEY,
-            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-        }
-    };
-
-    // list of body parts (used for endpoints)
-    const optionsBodyParts = {
-        method: 'GET',
-        url: 'https://exercisedb.p.rapidapi.com/exercises/targetList',
-        headers: {
-            'X-RapidAPI-Key': process.env.NEXT_PUBLIC_EXERCISEDB_KEY,
-            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-        }
-    };
+    const [searchError, setSearchError] = useState(''); 
 
 
 
-    // requesting all possible body parts for searching 
-    useEffect(() => {
-
-        const bodyPartsFunction = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const search = e.target.search.value;
+    
+        if (bodyParts.includes(search.toLowerCase())) {
             try {
-                const response = await axios.request(optionsBodyParts);
-                let data = await response.data;
-                setBodyParts(data);
-                console.log(`Body Parts Include...\n${data}`) // displayed in console for debugging
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}search/getExercises?bodyPart=${search}`);
+                setExercises(response.data);
+                setSearchError('');
             } catch (error) {
-                console.log(error);
+                setSearchError('Could not fetch exercises');
             }
+        } else {
+            setSearchError('Please enter a valid search');
         }
+    
+        document.getElementById('myform').reset();
+    };
+    
 
-        bodyPartsFunction();
-    });
-
-
-    const displayBodyParts = bodyParts.map((i, idx) => {
-
-
-        // removes comma from last element
-        if (idx !== bodyParts.length - 1) {
-
-            return i + ", ";
-        }
-
-        return i;
-    })
-
-
-
-    // requesting + storing all exercises related to search 
-    async function handleSubmit() {
-        console.log("trying")
-
-        if (bodyParts.includes(search)) {
-            try {
-
-
-                const response = await axios.request({
-                    ...optionsExercises,
-                    url: `https://exercisedb.p.rapidapi.com/exercises/target/${search}`
-
-                });
-
-                setExercises(b => response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-    }
 
 
 
@@ -109,32 +68,33 @@ export default function Page() {
 
     return (
 
-        
-            <div className={styles.container}>
 
-                <form>
-                    <div className={styles.labelinput}>
-                        <label>Search</label>
-                        <input
-                            type="text"
-                            name="search"
-                            onChange={(e) => setSearch(e.target.value.toLowerCase())}
-                            value={search} />
+        <div className={styles.container}>
 
-
-                    </div>
-                    <h1>Available search inputs: </h1>
-                    {displayBodyParts}
-                </form>
-
-                <button onClick={handleSubmit}>Submit</button>
-
-                {allCards}
-            </div>
+            <form onSubmit={handleSubmit} id="myform">
+                <div className={styles.labelinput}>
+                    <label>Search</label>
+                    <input
+                        type="text"
+                        name="search"
+                        required />
 
 
+                </div>
+                <h1>Available search inputs: </h1>
+                <p>
+                    Back Cardio Chest Lower Arms Lower Legs Neck Shoulders Upper Arms Upper Legs Waist
+                </p>
+                <button type="submit">Submit</button>
+                <p className="searchError">{searchError}</p>
+            </form>
 
-        
+            {allCards}
+        </div>
+
+
+
+
 
 
 

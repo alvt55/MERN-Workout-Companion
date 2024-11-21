@@ -31,3 +31,4 @@ frontend/src/ApiKey.js
 
 backend/.env
 frontend/.env
+.vercel

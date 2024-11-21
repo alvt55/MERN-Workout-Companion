@@ -1,6 +1,7 @@
 
 const workoutRoutes = require('../routes/workouts')
 const authRoutes = require('../routes/auth')
+const searchRoutes = require('../routes/search');
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const User = require('../models/UserModel')
@@ -33,6 +34,7 @@ const app = express()
     
     app.use('/workouts', workoutRoutes)
     app.use('/auth', authRoutes)
+    app.use('/search', searchRoutes)
     
     
     
@@ -49,7 +51,7 @@ const app = express()
 
   
       
-  //  if (process.env.PRODUCTION === 'true') {
+
     mongoose.connect(process.env.MONG_URI)
     .then(() => {
         app.listen(process.env.PORT, () => {
@@ -59,7 +61,7 @@ const app = express()
     .catch((error) => {
        console.log(error)
     })
-  //  }
+
 
     
 
