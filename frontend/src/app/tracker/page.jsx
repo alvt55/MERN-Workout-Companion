@@ -10,6 +10,19 @@ import sessionStyles from '../styles/sessions.module.css'
 import DisplayExercises from './DisplayExercises';
 import SessionCard from './SessionCard';
 
+import {
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from "../../components/ui/select"
+
+
+import { For, Stack, createListCollection } from "@chakra-ui/react"
+
+
 export default function Page() {
 
 
@@ -186,8 +199,8 @@ export default function Page() {
 
 
   function removeUpdate() {
-    setUpdate(s => !s); 
-    console.log(update); 
+    setUpdate(s => !s);
+    console.log(update);
   }
 
 
@@ -195,16 +208,24 @@ export default function Page() {
   const createSessionElements = sessions.map((session, idx) => {
 
     if (session.day === selectedDay) {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate}/> // key = session.id 
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} /> // key = session.id 
     } else if (selectedDay === "All") {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate}/>
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
     }
 
     return "";
 
   }).reverse()
 
-
+  const frameworks = createListCollection({
+    items: [
+      { label: "React.js", value: "react" },
+      { label: "Vue.js", value: "vue" },
+      { label: "Angular", value: "angular" },
+      { label: "Svelte", value: "svelte" },
+    ],
+  })
+  
 
 
   return (
@@ -222,9 +243,26 @@ export default function Page() {
           </div>
 
           <div className={headerStyles.daybuttons}>
-            <button onClick={() => setDay(s => "Push")} className={day === "Push" ? headerStyles.active : headerStyles.inactive}>Push</button>
+            {/* <button onClick={() => setDay(s => "Push")} className={day === "Push" ? headerStyles.active : headerStyles.inactive}>Push</button>
             <button onClick={() => setDay(s => "Pull")} className={day === "Pull" ? headerStyles.active : headerStyles.inactive}>Pull</button>
-            <button onClick={() => setDay(s => "Legs")} className={day === "Legs" ? headerStyles.active : headerStyles.inactive}>Legs</button>
+            <button onClick={() => setDay(s => "Legs")} className={day === "Legs" ? headerStyles.active : headerStyles.inactive}>Legs</button> */}
+
+            <label>Day</label>
+            <input value={day} type="text" onChange={e => setDay(e.target.value)} />
+{/* 
+            <SelectRoot key={"md"} size={"md"} collection={frameworks}>
+            <SelectLabel>size = {"xs"}</SelectLabel>
+            <SelectTrigger>
+              <SelectValueText placeholder="Select movie" />
+            </SelectTrigger>
+            <SelectContent>
+              {frameworks.items.map((movie) => (
+                <SelectItem item={movie} key={movie.value}>
+                  {movie.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </SelectRoot> */}
 
           </div>
 
