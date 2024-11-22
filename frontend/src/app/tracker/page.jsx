@@ -10,17 +10,7 @@ import sessionStyles from '../styles/sessions.module.css'
 import DisplayExercises from './DisplayExercises';
 import SessionCard from './SessionCard';
 
-import {
-  SelectContent,
-  SelectItem,
-  SelectLabel,
-  SelectRoot,
-  SelectTrigger,
-  SelectValueText,
-} from "../../components/ui/select"
 
-
-import { For, Stack, createListCollection } from "@chakra-ui/react"
 
 
 export default function Page() {
@@ -32,18 +22,10 @@ export default function Page() {
 
   // Add exercises/session
   const [exercises, setExercises] = useState([]);
-  const [exFields, setExFields] = useState(true);
   const [sessionFields, setSessionFields] = useState(true);
   const id = useId(); // accessibility for keyboard users 
 
-  const [currExercise, setCurrExercise] = useState(
-    {
-      name: "",
-      weight: 0,
-      sets: 0,
-      reps: 0
-    }
-  );
+
 
 
   // display sessions 
@@ -89,49 +71,32 @@ export default function Page() {
 
 
 
-  function handleExerciseFormChange(event) {
-    setCurrExercise(prev => {
-      return {
-        ...prev,
-        [event.target.name]: event.target.value
-      }
-    });
-  }
 
 
 
-  function addExercise() {
+  function addExercise(e) {
 
-    // empty input detection
-    if (currExercise.name === "" || currExercise.sets === 0 || currExercise.reps === 0) {
-      setExFields(false);
+    e.preventDefault();
+    const name = e.target.exerciseName.value;
+    const weight = e.target.weight.value;
+    const sets = e.target.sets.value;
+    const reps = e.target.reps.value;
+
+    let nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
+
+    const currExercise = {
+      nameCapitalized,
+      weight,
+      sets,
+      reps
     }
 
-    else {
-
-      // capitalize first letter of exercise
-      let nameCapitalized = currExercise.name.charAt(0).toUpperCase() + currExercise.name.slice(1);
-      setCurrExercise(prev => {
-        return {
-          ...prev,
-          name: nameCapitalized
-        }
-      });
-
-      setExercises(e => [...e, currExercise]);
+    setExercises(e => [...e, currExercise]);
 
 
-      setExFields(true);
+    document.getElementById('exerciseForm').reset();
 
-
-      // resets current exercise 
-      setCurrExercise({
-        name: "",
-        weight: 0,
-        sets: 0,
-        reps: 0
-      });
-    }
+    console.log('adding exercise', currExercise)
 
   }
 
@@ -217,107 +182,59 @@ export default function Page() {
 
   }).reverse()
 
-  const frameworks = createListCollection({
-    items: [
-      { label: "React.js", value: "react" },
-      { label: "Vue.js", value: "vue" },
-      { label: "Angular", value: "angular" },
-      { label: "Svelte", value: "svelte" },
-    ],
-  })
-  
 
+
+  console.log("date: ", date);
+  console.log("day: ", day);
+
+  console.log("exercises added", exercises)
 
   return (
 
 
     <>
+      <HStack gap="10" width="full">
+        <InputGroup flex="1" startElement={<CiCalendarDate />}>
+          <Input onChange={e => setDay(e.target.value)} placeholder="Date" />
+        </InputGroup>
 
-      {/* header */}
-      <div className={headerStyles.session}>
-        <div className={headerStyles.sfcontainer}>
-
-          <div className={headerStyles.date}>
-            <label htmlFor="">Date</label>
-            <input value={date} onChange={e => setDate(e.target.value)} />
-          </div>
-
-          <div className={headerStyles.daybuttons}>
-            {/* <button onClick={() => setDay(s => "Push")} className={day === "Push" ? headerStyles.active : headerStyles.inactive}>Push</button>
-            <button onClick={() => setDay(s => "Pull")} className={day === "Pull" ? headerStyles.active : headerStyles.inactive}>Pull</button>
-            <button onClick={() => setDay(s => "Legs")} className={day === "Legs" ? headerStyles.active : headerStyles.inactive}>Legs</button> */}
-
-            <label>Day</label>
-            <input value={day} type="text" onChange={e => setDay(e.target.value)} />
-{/* 
-            <SelectRoot key={"md"} size={"md"} collection={frameworks}>
-            <SelectLabel>size = {"xs"}</SelectLabel>
-            <SelectTrigger>
-              <SelectValueText placeholder="Select movie" />
-            </SelectTrigger>
-            <SelectContent>
-              {frameworks.items.map((movie) => (
-                <SelectItem item={movie} key={movie.value}>
-                  {movie.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </SelectRoot> */}
-
-          </div>
-
-        </div>
-
-      </div>
+        <InputGroup flex="1" startElement={<GiWeightLiftingUp />}>
+          <Input onChange={e => setDay(e.target.value)} ps="4.75em" placeholder="What we focus on today?" />
+        </InputGroup>
+      </HStack>
 
 
-      {/* track exercises/sessions */}
-      <div className={exerciseStyles.exall}>
+      <form id="exerciseForm" onSubmit={addExercise}>
+        <Heading as="h1" size="2xl">Exercises</Heading>
+        <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw">
 
-        <div className={exerciseStyles.exercises}>
-          <form id={exerciseStyles.myform} className={exerciseStyles.myform}>
+          <Field label="Exercise name">
+            <Input name="exerciseName" type="text" required />
+          </Field>
 
-            <div className='labelinput'>
-              <label htmlFor={id + "-name"}>Name of Exercise</label>
-              <input type="text" id={id + "-name"} onInput={handleExerciseFormChange} name="name" value={currExercise.name} />
-            </div>
+          <Field label="Exercise name">
+            <NumberInputRoot defaultValue="10" width="200px">
+              <NumberInputField name="weight" />
+            </NumberInputRoot>
+          </Field>
+          <Field label="Exercise name">
+            <NumberInputRoot defaultValue="0" width="200px" required>
+              <NumberInputField name="sets" />
+            </NumberInputRoot>
+          </Field>
+          <Field label="Exercise name">
+            <NumberInputRoot defaultValue="10" width="200px" required>
+              <NumberInputField name="reps" />
+            </NumberInputRoot>
+          </Field>
+          <Button type="submit">Add Exercise</Button>
+        </Stack>
+      </form>
 
-
-            <div className='labelinput'>
-              <label htmlFor={id + "-weight"}>Weight in lbs</label>
-              <input type="number" id={id + "-weight"} onInput={handleExerciseFormChange} name="weight" value={currExercise.weight} />
-            </div>
-
-
-            <div className='labelinput'>
-              <label htmlFor={id + "-reps"}>Repetitions </label>
-              <input type="number" id={id + "-reps"} onInput={handleExerciseFormChange} name="reps" value={currExercise.reps} />
-            </div>
-
-            <div className='labelinput'>
-              <label htmlFor={id + "-sets"}>Sets</label>
-              <input type="number" id={id + "-sets"} onInput={handleExerciseFormChange} name="sets" value={currExercise.sets} />
-            </div>
-
-          </form >
-
-
-          <button onClick={addExercise} id='button'>Add Exercise</button> <br />
-          {!exFields && <p id={exerciseStyles.missingexercise}>Please fill in all exercise fields</p>}
-
-          <p id={exerciseStyles.exercisecount}>You have added {exercises.length} exercises</p>
+      <DisplayExercises exercises={exercises}></DisplayExercises>
 
 
-          {/* submit session */}
-          <button onClick={addSession} id='sessionbutton'>Add session</button>
-          {!sessionFields && <p id={exerciseStyles.missingsessiontext}>Please fill in all session fields</p>}
-
-
-        </div >
-        {/* exercises preview */}
-        <DisplayExercises exercises={exercises} />
-
-      </div>
+    
 
 
       {/* display sessions */}
@@ -338,5 +255,14 @@ export default function Page() {
   );
 }
 
+import { Box, HStack, Input, Button, Stack, Heading, InputAddon } from "@chakra-ui/react"
+import { CiCalendarDate } from "react-icons/ci"
+import { InputGroup } from "../../../components/ui/input-group"
+import { Field } from "../../../components/ui/field"
+import { NumberInputField, NumberInputRoot } from "../../../components/ui/number-input"
 
+
+
+import { GiWeightLiftingUp } from
+  "react-icons/gi";
 

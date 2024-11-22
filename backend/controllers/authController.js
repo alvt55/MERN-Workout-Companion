@@ -87,7 +87,7 @@ const signupPost = async (req, res) => {
 const logout = async (req, res) => {
 
   try {
-    res.clearCookie('jwt');
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
     res.status(200).json({ message: 'logout successful' })
   } catch (err) {
     res.status(400).json({ err });

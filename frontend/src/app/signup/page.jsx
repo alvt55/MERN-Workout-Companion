@@ -14,12 +14,18 @@ export default function Page() {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const passConfirm = e.target.confirmpass.value
 
         setEmailError('');
         setPasswordError('');
 
+        if (password !== passConfirm) {
+            setPasswordError("The passwords you entered do not match")
+            return; 
+        }
         
         try {
+            console.log('trying')
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/signup`, {
                 method: 'POST',
                 body: JSON.stringify({ email, password }),
@@ -88,9 +94,12 @@ export default function Page() {
                     <Field label="Password">
                         <PasswordInput name="password" type="password" placeholder="Enter your password" required />
                     </Field>
+                    <Field label="Confirm Password">
+                        <PasswordInput name="confirmpass" type="password" placeholder="Enter your password again" required />
+                    </Field>
                     {passwordError && <Box color="red.500">{passwordError}</Box>}
 
-                    <Button type="submit">Login</Button>
+                    <Button type="submit">Signup</Button>
                 </Stack>
 
                 <Link href="/login">Have an account? Login here.</Link>

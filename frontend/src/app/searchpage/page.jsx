@@ -11,8 +11,6 @@ import styles from '../styles/searchpage.module.css'
 
 
 export default function Page() {
-
-    const [search, setSearch] = useState('');
     const [exercises, setExercises] = useState([]);
 
     const bodyParts = [
