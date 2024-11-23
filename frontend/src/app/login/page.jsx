@@ -4,8 +4,9 @@
 import { useState } from 'react';
 import Link from 'next/link'
 import { Box, Input, Stack, Button, Heading} from '@chakra-ui/react';
-import { Field } from "../../components/ui/field"
-import { PasswordInput } from "../../components/ui/password-input"
+import { Field } from "@/components/ui/field"
+import { PasswordInput } from "@/components/ui/password-input"
+
 
 
 export default function Page() {

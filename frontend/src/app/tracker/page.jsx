@@ -17,12 +17,11 @@ export default function Page() {
 
 
   // Header
-  const [day, setDay] = useState("");
-  const [date, setDate] = useState("");
+
 
   // Add exercises/session
   const [exercises, setExercises] = useState([]);
-  const [sessionFields, setSessionFields] = useState(true);
+  const [sessionWarning, setSessionWarning] = useState('');
   const id = useId(); // accessibility for keyboard users 
 
 
@@ -30,11 +29,12 @@ export default function Page() {
 
   // display sessions 
   const [sessions, setSessions] = useState([]);
-  const [selectedDay, setSelectedDay] = useState("All");
+  const [selectedDay, setSelectedDay] = useState("");
 
 
   // detects updates to changes in sessions (add or remove)
   const [update, setUpdate] = useState(false)
+
 
   // fetches sessions from DB
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function Page() {
     let nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
     const currExercise = {
-      nameCapitalized,
+      name: nameCapitalized,
       weight,
       sets,
       reps
@@ -104,20 +104,30 @@ export default function Page() {
 
 
   // posting workout session to DB using backend API
-  async function addSession() {
+  async function addSession(e) {
 
 
-    if (date === "" || day === "" || exercises.length === 0) {
-      console.log(date, day, exercises)
-      setSessionFields(false);
+
+    e.preventDefault();
+
+
+    const d = new Date();
+    const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    const day = e.target.day.value;
+
+
+
+    if (exercises.length === 0) {
+      setSessionWarning('Please add at least 1 exercise')
       return;
     }
 
     let dateCapitalized = date.charAt(0).toUpperCase() + date.slice(1);
+    let dayCapitalized = day.charAt(0).toUpperCase() + day.slice(1);
 
     const currSession = {
       date: dateCapitalized,
-      day: day,
+      day: dayCapitalized,
       exercises: exercises
     };
 
@@ -133,31 +143,25 @@ export default function Page() {
     const json = await response.json();
 
     if (json.authError) {
-      console.log(json.authError)
       redirect('/login')
     }
 
 
     if (!response.ok) {
+      setSessionWarning('Unable to send workout to database')
       console.log('failed to post session')
     } else {
       console.log('workout posted')
 
+
       setUpdate(s => !s)
 
       //  reset all values 
-      setDate(s => "")
-      setDay(s => "")
+      document.getElementById('sessionForm').reset()
+      setSessionWarning('');
       setExercises(s => [])
-      setCurrExercise({
-        name: "",
-        weight: 0,
-        sets: 0,
-        reps: 0
-      });
-    }
 
-    setSessionFields(true);
+    }
 
 
   }
@@ -169,12 +173,11 @@ export default function Page() {
   }
 
 
-
   const createSessionElements = sessions.map((session, idx) => {
 
-    if (session.day === selectedDay) {
+    if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
       return <SessionCard key={session._id} session={session} remove={removeUpdate} /> // key = session.id 
-    } else if (selectedDay === "All") {
+    } else if (selectedDay.trim() === "") {
       return <SessionCard key={session._id} session={session} remove={removeUpdate} />
     }
 
@@ -184,67 +187,84 @@ export default function Page() {
 
 
 
-  console.log("date: ", date);
-  console.log("day: ", day);
+
+  // testing 
+
 
   console.log("exercises added", exercises)
+  console.log('selected day', selectedDay)
 
   return (
 
 
     <>
-      <HStack gap="10" width="full">
-        <InputGroup flex="1" startElement={<CiCalendarDate />}>
-          <Input onChange={e => setDay(e.target.value)} placeholder="Date" />
-        </InputGroup>
 
-        <InputGroup flex="1" startElement={<GiWeightLiftingUp />}>
-          <Input onChange={e => setDay(e.target.value)} ps="4.75em" placeholder="What we focus on today?" />
-        </InputGroup>
+      <form id="sessionForm" onSubmit={addSession}>
+  
+          <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white">
+            <Input name="day" ps="4.75em" placeholder="What we focus on today?" required />
+          </InputGroup>
+
+        <Button type="submit">Finish Workout</Button>
+        {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
+
+      </form>
+
+
+      <HStack gap="10" width="full" color="white">
+
+
+        <form id="exerciseForm" onSubmit={addExercise}>
+          <Heading as="h1" size="2xl">Add Exercises Here</Heading>
+          <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw" color="white">
+
+            <Field label="Exercise name">
+              <Input name="exerciseName" type="text" required />
+            </Field>
+
+            <Field label="Exercise name">
+              <NumberInputRoot defaultValue="10" width="200px">
+                <NumberInputField name="weight" />
+              </NumberInputRoot>
+            </Field>
+            <Field label="Exercise name">
+              <NumberInputRoot defaultValue="0" width="200px" required>
+                <NumberInputField name="sets" />
+              </NumberInputRoot>
+            </Field>
+            <Field label="Exercise name">
+              <NumberInputRoot defaultValue="10" width="200px" required>
+                <NumberInputField name="reps" />
+              </NumberInputRoot>
+            </Field>
+            <Button type="submit">Add Exercise</Button>
+          </Stack>
+        </form>
+
+        <DisplayExercises exercises={exercises}></DisplayExercises>
       </HStack>
 
 
-      <form id="exerciseForm" onSubmit={addExercise}>
-        <Heading as="h1" size="2xl">Exercises</Heading>
-        <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw">
-
-          <Field label="Exercise name">
-            <Input name="exerciseName" type="text" required />
-          </Field>
-
-          <Field label="Exercise name">
-            <NumberInputRoot defaultValue="10" width="200px">
-              <NumberInputField name="weight" />
-            </NumberInputRoot>
-          </Field>
-          <Field label="Exercise name">
-            <NumberInputRoot defaultValue="0" width="200px" required>
-              <NumberInputField name="sets" />
-            </NumberInputRoot>
-          </Field>
-          <Field label="Exercise name">
-            <NumberInputRoot defaultValue="10" width="200px" required>
-              <NumberInputField name="reps" />
-            </NumberInputRoot>
-          </Field>
-          <Button type="submit">Add Exercise</Button>
-        </Stack>
-      </form>
-
-      <DisplayExercises exercises={exercises}></DisplayExercises>
 
 
-    
 
 
       {/* display sessions */}
-      <div className={sessionStyles.sessionsort}>
+      {/* <div className={sessionStyles.sessionsort}>
 
         <button onClick={() => setSelectedDay("All")}>All</button>
         <button onClick={() => setSelectedDay("Push")}>Push</button>
         <button onClick={() => setSelectedDay("Pull")}>Pull</button>
         <button onClick={() => setSelectedDay("Legs")}>Legs</button>
-      </div>
+      </div> */}
+
+
+      <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw" color="white">
+        <Field label="Filter by focus">
+          <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
+        </Field>
+
+      </Stack>
 
       <div className={sessionStyles.sessionsText}>
         {createSessionElements}
@@ -257,9 +277,10 @@ export default function Page() {
 
 import { Box, HStack, Input, Button, Stack, Heading, InputAddon } from "@chakra-ui/react"
 import { CiCalendarDate } from "react-icons/ci"
-import { InputGroup } from "../../../components/ui/input-group"
-import { Field } from "../../../components/ui/field"
-import { NumberInputField, NumberInputRoot } from "../../../components/ui/number-input"
+import { InputGroup } from "@/components/ui/input-group"
+import { Field } from "@/components/ui/field"
+import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
+import { Alert } from "@/components/ui/alert"
 
 
 

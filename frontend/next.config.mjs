@@ -2,10 +2,12 @@
 const nextConfig = {
     experimental: {
       optimizePackageImports: ["@chakra-ui/react"],
-    }
+    },
+
+    
   }
 
-  // next.config.js
+
 
   
 

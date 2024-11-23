@@ -2,8 +2,8 @@
 
 import  {ChakraProvider, defaultSystem}  from '@chakra-ui/react';
 import Navbar from './navbarpage/Navbar';
-import '../index.css';
 
+import system from "../theme";
 
 
 export default function RootLayout({ children }) {

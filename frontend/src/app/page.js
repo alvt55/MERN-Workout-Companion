@@ -9,34 +9,6 @@ export default function Page() {
 
     return (
         <>
-
-
-            {/* <div className='homepage'>
-                <h1>Welcome</h1>
-                <img src={workoutimg.src} />
-                <Link href="/login">Login here</Link>
-            </div>
-            img */}
-            {/* <Box>
-                <Image src={workoutimg.src} h="90vh" w="100vw">
-
-                </Image>
-
-                <Box
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                    backgroundColor="white"
-                    textAlign="center"
-                    p='10px 50px'
-
-                >
-                    Welcome
-                    </Box>
-
-            </Box> */}
-
             <Box
                 bg="blackAlpha.100"
                 w="100%"              // Full width of the screen
@@ -60,7 +32,6 @@ export default function Page() {
                     <Text fontSize="xl" mb={6} w="50%">
                         Manage your fitness journey with ease. <b>GCompanion</b> helps organize fitness, your way. 
                     </Text>
-                    
                     
                     
                     
