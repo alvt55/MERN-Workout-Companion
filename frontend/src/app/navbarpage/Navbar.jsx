@@ -1,10 +1,15 @@
 'use client'
 import Link from 'next/link'
-import styles from '../styles/navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
 
-import { Box, Flex, Button} from '@chakra-ui/react';
+import { Box, Flex, Button, Heading, VStack} from '@chakra-ui/react';
+import {
+    MenuContent,
+    MenuItem,
+    MenuRoot,
+    MenuTrigger,
+  } from "@/components/ui/menu"
 import { usePathname } from 'next/navigation'
 
 
@@ -17,6 +22,7 @@ export default function Navbar(props) {
 
 
     const path = usePathname();
+    const loggedIn = path === '/tracker' || path === '/searchpage'; 
 
 
     const logoutRequest = async (e) => {
@@ -33,7 +39,7 @@ export default function Navbar(props) {
             if (res) {
                 window.location.assign('/login')
             }
-            
+
 
         } catch (err) {
             console.log(err);
@@ -48,54 +54,47 @@ export default function Navbar(props) {
 
     return (
 
-
-        // <div className={styles.navbarcontainer}>
-
-        //     <Link href="/"><h1>Companion <FontAwesomeIcon icon={faDumbbell} /></h1></Link>
-
-        //     <div className={styles.navbarlinks}>
-
-        //         <Link href="/tracker" className={styles.navbarlink}>Gym Tracker</Link>
-        //         <Link href="/searchpage" className={styles.navbarlink}>Exercise Search</Link>
-
-        //         {/* displays login or logout based on current url */}
-        //         {path === '/tracker' ?
-        //             <button onClick={logoutRequest}>logout</button> :
-        //             <Link href="/login" className={styles.navbarlink}>Login</Link>}
-
-
-        //     </div>
-
-        // </div>
-
-
-        <Box w="100%" h="10vh" bg="teal.500" alignContent={'center'} >
+        <Box maxWidth="100%" h="10vh" bg="teal.500" alignContent={'center'} color="#1f1f1f" overflowX="hidden">
 
             <Flex gap="10" justifyContent='space-evenly' m="0 3rem">
-               
+
                 <Flex >
                     <Link href="/" style={{ textDecoration: 'none' }}>
-                        <h1 style={{ fontSize: '2rem' }}>
-                            GCompanion <FontAwesomeIcon icon={faDumbbell} />
-                        </h1>
+                        <Flex fontSize='2rem' gap={5}>
+                            <Heading hideBelow="md">GCompanion</Heading> <FontAwesomeIcon icon={faDumbbell} />
+                        </Flex>
                     </Link>
                 </Flex>
 
 
-                <Flex justifyContent="space-evenly" flex="1" alignItems='center' fontSize="1.6rem">
+                {/* links for larger screens */}
+                <Flex justifyContent="space-evenly" flex="1" alignItems='center' fontSize="1.6rem" hideBelow="md">
+                    { loggedIn ?
+                        <>
+                            <Link href="/tracker" >Gym Tracker</Link>
+                            <Link href="/searchpage" >Exercise Search</Link>
+                            <Button onClick={logoutRequest} >Logout</Button>
 
-                    <Link href="/tracker" className={styles.navbarlink}>Gym Tracker</Link>
-                    <Link href="/searchpage" className={styles.navbarlink}>Exercise Search</Link>
-
-                    {/* displays login or logout based on current url */}
-                    {path === '/tracker' ?
-                        <Button onClick={logoutRequest}>Logout</Button> :
-                        <Button onClick={loginRequest}>Login</Button> }
-
-                        {/* // <Link href="/login" className={styles.navbarlink}>Login</Link>} */}
-
-                    {/* <Button onClick={logoutRequest}>Logout</Button> */}
+                        </> :
+                        <Button onClick={loginRequest} marginLeft="auto">Login</Button>}
                 </Flex>
+
+                <MenuRoot >
+                    <MenuTrigger asChild hideFrom="md">
+                        <Button variant="outline" size="sm">
+                            Menu
+                        </Button>
+                    </MenuTrigger>
+                    <MenuContent>
+                    { loggedIn ?
+                        <VStack>
+                            <Link href="/searchpage" >Exercise Search</Link>
+                            <Button onClick={logoutRequest} >Logout</Button>
+
+                        </VStack> :
+                        <Button onClick={loginRequest} marginLeft="auto">Login</Button>}
+                    </MenuContent>
+                </MenuRoot>
             </Flex>
 
         </Box>

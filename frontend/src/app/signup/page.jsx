@@ -58,27 +58,7 @@ export default function Page() {
 
     
     return (
-        // <div className={styles.container}>
-
-
-        //     <form onSubmit={signup} className={styles.form}>
-        //         <h2>Sign up</h2>
-        //         <div className='labelinput'>
-        //             <label htmlFor="email">Email</label>
-        //             <input name="email" type="text" required />
-        //         </div>
-        //         <div className='labelinput'>
-        //             <label htmlFor="password">Password</label>
-        //             <input name="password" type="password" required />
-        //         </div>
-        //         <div className="emailerror">{emailError}</div>
-        //         <div className="passworderror" >{passwordError}</div>
-        //         <button type="submit" id="button">Sign up</button>
-        //     </form>
-
-        //     <Link href="login">Have an account? Sign in here.</Link>
-        // </div>
-
+   
 
         <Box display="flex" justifyContent="center" alignItems="center" minH="90vh" color="white">
             

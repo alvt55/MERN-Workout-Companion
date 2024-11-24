@@ -1,14 +1,24 @@
 'use client';
-import { useState, useEffect, useId } from 'react'
+import { useState, useEffect } from 'react'
 
 
 import { redirect } from 'next/navigation'
-import headerStyles from '../styles/header.module.css'
-import exerciseStyles from '../styles/exercises.module.css'
+
 import sessionStyles from '../styles/sessions.module.css'
 
 import DisplayExercises from './DisplayExercises';
 import SessionCard from './SessionCard';
+
+import { Box, VStack, HStack, Input, Button, Stack, Heading } from "@chakra-ui/react"
+import { InputGroup } from "@/components/ui/input-group"
+import { Field } from "@/components/ui/field"
+import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
+import { Alert } from "@/components/ui/alert"
+
+
+
+import { GiWeightLiftingUp } from
+  "react-icons/gi";
 
 
 
@@ -16,19 +26,13 @@ import SessionCard from './SessionCard';
 export default function Page() {
 
 
-  // Header
-
-
-  // Add exercises/session
+  
+  // exercise
   const [exercises, setExercises] = useState([]);
-  const [sessionWarning, setSessionWarning] = useState('');
-  const id = useId(); // accessibility for keyboard users 
 
-
-
-
-  // display sessions 
+  // session
   const [sessions, setSessions] = useState([]);
+  const [sessionWarning, setSessionWarning] = useState('');
   const [selectedDay, setSelectedDay] = useState("");
 
 
@@ -48,7 +52,7 @@ export default function Page() {
         credentials: 'include'
       })
 
-      const json = await response.json() // convert obj into js 
+      const json = await response.json(); 
 
       if (json.authError) {
         console.log(json.authError)
@@ -106,16 +110,12 @@ export default function Page() {
   // posting workout session to DB using backend API
   async function addSession(e) {
 
-
-
     e.preventDefault();
 
-
-    const d = new Date();
+      const d = new Date();
+    
     const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
     const day = e.target.day.value;
-
-
 
     if (exercises.length === 0) {
       setSessionWarning('Please add at least 1 exercise')
@@ -185,6 +185,7 @@ export default function Page() {
 
   }).reverse()
 
+ 
 
 
 
@@ -199,19 +200,9 @@ export default function Page() {
 
     <>
 
-      <form id="sessionForm" onSubmit={addSession}>
-  
-          <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white">
-            <Input name="day" ps="4.75em" placeholder="What we focus on today?" required />
-          </InputGroup>
-
-        <Button type="submit">Finish Workout</Button>
-        {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
-
-      </form>
-
-
-      <HStack gap="10" width="full" color="white">
+      
+      <VStack gap="12" width="100vw">
+      <HStack marginTop="4rem" gap="8" color="white" justify={'space-evenly'} width="100%">
 
 
         <form id="exerciseForm" onSubmit={addExercise}>
@@ -222,17 +213,17 @@ export default function Page() {
               <Input name="exerciseName" type="text" required />
             </Field>
 
-            <Field label="Exercise name">
+            <Field label="Weight">
               <NumberInputRoot defaultValue="10" width="200px">
                 <NumberInputField name="weight" />
               </NumberInputRoot>
             </Field>
-            <Field label="Exercise name">
+            <Field label="Sets">
               <NumberInputRoot defaultValue="0" width="200px" required>
                 <NumberInputField name="sets" />
               </NumberInputRoot>
             </Field>
-            <Field label="Exercise name">
+            <Field label="Reps">
               <NumberInputRoot defaultValue="10" width="200px" required>
                 <NumberInputField name="reps" />
               </NumberInputRoot>
@@ -246,44 +237,48 @@ export default function Page() {
 
 
 
+  
+      <form id="sessionForm" onSubmit={addSession}>
+
+        <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white" width="30vw">
+          <Input name="day" ps="4.75em" placeholder="What did we focus on today?" required />
+        </InputGroup>
+
+        <Button type="submit">Finish Workout</Button>
+        {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
+
+      </form>
+
+      
 
 
 
-      {/* display sessions */}
-      {/* <div className={sessionStyles.sessionsort}>
 
-        <button onClick={() => setSelectedDay("All")}>All</button>
-        <button onClick={() => setSelectedDay("Push")}>Push</button>
-        <button onClick={() => setSelectedDay("Pull")}>Pull</button>
-        <button onClick={() => setSelectedDay("Legs")}>Legs</button>
-      </div> */}
-
-
-      <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw" color="white">
-        <Field label="Filter by focus">
+      <Field label="Filter by focus" width="15vw" color="white" >
           <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
         </Field>
 
-      </Stack>
 
-      <div className={sessionStyles.sessionsText}>
-        {createSessionElements}
-      </div>
+
+      
+
+      <VStack width="100vw" justify="center">
+
+      <HStack wrap="wrap" justify="center" >
+      {createSessionElements}
+      </HStack>
+      
+      </VStack>
+       
+  
+      
+      </VStack>
+      
     </>
 
 
   );
 }
 
-import { Box, HStack, Input, Button, Stack, Heading, InputAddon } from "@chakra-ui/react"
-import { CiCalendarDate } from "react-icons/ci"
-import { InputGroup } from "@/components/ui/input-group"
-import { Field } from "@/components/ui/field"
-import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
-import { Alert } from "@/components/ui/alert"
 
-
-
-import { GiWeightLiftingUp } from
-  "react-icons/gi";
 

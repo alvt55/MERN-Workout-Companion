@@ -1,30 +1,33 @@
-import styles from '../styles/searchpage.module.css'
+// import styles from '../styles/searchpage.module.css'
+import { Card, Heading, Image, HStack } from '@chakra-ui/react';
+
 
 export default function ExerciseCard(props) {
 
 
     const name = props.exerciseObj.name;
-    const capital = name[0].toUpperCase() + name.slice(1);
 
     // formats the instructions for the exercise card from API
     const steps = props.exerciseObj.instructions.map((i, idx) => {
         return <li key={idx}>{i}</li>
     })
 
-
     return (
-        <div className={styles.exercisecard}>
-            <h3>{capital}</h3>
 
-            <div className={styles.exerciseinfo}>
+        <Card.Root width="100%" height="50%" boxShadow="2xl" borderRadius="2xl" border="none" backgroundColor={"#181818"}>
+            <Card.Body color="white" borderRadius="xl">
+                <Heading color="teal.500" className={"capitalize"}>{name}</Heading>
+                <HStack>
 
-                <img src={props.exerciseObj.gifUrl} alt=""/>
 
-                <ol>
-                    {steps}
-                </ol>
-            </div>
+                    <Image height="40%" src={props.exerciseObj.gifUrl} alt="" />
+                    <ol>
+                        {steps}
+                    </ol>
+                </HStack>
+            </Card.Body>
 
-        </div>
+        </Card.Root>
+
     );
 }

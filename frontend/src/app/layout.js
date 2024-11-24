@@ -1,24 +1,27 @@
 'use client'
 
-import  {ChakraProvider, defaultSystem}  from '@chakra-ui/react';
+import { ChakraProvider, defaultSystem, Box } from '@chakra-ui/react';
 import Navbar from './navbarpage/Navbar';
-
-import system from "../theme";
+import './index.css'
 
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-   
+
       <body>
-   
 
 
-      <ChakraProvider value={defaultSystem}>
+
+        <ChakraProvider value={defaultSystem}>
+
+          <Box width="100%" m="0 auto" overflow="hidden">
           <Navbar />
           {children}
-        
-    </ChakraProvider>
+          </Box>
+          
+
+        </ChakraProvider>
       </body>
     </html>
   );

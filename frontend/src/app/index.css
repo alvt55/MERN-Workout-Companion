@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+    font-family: "Inconsolata", monospace;
+    background-color: #1f1f1d;
+    max-width: 100vw;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}

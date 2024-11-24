@@ -1,12 +1,12 @@
 
-import styles from '../styles/displayexercises.module.css'
+import { Card, Text } from "@chakra-ui/react"
 
 
 
 
 function DisplayExercises(props) {
 
-    const exercises = props.exercises; 
+    const exercises = props.exercises;
 
 
     // displays exercises formatted in preview
@@ -18,7 +18,7 @@ function DisplayExercises(props) {
             const obj = exercises[i];
 
             // removes weight if 0 
-            let weight = " (" + obj.weight + ") ";
+            let weight = " (" + obj.weight + "lbs) ";
             if (obj.weight <= 0) {
                 weight = " ";
             }
@@ -35,12 +35,17 @@ function DisplayExercises(props) {
 
         <>
 
-            <div className={styles.displayExcontainer}>
-                {/* pre keeps the new lines created by display()*/}
-                <pre id="display-text">{display()}</pre>
+            <Card.Root width="25%" height="50vh"  boxShadow="2xl"  borderRadius="2xl" border="none" backgroundColor={"#181818"}>
+                <Card.Body  color="white" overflowY="auto" borderRadius="xl">
 
+                        <Text color="teal.500">SetsxReps (Weight) Exercise</Text>
+                        <pre>{display()}</pre>
+                </Card.Body>
+          
+            </Card.Root>
+            
 
-            </div>
+           
 
         </>
     );
