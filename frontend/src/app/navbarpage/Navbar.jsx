@@ -6,7 +6,6 @@ import { faDumbbell } from '@fortawesome/free-solid-svg-icons';
 import { Box, Flex, Button, Heading, VStack} from '@chakra-ui/react';
 import {
     MenuContent,
-    MenuItem,
     MenuRoot,
     MenuTrigger,
   } from "@/components/ui/menu"
@@ -68,7 +67,7 @@ export default function Navbar(props) {
 
 
                 {/* links for larger screens */}
-                <Flex justifyContent="space-evenly" flex="1" alignItems='center' fontSize="1.6rem" hideBelow="md">
+                <Flex justifyContent="space-evenly" flex="1" alignItems='center' fontSize="1.6rem" hideBelow="lg">
                     { loggedIn ?
                         <>
                             <Link href="/tracker" >Gym Tracker</Link>
@@ -79,20 +78,23 @@ export default function Navbar(props) {
                         <Button onClick={loginRequest} marginLeft="auto">Login</Button>}
                 </Flex>
 
-                <MenuRoot >
-                    <MenuTrigger asChild hideFrom="md">
+                <MenuRoot>
+                    <MenuTrigger asChild display={{ base: "flex", md: "flex", lg: "none", xl: "none" }} >
                         <Button variant="outline" size="sm">
                             Menu
                         </Button>
                     </MenuTrigger>
-                    <MenuContent>
+                    <MenuContent backgroundColor="#1f1f1f" color="white" outline="white" display={{ base: "flex", md: "flex", lg: "none", xl: "none" }}>
                     { loggedIn ?
-                        <VStack>
+                        <VStack justify="center">
+                             <Link href="/tracker" >Gym Tracker</Link>
                             <Link href="/searchpage" >Exercise Search</Link>
                             <Button onClick={logoutRequest} >Logout</Button>
 
                         </VStack> :
-                        <Button onClick={loginRequest} marginLeft="auto">Login</Button>}
+
+                        <Button onClick={loginRequest} marginLeft="auto">Login</Button>
+                        }
                     </MenuContent>
                 </MenuRoot>
             </Flex>

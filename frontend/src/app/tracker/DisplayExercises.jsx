@@ -1,5 +1,5 @@
 
-import { Card, Text } from "@chakra-ui/react"
+import { Card, Text} from "@chakra-ui/react"
 
 
 
@@ -35,10 +35,13 @@ function DisplayExercises(props) {
 
         <>
 
-            <Card.Root width="25%" height="50vh"  boxShadow="2xl"  borderRadius="2xl" border="none" backgroundColor={"#181818"}>
-                <Card.Body  color="white" overflowY="auto" borderRadius="xl">
-
-                        <Text color="teal.500">SetsxReps (Weight) Exercise</Text>
+            <Card.Root width={{ base: "100%", lg: "40%" }} height="45vh"  boxShadow="2xl"  borderRadius="2xl" border="none" backgroundColor={"#181818"}>
+                <Card.Body color="white" overflowY="auto" overflowX="auto" borderRadius="xl">
+                      
+                            <Text textAlign={"left"} color="teal.500">Exercises Added</Text>
+                            <Text>SetsxReps (Weight) Exercise</Text>
+                       
+                        <br></br>
                         <pre>{display()}</pre>
                 </Card.Body>
           

@@ -1,5 +1,5 @@
 // import styles from '../styles/searchpage.module.css'
-import { Card, Heading, Image, HStack } from '@chakra-ui/react';
+import { Card, Heading, Image, Flex } from '@chakra-ui/react';
 
 
 export default function ExerciseCard(props) {
@@ -14,17 +14,17 @@ export default function ExerciseCard(props) {
 
     return (
 
-        <Card.Root width="100%" height="50%" boxShadow="2xl" borderRadius="2xl" border="none" backgroundColor={"#181818"}>
+        <Card.Root width="100%" height={{ base: "50%", md: "50%" }} boxShadow="2xl" borderRadius="2xl" border="none" backgroundColor={"#181818"}>
             <Card.Body color="white" borderRadius="xl">
                 <Heading color="teal.500" className={"capitalize"}>{name}</Heading>
-                <HStack>
+                <Flex marginTop="2rem" gap="8" width="100%" flexDirection={{ base: "column", md: "row" }}>
 
 
-                    <Image height="40%" src={props.exerciseObj.gifUrl} alt="" />
+                    <Image height={{ base: "30%", md: "40%" }} src={props.exerciseObj.gifUrl} alt="" />
                     <ol>
                         {steps}
                     </ol>
-                </HStack>
+                </Flex>
             </Card.Body>
 
         </Card.Root>

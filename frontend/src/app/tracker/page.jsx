@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react'
 
 import { redirect } from 'next/navigation'
 
-import sessionStyles from '../styles/sessions.module.css'
 
 import DisplayExercises from './DisplayExercises';
 import SessionCard from './SessionCard';
 
-import { Box, VStack, HStack, Input, Button, Stack, Heading } from "@chakra-ui/react"
+import { VStack, Input, Button, Stack, Heading, Flex } from "@chakra-ui/react"
 import { InputGroup } from "@/components/ui/input-group"
 import { Field } from "@/components/ui/field"
 import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
@@ -26,7 +25,7 @@ import { GiWeightLiftingUp } from
 export default function Page() {
 
 
-  
+
   // exercise
   const [exercises, setExercises] = useState([]);
 
@@ -52,7 +51,7 @@ export default function Page() {
         credentials: 'include'
       })
 
-      const json = await response.json(); 
+      const json = await response.json();
 
       if (json.authError) {
         console.log(json.authError)
@@ -112,8 +111,8 @@ export default function Page() {
 
     e.preventDefault();
 
-      const d = new Date();
-    
+    const d = new Date();
+
     const date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
     const day = e.target.day.value;
 
@@ -185,7 +184,7 @@ export default function Page() {
 
   }).reverse()
 
- 
+
 
 
 
@@ -200,80 +199,88 @@ export default function Page() {
 
     <>
 
-      
-      <VStack gap="12" width="100vw">
-      <HStack marginTop="4rem" gap="8" color="white" justify={'space-evenly'} width="100%">
+
+      <VStack gap="12" width="100vw" color="white" padding="2rem">
+
+        {/* container for form and display */}
+        <Flex marginTop="3rem" gap="8" justify={'space-evenly'} width="100%" flexDirection={{ base: "column", md: "row" }}>
 
 
-        <form id="exerciseForm" onSubmit={addExercise}>
-          <Heading as="h1" size="2xl">Add Exercises Here</Heading>
-          <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw" color="white">
+          <form id="exerciseForm" onSubmit={addExercise}>
+            <Heading as="h1" size="2xl">Add Exercises Here</Heading>
+            <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw" color="white">
 
-            <Field label="Exercise name">
-              <Input name="exerciseName" type="text" required />
-            </Field>
+              <Field label="Exercise name">
+                <Input name="exerciseName" type="text" required />
+              </Field>
 
-            <Field label="Weight">
-              <NumberInputRoot defaultValue="10" width="200px">
-                <NumberInputField name="weight" />
-              </NumberInputRoot>
-            </Field>
-            <Field label="Sets">
-              <NumberInputRoot defaultValue="0" width="200px" required>
-                <NumberInputField name="sets" />
-              </NumberInputRoot>
-            </Field>
-            <Field label="Reps">
-              <NumberInputRoot defaultValue="10" width="200px" required>
-                <NumberInputField name="reps" />
-              </NumberInputRoot>
-            </Field>
-            <Button type="submit">Add Exercise</Button>
-          </Stack>
+              <Field label="Weight">
+                <NumberInputRoot defaultValue="1" width="200px">
+                  <NumberInputField name="weight" />
+                </NumberInputRoot>
+              </Field>
+              <Field label="Sets">
+                <NumberInputRoot defaultValue="1" width="200px" required>
+                  <NumberInputField name="sets" />
+                </NumberInputRoot>
+              </Field>
+              <Field label="Reps">
+                <NumberInputRoot defaultValue="1" width="200px" required>
+                  <NumberInputField name="reps" />
+                </NumberInputRoot>
+              </Field>
+              <Button type="submit">Add Exercise</Button>
+            </Stack>
+          </form>
+
+          <DisplayExercises exercises={exercises}></DisplayExercises>
+        </Flex>
+
+
+
+
+
+        
+        <form id="sessionForm" onSubmit={addSession}>
+
+        <VStack gap={5}>
+          <Field label="What did we focus on today?">
+            <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white" width={{ base: "80vw", md: "30vw" }}>
+              <Input name="day" ps="4.75em" placeholder="e.g. cardio, back/chest, legs " required />
+            </InputGroup>
+          </Field>
+
+          <Button type="submit">Finish Workout</Button>
+          {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
+
+          </VStack>
+
         </form>
 
-        <DisplayExercises exercises={exercises}></DisplayExercises>
-      </HStack>
-
-
-
-  
-      <form id="sessionForm" onSubmit={addSession}>
-
-        <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white" width="30vw">
-          <Input name="day" ps="4.75em" placeholder="What did we focus on today?" required />
-        </InputGroup>
-
-        <Button type="submit">Finish Workout</Button>
-        {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
-
-      </form>
-
-      
 
 
 
 
-      <Field label="Filter by focus" width="15vw" color="white" >
+
+
+
+        <Field label="Filter by focus" width={{ base: "80vw", md: "30vw" }} color="white" >
           <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
         </Field>
 
 
 
-      
 
-      <VStack width="100vw" justify="center">
 
-      <HStack wrap="wrap" justify="center" >
-      {createSessionElements}
-      </HStack>
-      
+        <VStack width="100vw" justify="center">
+
+            {createSessionElements}
+        </VStack>
+
+
+
       </VStack>
-       
-  
-      
-      </VStack>
-      
+
     </>
 
 
