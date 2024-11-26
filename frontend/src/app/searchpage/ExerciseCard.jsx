@@ -1,5 +1,5 @@
-// import styles from '../styles/searchpage.module.css'
-import { Card, Heading, Image, Flex } from '@chakra-ui/react';
+"use client"
+import { Card, Heading, Flex, Image} from '@chakra-ui/react';
 
 
 export default function ExerciseCard(props) {
@@ -28,6 +28,7 @@ export default function ExerciseCard(props) {
             </Card.Body>
 
         </Card.Root>
+     
 
     );
 }

@@ -9,7 +9,7 @@ const {
 const searchRouter = express.Router()
 
 // GET all workouts
-searchRouter.get('/getExercises/', getExercises);
+searchRouter.get('/getExercises', getExercises);
 
   
 

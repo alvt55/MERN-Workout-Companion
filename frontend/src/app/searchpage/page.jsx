@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import ExerciseCard from './ExerciseCard';
-import axios from 'axios';
 
 import { Box, Input, Stack, Button, Heading, Text, VStack } from '@chakra-ui/react';
 import { Field } from "../../components/ui/field"
@@ -12,7 +11,7 @@ import { Field } from "../../components/ui/field"
 
 
 export default function Page() {
-    const [exercises, setExercises] = useState([]);
+    const [exercises, setExercises] = useState(null);
 
     const bodyParts = [
         "back",
@@ -38,11 +37,22 @@ export default function Page() {
 
         if (bodyParts.includes(search.toLowerCase())) {
             try {
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}search/getExercises?bodyPart=${search}`);
-                setExercises(response.data);
+                // const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}search/getExercises?bodyPart=${search}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}search/getExercises?bodyPart=${search}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+
+                const json = await response.json();
+                console.log("this is json.data", json)
+                setExercises(json);
+
+
                 setSearchError('');
             } catch (error) {
-                setSearchError('Could not fetch exercises');
+                setSearchError('Could not fetch exercises', error);
             }
         } else {
             setSearchError('Please enter a valid search');
@@ -53,17 +63,21 @@ export default function Page() {
 
 
 
+    console.log('exercises', exercises)
 
 
     // returns exercise cards formatted
-    const allCards = exercises.map(exercise => {
-        return <ExerciseCard key={exercise.id} exerciseObj={exercise} />
 
-    })
+  
+        // const allCards = exercises.map(exercise => {
+        //     return <ExerciseCard key={exercise.id} exerciseObj={exercise} />
+    
+        // })
+   
+    
 
 
 
-    // TODO: detect no cookies
 
 
 
@@ -92,34 +106,12 @@ export default function Page() {
 
 
             <VStack gap={5}>
-                {allCards}
+                
             </VStack>
 
         </VStack>
 
 
-        // <div className={styles.container}>
-
-        //     <form onSubmit={handleSubmit} id="myform">
-        //         <div className={styles.labelinput}>
-        //             <label>Search</label>
-        //             <input
-        //                 type="text"
-        //                 name="search"
-        //                 required />
-
-
-        //         </div>
-        //         <h1>Available search inputs: </h1>
-        //         <p>
-        //             Back Cardio Chest Lower Arms Lower Legs Neck Shoulders Upper Arms Upper Legs Waist
-        //         </p>
-        //         <button type="submit">Submit</button>
-        //         <p className="searchError">{searchError}</p>
-        //     </form>
-
-        //     {allCards}
-        // </div>
 
 
 

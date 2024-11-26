@@ -49,16 +49,21 @@ function SessionCard(props) {
 
     <Card.Root w="80vw" height="50%" boxShadow="2xl" borderRadius="2xl" border="none" backgroundColor={"#181818"}>
       <Card.Body color="white" borderRadius="xl">
-        <Heading color="teal.500" className={"capitalize"}>{props.session.date}  |  {props.session.day}</Heading>
+        <Heading color="teal.500" className={"capitalize"} marginBottom={2}>{props.session.date}  |  {props.session.day}</Heading>
 
 
         <ul>
           {session.exercises.map((e, idx) => {
 
-            let weight = e.weight ? " (" + e.weight + ") " : " ";
+         
 
-            let exText = e.sets + "x" + e.reps + weight + e.name;
-            return <li key={idx}>{exText}</li>
+            let weight = " (" + e.weight + e.unit + ")";
+            if (e.weight <= 0 || e.unit === 'bodyweight') {
+              weight = " (Bodyweight)";
+            }
+
+            let firstLine = e.sets + "x" + e.reps + weight; 
+            return <span key={idx}><li key={idx}>{firstLine}<br></br> {e.name}</li> <br></br> </span>
           })}
         </ul>
 

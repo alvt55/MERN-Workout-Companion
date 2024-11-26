@@ -8,17 +8,16 @@ import { redirect } from 'next/navigation'
 import DisplayExercises from './DisplayExercises';
 import SessionCard from './SessionCard';
 
-import { VStack, Input, Button, Stack, Heading, Flex } from "@chakra-ui/react"
+import { VStack, Input, Button, Stack, Heading, Flex, HStack} from "@chakra-ui/react"
 import { InputGroup } from "@/components/ui/input-group"
 import { Field } from "@/components/ui/field"
 import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
 import { Alert } from "@/components/ui/alert"
 
-
-
 import { GiWeightLiftingUp } from
   "react-icons/gi";
 
+  import { Radio, RadioGroup } from "@/components/ui/radio"
 
 
 
@@ -37,6 +36,16 @@ export default function Page() {
 
   // detects updates to changes in sessions (add or remove)
   const [update, setUpdate] = useState(false)
+
+
+  useEffect(() => {
+    const data = window.localStorage.getItem('MY_APP_STATE');
+    if (data !== null) setExercises(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('MY_APP_STATE', JSON.stringify(exercises));
+  }, [exercises]);
 
 
   // fetches sessions from DB
@@ -84,6 +93,10 @@ export default function Page() {
     const weight = e.target.weight.value;
     const sets = e.target.sets.value;
     const reps = e.target.reps.value;
+    const unit = e.target.unit.value;
+
+    
+    
 
     let nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
@@ -91,7 +104,8 @@ export default function Page() {
       name: nameCapitalized,
       weight,
       sets,
-      reps
+      reps,
+      unit
     }
 
     setExercises(e => [...e, currExercise]);
@@ -99,7 +113,10 @@ export default function Page() {
 
     document.getElementById('exerciseForm').reset();
 
-    console.log('adding exercise', currExercise)
+    // console.log('adding exercise', currExercise)
+    console.log(unit)
+  
+
 
   }
 
@@ -191,8 +208,8 @@ export default function Page() {
   // testing 
 
 
-  console.log("exercises added", exercises)
-  console.log('selected day', selectedDay)
+  // console.log("exercises added", exercises)
+  // console.log('selected day', selectedDay)
 
   return (
 
@@ -218,7 +235,18 @@ export default function Page() {
                 <NumberInputRoot defaultValue="1" width="200px">
                   <NumberInputField name="weight" />
                 </NumberInputRoot>
+
+                <RadioGroup defaultValue="lbs" name="unit" required>
+                <HStack gap="6">
+                  <Radio value="lbs">Lbs</Radio>
+                  <Radio value="kg">Kgs</Radio>
+                  <Radio value="bodyweight">Bodyweight</Radio>
+
+                </HStack>
+              </RadioGroup>
               </Field>
+              
+
               <Field label="Sets">
                 <NumberInputRoot defaultValue="1" width="200px" required>
                   <NumberInputField name="sets" />
@@ -240,18 +268,18 @@ export default function Page() {
 
 
 
-        
+
         <form id="sessionForm" onSubmit={addSession}>
 
-        <VStack gap={5}>
-          <Field label="What did we focus on today?">
-            <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white" width={{ base: "80vw", md: "30vw" }}>
-              <Input name="day" ps="4.75em" placeholder="e.g. cardio, back/chest, legs " required />
-            </InputGroup>
-          </Field>
+          <VStack gap={5}>
+            <Field label="What did we focus on today?">
+              <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white" width={{ base: "80vw", md: "30vw" }}>
+                <Input name="day" ps="4.75em" placeholder="e.g. cardio, back/chest, legs " required />
+              </InputGroup>
+            </Field>
 
-          <Button type="submit">Finish Workout</Button>
-          {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
+            <Button type="submit">Finish Workout</Button>
+            {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
 
           </VStack>
 
@@ -274,7 +302,7 @@ export default function Page() {
 
         <VStack width="100vw" justify="center">
 
-            {createSessionElements}
+          {createSessionElements}
         </VStack>
 
 
