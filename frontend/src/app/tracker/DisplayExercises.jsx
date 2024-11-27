@@ -1,5 +1,5 @@
 "use client"
-import { Card, Text, Box} from "@chakra-ui/react"
+import { Card, Text} from "@chakra-ui/react"
 
 
 

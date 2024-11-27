@@ -189,6 +189,8 @@ export default function Page() {
   }
 
 
+
+  // TODO: fix for multiple words?
   const createSessionElements = sessions.map((session, idx) => {
 
     if (session.day.toLowerCase() === selectedDay.toLowerCase()) {

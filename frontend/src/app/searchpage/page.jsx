@@ -11,7 +11,7 @@ import { Field } from "../../components/ui/field"
 
 
 export default function Page() {
-    const [exercises, setExercises] = useState(null);
+    const [exercises, setExercises] = useState([]);
 
     const bodyParts = [
         "back",
@@ -69,10 +69,10 @@ export default function Page() {
     // returns exercise cards formatted
 
   
-        // const allCards = exercises.map(exercise => {
-        //     return <ExerciseCard key={exercise.id} exerciseObj={exercise} />
+        const allCards = exercises.map(exercise => {
+            return <ExerciseCard key={exercise.id} exerciseObj={exercise} />
     
-        // })
+        })
    
     
 
@@ -106,7 +106,7 @@ export default function Page() {
 
 
             <VStack gap={5}>
-                
+                {allCards}
             </VStack>
 
         </VStack>
