@@ -1,4 +1,4 @@
-
+'use client'
 import { redirect } from 'next/navigation'
 import { Card, Heading, Button } from '@chakra-ui/react';
 

@@ -37,7 +37,6 @@ export default function Page() {
 
         if (bodyParts.includes(search.toLowerCase())) {
             try {
-                // const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}search/getExercises?bodyPart=${search}`);
                 const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}search/getExercises?bodyPart=${search}`, {
                     method: 'GET',
                     headers: {
@@ -50,7 +49,7 @@ export default function Page() {
                 setExercises(json);
 
 
-                setSearchError('');
+                setSearchError('');        
             } catch (error) {
                 setSearchError('Could not fetch exercises', error);
             }
@@ -58,7 +57,28 @@ export default function Page() {
             setSearchError('Please enter a valid search');
         }
 
-        document.getElementById('myForm').reset();
+        // const url = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${search}?limit=10&offset=0`;
+        // const options = {
+        //   method: 'GET',
+        //   headers: {
+        //     'x-rapidapi-key': process.env.EXERCISEDB_KEY,
+        //     'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+        //   }
+        // };
+
+        
+        // const response = await fetch(url, options);
+        // const result = await response.json();
+
+        // console.log(result)
+
+        // if (response.error) {
+        //     console.log(response.error); 
+        // } else {
+        //     setExercises(result); 
+        // }
+      
+        // document.getElementById('myForm').reset();
     };
 
 

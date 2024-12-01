@@ -1,4 +1,4 @@
-"use client"
+// 'use client'
 import { Card, Text} from "@chakra-ui/react"
 
 

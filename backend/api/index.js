@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 
 
 // attaches dotenv variables to process.env obj 
-require('dotenv').config() 
+require('dotenv').config({}) 
 
 
 
@@ -39,11 +39,11 @@ const app = express()
     
     
     // vercel testing 
-    app.get('/', (req, res) => {
+    app.get('/api/', (req, res) => {
         res.status(200).json({msg: 'express test'})
     });
 
-    app.get('/two', (req, res) => {
+    app.get('/api/two', (req, res) => {
       res.status(200).json({msg: 'second express test'})
   });
 

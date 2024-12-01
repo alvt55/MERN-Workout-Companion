@@ -21,6 +21,7 @@ import { GiWeightLiftingUp } from
 
 
 
+
 export default function Page() {
 
 
@@ -96,8 +97,6 @@ export default function Page() {
     const unit = e.target.unit.value;
 
     
-    
-
     let nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
     const currExercise = {
@@ -116,8 +115,6 @@ export default function Page() {
     // console.log('adding exercise', currExercise)
     console.log(unit)
   
-
-
   }
 
 
@@ -206,13 +203,6 @@ export default function Page() {
 
 
 
-
-  // testing 
-
-
-  // console.log("exercises added", exercises)
-  // console.log('selected day', selectedDay)
-
   return (
 
 
@@ -293,7 +283,6 @@ export default function Page() {
 
 
 
-
         <Field label="Filter by focus" width={{ base: "80vw", md: "30vw" }} color="white" >
           <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
         </Field>
@@ -306,6 +295,10 @@ export default function Page() {
 
           {createSessionElements}
         </VStack>
+
+     
+
+        
 
 
 

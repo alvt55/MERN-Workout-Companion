@@ -1,4 +1,3 @@
-"use client"
 import { Card, Heading, Flex, Image} from '@chakra-ui/react';
 
 
