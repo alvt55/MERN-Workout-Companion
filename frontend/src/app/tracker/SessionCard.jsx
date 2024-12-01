@@ -13,11 +13,13 @@ function SessionCard(props) {
 
 
   const deleteSession = async () => {
+    const jwt = window.localStorage.getItem('jwt');
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/${session._id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`
       },
       credentials: 'include'
     })

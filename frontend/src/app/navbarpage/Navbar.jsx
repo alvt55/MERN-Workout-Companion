@@ -25,17 +25,20 @@ export default function Navbar(props) {
 
 
     const logoutRequest = async (e) => {
+        const jwt = window.localStorage.getItem('jwt');
 
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/logout`, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwt}`
                 },
                 credentials: 'include'
             });
 
             if (res) {
+                window.localStorage.removeItem('jwt');
                 window.location.assign('/login')
             }
 

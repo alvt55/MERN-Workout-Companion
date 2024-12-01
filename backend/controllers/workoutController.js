@@ -7,8 +7,11 @@ require('dotenv').config()
 // Get all workouts
 const getWorkouts = async (req, res) => {
 
-    const token = req.cookies.jwt  
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]
     const decoded = jwt.verify(token, process.env.JWTSECRET)
+
+    console.log(decoded); 
 
     try {
         const workouts = await Workout.find({sessionuser: decoded.id}).sort({ createdAt: -1 })
@@ -23,7 +26,8 @@ const getWorkouts = async (req, res) => {
 // Post a workout
 const createWorkout = async (req, res) => {
 
-    const token = req.cookies.jwt  
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]
     const decoded = jwt.verify(token, process.env.JWTSECRET)
 
     const { date, day, exercises } = req.body // get workout properties from req obj 

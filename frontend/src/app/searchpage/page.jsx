@@ -83,7 +83,7 @@ export default function Page() {
 
 
 
-    console.log('exercises', exercises)
+    // console.log('exercises', exercises)
 
 
     // returns exercise cards formatted

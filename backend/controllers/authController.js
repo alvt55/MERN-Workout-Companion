@@ -55,8 +55,8 @@ const loginPost = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000,  sameSite: 'None', secure: true});
-    res.status(200).json({ user: user._id });
+    // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000,  sameSite: 'None', secure: true});
+    res.status(200).json({ token });
 
   } catch (err) {
     const errors = handleErrors(err)
@@ -73,8 +73,8 @@ const signupPost = async (req, res) => {
   try {
     const user = await User.create({ email, password });
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000,  sameSite: 'None', secure: true});
-    res.status(201).json({ user: user._id });
+    // res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000,  sameSite: 'None', secure: true});
+    res.status(201).json({ token });
   }
   catch (err) {
     const errors = handleErrors(err);
@@ -87,7 +87,7 @@ const signupPost = async (req, res) => {
 const logout = async (req, res) => {
 
   try {
-    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+    // res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
     res.status(200).json({ message: 'logout successful' })
   } catch (err) {
     res.status(400).json({ err });

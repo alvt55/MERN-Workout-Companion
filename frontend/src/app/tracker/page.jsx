@@ -39,7 +39,10 @@ export default function Page() {
   const [update, setUpdate] = useState(false)
 
 
+
+
   useEffect(() => {
+    
     const data = window.localStorage.getItem('MY_APP_STATE');
     if (data !== null) setExercises(JSON.parse(data));
   }, []);
@@ -49,14 +52,17 @@ export default function Page() {
   }, [exercises]);
 
 
+
   // fetches sessions from DB
   useEffect(() => {
+    const jwt = window.localStorage.getItem('jwt');
 
     const fetchWorkouts = async () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/getWorkouts`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`
         },
         credentials: 'include'
       })
@@ -113,7 +119,7 @@ export default function Page() {
     document.getElementById('exerciseForm').reset();
 
     // console.log('adding exercise', currExercise)
-    console.log(unit)
+    // console.log(unit)
   
   }
 
@@ -123,6 +129,7 @@ export default function Page() {
   // posting workout session to DB using backend API
   async function addSession(e) {
 
+    const jwt = window.localStorage.getItem('jwt');
     e.preventDefault();
 
     const d = new Date();
@@ -148,7 +155,8 @@ export default function Page() {
       method: 'POST',
       body: JSON.stringify(currSession),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`
       },
       credentials: 'include'
     })

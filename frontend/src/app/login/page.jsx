@@ -35,15 +35,16 @@ export default function Page() {
 
             const data = await res.json();
 
+            if (data.token) {
+                window.localStorage.setItem('jwt', data.token);
+                window.location.assign('/tracker')
+            }
+            
             if (data.errors) {
                 setEmailError(data.errors.email);
                 setPasswordError(data.errors.password);
             }
 
-            if (data.user) {
-                window.location.assign('/tracker')
-
-            }
 
         } catch (err) {
             console.log(err);
