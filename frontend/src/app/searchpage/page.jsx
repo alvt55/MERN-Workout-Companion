@@ -33,9 +33,11 @@ export default function Page() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const search = e.target.search.value;
+        const s = e.target.search.value;
+        const search = s.toLowerCase(); 
 
-        if (bodyParts.includes(search.toLowerCase())) {
+
+        if (bodyParts.includes(search)) {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}search/getExercises?bodyPart=${search}`, {
                     method: 'GET',
