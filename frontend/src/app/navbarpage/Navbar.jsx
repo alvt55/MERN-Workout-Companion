@@ -58,11 +58,9 @@ export default function Navbar(props) {
             <Flex gap="10" justifyContent='space-evenly' m="0 3rem">
 
                 <Flex >
-                    <Link href="/" style={{ textDecoration: 'none' }}>
                         <Flex fontSize='2rem' gap={5}>
                             <Heading hideBelow="md">GCompanion</Heading> <FontAwesomeIcon icon={faDumbbell} />
                         </Flex>
-                    </Link>
                 </Flex>
 
 

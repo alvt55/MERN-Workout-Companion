@@ -1,8 +1,0 @@
-{
-    "rewrites": [
-      {
-        "source": "/api/:path*",
-        "destination": "https://gcompanion-express.vercel.app/api/:path*"
-      }
-    ]
-  }
