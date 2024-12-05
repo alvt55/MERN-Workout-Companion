@@ -44,7 +44,16 @@ const createWorkout = async (req, res) => {
 // delete a workout 
 const deleteWorkout = async (req, res) => {
 
-    const { id } = req.params
+    const { id, userid} = req.params
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]
+    const decoded = jwt.verify(token, process.env.JWTSECRET)
+
+
+    if (userid !== decoded.id) {
+        return res.status(400).json({error: "unauthorized user tried to delete"});
+    }
+  
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ error: "no such workout" })

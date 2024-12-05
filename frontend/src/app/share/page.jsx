@@ -6,10 +6,10 @@ import { InputGroup } from "@/components/ui/input-group"
 import { Field } from "@/components/ui/field"
 import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
 import { Alert } from "@/components/ui/alert"
-
 import { redirect } from 'next/navigation'
 import { socket } from './socket'
 import io from "socket.io-client";
+import FriendCard from './FriendCard'
 
 export default function Page() {
 
@@ -68,7 +68,7 @@ export default function Page() {
     async function main() {
       socket.connect();
 
-      const jwt = window.localStorage.getItem('jwt');
+      const jwt = "" || window.localStorage.getItem('jwt');
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}auth/findEmail`, {
         method: 'GET',
         headers: {
@@ -87,8 +87,10 @@ export default function Page() {
       console.log('after register')
 
 
-      function addSharedSession(senderEmail, theirSessions) {
-        console.log('Received shared session from', senderEmail, theirSessions);
+      function addSharedSession(theirSessions) {
+        console.log('Received shared session from', theirSessions);
+        
+
         setFriendSessions((prev) => [...prev, ...theirSessions]);
         console.log(friendSessions);
       }
@@ -110,8 +112,14 @@ export default function Page() {
 
   function shareActivity() {
 
+    const sendingSessions = mySessions.map((session) => {
+     return {...session, 
+        email: email
+      }
+    })
 
-    socket.emit('shareActivity', ["test1@gmail.com"], email, mySessions);
+
+    socket.emit('shareActivity', ["web1@gmail.com", "a@gmail.com"], sendingSessions);
   }
 
 
@@ -136,10 +144,11 @@ export default function Page() {
 
   const createFriendElements = friendSessions.map((session, idx) => {
 
-    if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} /> // key = session.id 
+ 
+      if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
+      return <FriendCard key={session._id} session={session} remove={removeUpdate} from={session.email}/> // key = session.id 
     } else if (selectedDay.trim() === "") {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
+      return <FriendCard key={session._id} session={session} remove={removeUpdate} from={session.email}/>
     }
 
     return "";
@@ -151,6 +160,7 @@ export default function Page() {
   return (
 
     <>
+    <Heading color={"white"}>{email}</Heading>
 
       <Field label="Filter by focus" width={{ base: "80vw", md: "30vw" }} color="white" >
         <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />

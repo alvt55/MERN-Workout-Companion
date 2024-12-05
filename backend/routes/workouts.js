@@ -16,7 +16,7 @@ router.get('/getWorkouts', requireAuth, getWorkouts)
 router.post('/createWorkout', requireAuth, createWorkout)
 
 // DELETE a workout 
-router.delete('/:id', requireAuth, deleteWorkout); 
+router.delete('/:id/:userid', requireAuth, deleteWorkout); 
 
   
 
