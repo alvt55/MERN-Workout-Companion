@@ -1,7 +1,7 @@
 'use client'
 import { redirect } from 'next/navigation'
 import { Card, Heading, Button } from '@chakra-ui/react';
-
+import { socket } from '../share/socket';
 
 function SessionCard(props) {
 
@@ -45,6 +45,11 @@ function SessionCard(props) {
   }
   //
 
+  function shareActivity() {
+
+    socket.emit('shareActivity', ["web1@gmail.com", "a@gmail.com"], session);
+  }
+
   // formats session cards 
   return (
 
@@ -57,19 +62,21 @@ function SessionCard(props) {
         <ul>
           {session.exercises.map((e, idx) => {
 
-         
+
 
             let weight = " (" + e.weight + e.unit + ")";
             if (e.weight <= 0 || e.unit === 'bodyweight') {
               weight = " (Bodyweight)";
             }
 
-            let firstLine = e.sets + "x" + e.reps + weight; 
+            let firstLine = e.sets + "x" + e.reps + weight;
             return <span key={idx}><li key={idx}>{firstLine}<br></br> {e.name}</li> <br></br> </span>
           })}
         </ul>
 
         <Button marginTop="3rem" h={"fit-content"} w={"fit-content"} onClick={deleteSession} color="red.500" variant="outline">Delete</Button>
+        {props.shareButton ? <Button marginTop="3rem" h={"fit-content"} w={"fit-content"} onClick={shareActivity} color="teal.500" variant="outline">Share</Button> 
+        : ""}
 
 
       </Card.Body>

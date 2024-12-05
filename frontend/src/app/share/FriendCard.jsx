@@ -1,6 +1,7 @@
 'use client'
 import { redirect } from 'next/navigation'
 import { Card, Heading, Button, Text } from '@chakra-ui/react';
+import { socket } from './socket';
 
 
 export default function FriendCard(props) {
@@ -40,13 +41,14 @@ export default function FriendCard(props) {
     }
 
 
-    // formats session cards 
+
+
     return (
 
 
         <Card.Root w="80vw" height="50%" boxShadow="2xl" borderRadius="2xl" border="none" backgroundColor={"#181818"}>
             <Card.Body color="white" borderRadius="xl">
-                <Text color="white" marginBottom={4}>From {props.from}</Text>
+                <Text color="white" marginBottom={4}>From {session.email}</Text>
                 <Heading color="teal.500" className={"capitalize"} marginBottom={2}>{session.date}  |  {session.day}</Heading>
 
 
@@ -67,6 +69,7 @@ export default function FriendCard(props) {
                     })}
                 </ul>
 
+                {/* <Button marginTop="3rem" h={"fit-content"} w={"fit-content"} onClick={} color="red.500" variant="outline">Delete</Button> */}
 
 
             </Card.Body>

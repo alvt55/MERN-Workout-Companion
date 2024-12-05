@@ -38,15 +38,15 @@ io.on("connect", (socket) => {
         // console.log(activeSockets); 
     })
 
-    socket.on('shareActivity', (receivers, mySessions) => {
-        console.log( 'sender sessions', mySessions);
+    socket.on('shareActivity', (receivers, mySession) => {
+        console.log( 'sender sessions', mySession);
         console.log('Sending these to ', receivers[0]); 
 
         receivers.map(email => {
             const receivingSocket = activeSockets[email];
             
             if (receivingSocket) {
-                receivingSocket.emit('shareActivity', mySessions)
+                receivingSocket.emit('shareActivity', mySession)
             }
         })
     });

@@ -18,7 +18,7 @@ export default function Page() {
   const [friendSessions, setFriendSessions] = useState([]);
   const [update, setUpdate] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
-  const [email, setEmail] = useState('')
+ 
 
 
 
@@ -77,21 +77,20 @@ export default function Page() {
         }
       })
 
-      const email = await response.json()
-
-      setEmail(email); 
-
-      console.log('fetched email:', email)
-
-      socket.emit('register', email);
-      console.log('after register')
+      const email = await response.json(); 
+      socket.emit('register', email); 
 
 
-      function addSharedSession(theirSessions) {
-        console.log('Received shared session from', theirSessions);
+
+      function addSharedSession(theirSession) {
+        console.log('Received shared session from', theirSession);
+
+        console.log('curr friend sessions', friendSessions);
+
+          setFriendSessions((prev) => [...prev, theirSession]);
         
 
-        setFriendSessions((prev) => [...prev, ...theirSessions]);
+        
         console.log(friendSessions);
       }
 
@@ -110,17 +109,6 @@ export default function Page() {
 
 
 
-  function shareActivity() {
-
-    const sendingSessions = mySessions.map((session) => {
-     return {...session, 
-        email: email
-      }
-    })
-
-
-    socket.emit('shareActivity', ["web1@gmail.com", "a@gmail.com"], sendingSessions);
-  }
 
 
 
@@ -129,12 +117,15 @@ export default function Page() {
     console.log(update);
   }
 
+
+  // user sessions
   const createSessionElements = mySessions.map((session, idx) => {
 
+
     if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} /> // key = session.id 
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} shareButton={true}/> // key = session.id 
     } else if (selectedDay.trim() === "") {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} shareButton={true}/>
     }
 
     return "";
@@ -142,25 +133,27 @@ export default function Page() {
   }).reverse()
 
 
+  // friend sessions
   const createFriendElements = friendSessions.map((session, idx) => {
 
- 
       if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
-      return <FriendCard key={session._id} session={session} remove={removeUpdate} from={session.email}/> // key = session.id 
+      return <FriendCard key={session._id} session={session} remove={removeUpdate} /> // key = session.id 
     } else if (selectedDay.trim() === "") {
-      return <FriendCard key={session._id} session={session} remove={removeUpdate} from={session.email}/>
+      return <FriendCard key={session._id} session={session} remove={removeUpdate} />
     }
 
     return "";
 
   }).reverse()
+
+
 
   console.log(friendSessions)
 
   return (
 
     <>
-    <Heading color={"white"}>{email}</Heading>
+   
 
       <Field label="Filter by focus" width={{ base: "80vw", md: "30vw" }} color="white" >
         <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
@@ -173,7 +166,7 @@ export default function Page() {
       </VStack>
 
 
-      <Button onClick={shareActivity}>Share</Button>
+
 
 
       <VStack width="100vw" justify="center">

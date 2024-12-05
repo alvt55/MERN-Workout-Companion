@@ -173,6 +173,7 @@ export default function Page() {
       console.log('failed to post session')
     } else {
       console.log('workout posted')
+      console.log(json);
 
 
       setUpdate(s => !s)
