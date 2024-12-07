@@ -94,7 +94,10 @@ export default function Page() {
         console.log(friendSessions);
       }
 
-      socket.on('shareActivity', addSharedSession);
+      socket.on('shareActivity', (theirSession) => {
+        console.log("id", theirSession._id, "data", theirSession);
+        socket.auth.offset = theirSession._id; 
+      });
 
 
     }

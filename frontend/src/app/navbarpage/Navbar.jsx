@@ -21,7 +21,7 @@ export default function Navbar(props) {
 
 
     const path = usePathname();
-    const loggedIn = path === '/tracker' || path === '/searchpage'; 
+    const loggedIn = path === '/tracker' || path === '/searchpage' || path === '/share'; 
 
 
     const logoutRequest = async (e) => {
@@ -75,6 +75,7 @@ export default function Navbar(props) {
                         <>
                             <Link href="/tracker" >Gym Tracker</Link>
                             <Link href="/searchpage" >Exercise Search</Link>
+                            <Link href="/share" >Social</Link>
                             <Button onClick={logoutRequest} >Logout</Button>
 
                         </> :
@@ -92,6 +93,7 @@ export default function Navbar(props) {
                         <VStack justify="center">
                              <Link href="/tracker" >Gym Tracker</Link>
                             <Link href="/searchpage" >Exercise Search</Link>
+                            <Link href="/share" >Social</Link>
                             <Button onClick={logoutRequest} >Logout</Button>
 
                         </VStack> :

@@ -32,21 +32,31 @@ io.on("connect", (socket) => {
     console.log('Client connected:', socket.id);
 
     socket.on('register', email => {
-        // console.log(socket); 
+
+        // TODO: fetch any sessions that are marked as notDelivered and are intended for this user
+        // emit these sessions immediately
+        // mark session as delivered 
+
         activeSockets[email] = socket;
-        console.log(email, 'registered on socket.io')
-        // console.log(activeSockets); 
+        console.log(email, 'registered on socket.io');
+
+
+
+   
     })
 
     socket.on('shareActivity', (receivers, mySession) => {
-        console.log( 'sender sessions', mySession);
-        console.log('Sending these to ', receivers[0]); 
+
+
 
         receivers.map(email => {
             const receivingSocket = activeSockets[email];
             
             if (receivingSocket) {
                 receivingSocket.emit('shareActivity', mySession)
+            } else {
+                console.log();
+                // TODO: save session along with the reciever that didn't recieve 
             }
         })
     });
