@@ -59,6 +59,9 @@ export default function Page() {
 
 
 
+  // TODO: fetch friend sessions here 
+
+
 
 
 
@@ -89,7 +92,7 @@ export default function Page() {
 
           setFriendSessions((prev) => [...prev, theirSession]);
         
-
+          // TODO: save this friend session to db 
         
         console.log(friendSessions);
       }

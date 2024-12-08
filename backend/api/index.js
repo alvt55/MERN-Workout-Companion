@@ -42,29 +42,31 @@ io.on("connect", async (socket) => {
         console.log(email, 'registered on socket.io');
    
 
-        const missed  = await findUndelivered(email);
+        // const missed  = await findUndelivered(email);
         
-        if (missed.length !== 0) {
-            console.log("missed", missed); 
-            missed.map(session => {
-                socket.emit('shareActivity', session); 
-            })
-        }
+        // if (missed.length !== 0) {
+        //     console.log(email, "missed", missed); 
+        //     missed.map(async session => {
+        //         socket.emit('shareActivity', session); 
+        //         // const sessionToDelete = await UndeliveredSession.findByIdAndDelete(session._id); 
+        //         // console.log('deleted', sessionToDelete);
+        //     })
+        // }
 
-        
+    
     })
 
 
     socket.on('shareActivity', async (receivers, mySession) => {
 
-        receivers.map(email => {
+        receivers.map(async email => {
             const receivingSocket = activeSockets[email];
             
             if (receivingSocket) {
                 receivingSocket.emit('shareActivity', mySession)
             } else {
                 // TODO: emit a message if saving to db failsm, await??
-                saveUndelivered(mySession, email); 
+                await saveUndelivered(mySession, email); 
             }
         })
     });
@@ -84,6 +86,8 @@ io.on("connect", async (socket) => {
 async function saveUndelivered(session, email) {
     
     const {_id , createdAt , updatedAt, __v,  ...sessionEdited} = session;
+
+    console.log('test', sessionEdited); 
 
     const sessionToBeSaved = {
         ...sessionEdited, 
