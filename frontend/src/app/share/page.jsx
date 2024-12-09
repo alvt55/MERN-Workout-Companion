@@ -51,15 +51,35 @@ export default function Page() {
 
       }
 
+      const friendResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/getFriendWorkouts`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`
+        },
+        credentials: 'include'
+      })
+
+      const jsonFriend = await friendResponse.json();
+
+      if (jsonFriend.authError) {
+        console.log(json.authError)
+        redirect('/login')
+      }
+
+      if (jsonFriend.error) {
+        console.log(json.error)
+      } else {
+        console.log('fetch friend workouts successful');
+        setFriendSessions(s => jsonFriend)
+
+      }
+
     }
 
 
     fetchWorkouts();
   }, [update]);
-
-
-
-  // TODO: fetch friend sessions here 
 
 
 
@@ -85,19 +105,16 @@ export default function Page() {
 
 
 
-      function addSharedSession(theirSession) {
+      async function addSharedSession(theirSession) {
         console.log('Received shared session from', theirSession);
 
         console.log('curr friend sessions', friendSessions);
 
-          setFriendSessions((prev) => [...prev, theirSession]);
-        
-          // TODO: save this friend session to db 
-        
-        console.log(friendSessions);
+          setFriendSessions((prev) => [...prev, theirSession]);    
+
       }
 
-      socket.on('shareActivity', session => addSharedSession(session));
+      socket.on('shareActivity', async session => addSharedSession(session));
 
 
     }

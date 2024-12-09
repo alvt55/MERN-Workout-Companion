@@ -1,11 +1,12 @@
 
-const express = require('express')
+const express = require('express');
 const {
   getWorkouts, 
   createWorkout, 
-  deleteWorkout
-} = require('../controllers/workoutController')
-const {requireAuth} = require('../middleware/authMiddleware')
+  deleteWorkout,
+  getFriendWorkouts
+} = require('../controllers/workoutController');
+const {requireAuth} = require('../middleware/authMiddleware');
 
 const router = express.Router()
 
@@ -18,6 +19,9 @@ router.post('/createWorkout', requireAuth, createWorkout)
 // DELETE a workout 
 router.delete('/:id/:userid', requireAuth, deleteWorkout); 
 
-  
+router.get('/getFriendWorkouts', requireAuth, getFriendWorkouts)
+
+
+
 
 module.exports = router

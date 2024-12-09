@@ -5,7 +5,7 @@ const searchRoutes = require('../routes/search');
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const User = require('../models/UserModel')
-const UndeliveredSession = require('../models/UndeliveredSessions')
+const SharedSession = require('../models/SharedModel')
 const mongoose = require('mongoose')
 const { Server } = require('socket.io')
 const { createServer } = require("http");
@@ -33,26 +33,8 @@ io.on("connect", async (socket) => {
     console.log('Client connected:', socket.id);
 
     socket.on('register', async email => {
-
-        // TODO: fetch any sessions that are marked as notDelivered and are intended for this user
-        // emit these sessions immediately
-        // mark session as delivered 
-
         activeSockets[email] = socket;
         console.log(email, 'registered on socket.io');
-   
-
-        // const missed  = await findUndelivered(email);
-        
-        // if (missed.length !== 0) {
-        //     console.log(email, "missed", missed); 
-        //     missed.map(async session => {
-        //         socket.emit('shareActivity', session); 
-        //         // const sessionToDelete = await UndeliveredSession.findByIdAndDelete(session._id); 
-        //         // console.log('deleted', sessionToDelete);
-        //     })
-        // }
-
     
     })
 
@@ -63,9 +45,9 @@ io.on("connect", async (socket) => {
             const receivingSocket = activeSockets[email];
             
             if (receivingSocket) {
-                receivingSocket.emit('shareActivity', mySession)
+                await saveUndelivered(mySession, email, receivingSocket); 
+
             } else {
-                // TODO: emit a message if saving to db failsm, await??
                 await saveUndelivered(mySession, email); 
             }
         })
@@ -83,7 +65,7 @@ io.on("connect", async (socket) => {
 });
 
 
-async function saveUndelivered(session, email) {
+async function saveUndelivered(session, email, receivingSocket) {
     
     const {_id , createdAt , updatedAt, __v,  ...sessionEdited} = session;
 
@@ -95,24 +77,30 @@ async function saveUndelivered(session, email) {
     }
     console.log('session edited', sessionToBeSaved); 
 
+    const exists = await SharedSession.findOne({
+        date: sessionToBeSaved.date,
+        day: sessionToBeSaved.day,
+        sessionuser: sessionToBeSaved.sessionuser,
+        email: sessionToBeSaved.email,
+        recieverEmail: sessionToBeSaved.recieverEmail,
+      });
+    
+      if (exists) {
+        console.log('Duplicate document detected. The document already exists.');
+        return;
+      }
+
     try {
-        const session = await UndeliveredSession.create(sessionToBeSaved); 
+        const session = await SharedSession.create(sessionToBeSaved); 
+        receivingSocket.emit('shareActivity', sessionToBeSaved)
+
     } catch(err) {
         console.log(err); 
     }
     
 }
 
-async function findUndelivered(email) {
 
-    try {
-        const missed = await UndeliveredSession.find({recieverEmail: email});
-        return missed; 
-    } catch(err) {
-        console.log(err); 
-    }
-    
-}
 
 
 

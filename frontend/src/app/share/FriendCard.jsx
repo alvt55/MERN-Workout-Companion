@@ -8,37 +8,8 @@ export default function FriendCard(props) {
 
 
     const session = props.session;
-    const deleteSession = async () => {
-        //     const jwt = window.localStorage.getItem('jwt');
 
-        //     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/${session._id}`, {
-        //       method: 'DELETE',
-        //       headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${jwt}`
-        //       },
-        //       credentials: 'include'
-        //     })
-
-        //     const json = await response.json();
-
-
-        //     // auth error handling 
-        //     if (json.authError) {
-        //       console.log(json.authError)
-        //       redirect('/login')
-        //     }
-
-        //     // delete errors 
-        //     if (json.error) {
-        //       console.log(json.error)
-        //     } else {
-        //       props.remove();
-        //       console.log('delete successful')
-        //     }
-
-
-    }
+    
 
 
 

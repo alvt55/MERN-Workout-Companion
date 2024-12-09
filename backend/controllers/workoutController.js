@@ -1,7 +1,8 @@
 const Workout = require('../models/WorkoutModel')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken');
-const User = require('../models/UserModel')
+const User = require('../models/UserModel');
+const SharedSession = require('../models/SharedModel');
 
 require('dotenv').config()
 
@@ -80,8 +81,41 @@ const deleteWorkout = async (req, res) => {
 
 
 
+
+const getFriendWorkouts = async (req, res) => {
+
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]
+    const decoded = jwt.verify(token, process.env.JWTSECRET)
+    console.log(decoded)
+
+    let email; 
+
+    try {
+        const user = await User.findById(decoded.id); 
+        email = user.email; 
+   } catch (err) {
+       console.log(err); 
+   }
+
+    try {
+        const workouts = await SharedSession.find({recieverEmail: email}).sort({ createdAt: -1 });
+        res.status(200).json(workouts)
+    } catch (err) {
+        res.status(400).json({error: err.message})
+    }
+    
+}
+
+
+
+
+
+
+
 module.exports = {
     getWorkouts,
     createWorkout,
-    deleteWorkout
+    deleteWorkout,
+    getFriendWorkouts
 }

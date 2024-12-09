@@ -47,7 +47,7 @@ function SessionCard(props) {
 
   function shareActivity() {
 
-    socket.emit('shareActivity', ["web1@gmail.com", "a@gmail.com"], session);
+    socket.emit('shareActivity', ["a@gmail.com", "web1@gmail.com"], session);
   }
 
   // formats session cards 
