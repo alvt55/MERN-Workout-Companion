@@ -1,14 +1,10 @@
 'use client'
 import { useState, useEffect } from 'react'
 import SessionCard from '../tracker/SessionCard'
-import { VStack, Input, Button, Stack, Heading, Flex, HStack } from "@chakra-ui/react"
-import { InputGroup } from "@/components/ui/input-group"
+import { VStack, Input, Heading, Box} from "@chakra-ui/react"
 import { Field } from "@/components/ui/field"
-import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
-import { Alert } from "@/components/ui/alert"
 import { redirect } from 'next/navigation'
 import { socket } from './socket'
-import io from "socket.io-client";
 import FriendCard from './FriendCard'
 
 export default function Page() {
@@ -18,11 +14,12 @@ export default function Page() {
   const [friendSessions, setFriendSessions] = useState([]);
   const [update, setUpdate] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
- 
 
 
 
 
+
+  // fetching/setting user sessions AND shared sessions
   useEffect(() => {
     const jwt = window.localStorage.getItem('jwt');
 
@@ -77,7 +74,6 @@ export default function Page() {
 
     }
 
-
     fetchWorkouts();
   }, [update]);
 
@@ -85,7 +81,7 @@ export default function Page() {
 
 
 
-
+  // socket.io functionality 
   useEffect(() => {
 
     async function main() {
@@ -100,18 +96,13 @@ export default function Page() {
         }
       })
 
-      const email = await response.json(); 
-      socket.emit('register', email); 
+      const email = await response.json();
+      socket.emit('register', email);
 
 
 
       async function addSharedSession(theirSession) {
-        console.log('Received shared session from', theirSession);
-
-        console.log('curr friend sessions', friendSessions);
-
-          setFriendSessions((prev) => [...prev, theirSession]);    
-
+        setFriendSessions((prev) => [...prev, theirSession]);
       }
 
       socket.on('shareActivity', async session => addSharedSession(session));
@@ -143,9 +134,9 @@ export default function Page() {
 
 
     if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} shareButton={true}/> // key = session.id 
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} shareButton={true} /> // key = session.id 
     } else if (selectedDay.trim() === "") {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} shareButton={true}/>
+      return <SessionCard key={session._id} session={session} remove={removeUpdate} shareButton={true} />
     }
 
     return "";
@@ -156,9 +147,10 @@ export default function Page() {
   // friend sessions
   const createFriendElements = friendSessions.map((session, idx) => {
 
-      if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
+    if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
       return <FriendCard key={session._id} session={session} remove={removeUpdate} /> // key = session.id 
     } else if (selectedDay.trim() === "") {
+      console.log('session', session._id);
       return <FriendCard key={session._id} session={session} remove={removeUpdate} />
     }
 
@@ -173,30 +165,20 @@ export default function Page() {
   return (
 
     <>
-   
 
-      <Field label="Filter by focus" width={{ base: "80vw", md: "30vw" }} color="white" >
-        <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
-      </Field>
+      <VStack width="100vw" justify="center" gap={7}>
 
-      <VStack width="100vw" justify="center">
-    YOur sessions
-        {createSessionElements}
-    
-      </VStack>
+        <Field label="Filter by focus" width={{ base: "80vw", md: "30vw" }} color="white" >
+          <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
+        </Field>
 
+          <Heading color="teal.500">Your Sessions</Heading>
+          {createSessionElements}
 
-
-
-
-      <VStack width="100vw" justify="center">
-        friend sessions
-        {createFriendElements}
+          <Heading color="teal.500">Your Friend's Sessions</Heading>
+          {createFriendElements}
 
       </VStack>
-
-
-
 
 
     </>
