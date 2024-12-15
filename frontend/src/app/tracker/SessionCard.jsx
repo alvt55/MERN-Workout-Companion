@@ -67,6 +67,7 @@ function SessionCard(props) {
           })}
         </ul>
 
+          {/* TODO: add a warning before deleting */}
         <Button marginTop="3rem" h={"fit-content"} w={"fit-content"} onClick={deleteSession} color="red.500" variant="outline">Delete</Button>
 
 
