@@ -3,6 +3,7 @@
 import { ChakraProvider, defaultSystem, Box } from '@chakra-ui/react';
 import Navbar from './navbarpage/Navbar';
 import './index.css'
+import {inter} from '@/app/ui/fonts'
 
 
 export default function RootLayout({ children }) {
@@ -15,7 +16,7 @@ export default function RootLayout({ children }) {
 
         <ChakraProvider value={defaultSystem}>
 
-          <Box width="100%" m="0 auto" overflow="hidden">
+          <Box width="100%" m="0 auto" overflow="hidden" className={`${inter.className} antialiased`}>
           <Navbar />
           {children}
           </Box>

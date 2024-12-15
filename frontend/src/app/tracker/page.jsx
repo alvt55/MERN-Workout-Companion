@@ -22,6 +22,7 @@ import { GiWeightLiftingUp } from
 
 
 
+
 export default function Page() {
 
 
@@ -296,6 +297,7 @@ export default function Page() {
           {createSessionElements}
         </VStack>
 
+      {/* <SessionCardWrapper/> */}
      
 
         

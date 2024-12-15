@@ -13,6 +13,11 @@ import { usePathname } from 'next/navigation'
 
 
 
+const links = [
+    { name: 'Gym Tracker', href: '/tracker'},
+    { name: 'Search', href: '/searchpage'},
+  ];
+  
 
 
 // navbar that is always accessible 
