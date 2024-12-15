@@ -19,7 +19,7 @@ import { fetchSearchExercises } from '../lib/data'
 
 export default async function Page(props) {
 
-
+    // url for search params 
     const { searchParams: searchParamsPromise } = props || {};
     const searchParams = await searchParamsPromise;
 

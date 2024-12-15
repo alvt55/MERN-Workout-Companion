@@ -37,8 +37,9 @@ const targets = [
 ]
 
 
-export async function fetchSearchExercises(search) {
 
+// retrieve data from external api
+export async function fetchSearchExercises(search) {
 
     if (bodyParts.includes(search)) {
         const url = `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${search}?limit=10&offset=0`;
@@ -72,6 +73,7 @@ export async function fetchSearchExercises(search) {
 }
 
 
+// fetch workouts using client stored jwt
 export async function fetchWorkouts(jwt) {
     console.log(jwt); 
 

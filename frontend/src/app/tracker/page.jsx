@@ -30,6 +30,8 @@ export default function Page() {
 
 
 
+
+  // temporary storage for exercises on device
   useEffect(() => {
     const data = window.localStorage.getItem('MY_APP_STATE');
     if (data !== null) setExercises(JSON.parse(data)); 

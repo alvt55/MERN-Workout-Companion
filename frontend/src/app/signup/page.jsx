@@ -8,7 +8,7 @@ import { PasswordInput } from "../../components/ui/password-input"
 
 export default function Page() {
 
-
+    // signup request - triggers error messages if needed
     const signup = async (e) => {
 
         e.preventDefault();

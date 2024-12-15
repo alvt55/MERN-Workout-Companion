@@ -16,9 +16,11 @@ import { usePathname } from 'next/navigation'
 
 
 
-// navbar that is always accessible 
+ 
 export default function Navbar() {
 
+
+    // navbar links
     const links = [
         { name: 'Gym Tracker', href: '/tracker'},
         { name: 'My Workouts', href: '/myworkouts'},
@@ -30,6 +32,7 @@ export default function Navbar() {
     const loggedIn = path === '/tracker' || path === '/searchpage' || path === '/myworkouts'; 
 
 
+    // api request, removes jwt cookie and redirects to login page
     const logoutRequest = async (e) => {
 
         try {
@@ -84,6 +87,7 @@ export default function Navbar() {
                         <Button onClick={loginRequest} marginLeft="auto">Login</Button>}
                 </Flex>
 
+                {/* links for smaller screens */}
                 <MenuRoot>
                     <MenuTrigger asChild display={{ base: "flex", md: "flex", lg: "none", xl: "none" }} >
                         <Button variant="outline" size="sm">
