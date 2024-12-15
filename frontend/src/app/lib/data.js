@@ -1,4 +1,5 @@
-
+'use server'
+import { redirect } from "next/navigation";
 
 const bodyParts = [
     "back",
@@ -14,25 +15,25 @@ const bodyParts = [
 ];
 
 const targets = [
-  "abductors",
-  "abs",
-  "adductors",
-  "biceps",
-  "calves",
-  "cardiovascular system",
-  "delts",
-  "forearms",
-  "glutes",
-  "hamstrings",
-  "lats",
-  "levator scapulae",
-  "pectorals",
-  "quads",
-  "serratus anterior",
-  "spine",
-  "traps",
-  "triceps",
-  "upper back"
+    "abductors",
+    "abs",
+    "adductors",
+    "biceps",
+    "calves",
+    "cardiovascular system",
+    "delts",
+    "forearms",
+    "glutes",
+    "hamstrings",
+    "lats",
+    "levator scapulae",
+    "pectorals",
+    "quads",
+    "serratus anterior",
+    "spine",
+    "traps",
+    "triceps",
+    "upper back"
 ]
 
 
@@ -69,3 +70,30 @@ export async function fetchSearchExercises(search) {
         return [];
     }
 }
+
+
+export async function fetchWorkouts(jwt) {
+    console.log(jwt); 
+
+    const response = await fetch(`${process.env.BACKEND_URL}workouts/getWorkouts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': `jwt=${jwt.value}`
+        }
+    })
+
+    const json = await response.json();
+
+    if (json.authError || json.error) {
+        // console.log(json.authError);
+        redirect('/login');
+    } else {
+        console.log('fetch workout successful');
+        return json; 
+    }
+
+
+}
+
+
