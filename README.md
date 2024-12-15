@@ -1,3 +1,4 @@
+<pre>
 A full-stack workout tracker web application that enables users to log, manage, and track their fitness activities. 
 
 Features
@@ -14,5 +15,5 @@ CSS/Chakra UI for styling
 Express.js
 MongoDB (Atlas) 
 Vercel (deployment) 
-
+</pre>
 
