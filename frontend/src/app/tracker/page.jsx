@@ -5,21 +5,17 @@ import { useState, useEffect } from 'react'
 import { redirect } from 'next/navigation'
 
 
-import DisplayExercises from './DisplayExercises';
-import SessionCard from './SessionCard';
-
 import { VStack, Input, Button, Stack, Heading, Flex, HStack} from "@chakra-ui/react"
 import { InputGroup } from "@/components/ui/input-group"
 import { Field } from "@/components/ui/field"
 import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
 import { Alert } from "@/components/ui/alert"
-
-import { GiWeightLiftingUp } from
-  "react-icons/gi";
-
-  import { Radio, RadioGroup } from "@/components/ui/radio"
+import { GiWeightLiftingUp } from "react-icons/gi";
+import { Radio, RadioGroup } from "@/components/ui/radio"
 
 
+import {addWorkoutSession} from '../lib/actions'
+import DisplayExercises from './DisplayExercises';
 
 
 
@@ -29,62 +25,19 @@ export default function Page() {
 
   // exercise
   const [exercises, setExercises] = useState([]);
-
-  // session
-  const [sessions, setSessions] = useState([]);
   const [sessionWarning, setSessionWarning] = useState('');
-  const [selectedDay, setSelectedDay] = useState("");
 
 
-  // detects updates to changes in sessions (add or remove)
-  const [update, setUpdate] = useState(false)
 
 
   useEffect(() => {
     const data = window.localStorage.getItem('MY_APP_STATE');
-    if (data !== null) setExercises(JSON.parse(data));
+    if (data !== null) setExercises(JSON.parse(data)); 
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem('MY_APP_STATE', JSON.stringify(exercises));
   }, [exercises]);
-
-
-  // fetches sessions from DB
-  useEffect(() => {
-
-    const fetchWorkouts = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/getWorkouts`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      })
-
-      const json = await response.json();
-
-      if (json.authError) {
-        console.log(json.authError)
-        redirect('/login')
-      }
-
-      if (json.error) {
-        console.log(json.error)
-      } else {
-        console.log('fetch workout successful');
-        setSessions(s => json)
-
-      }
-
-    }
-
-
-    fetchWorkouts()
-  }, [update])
-
-
-
 
 
 
@@ -110,14 +63,12 @@ export default function Page() {
 
     setExercises(e => [...e, currExercise]);
 
-
     document.getElementById('exerciseForm').reset();
 
     // console.log('adding exercise', currExercise)
     console.log(unit)
   
   }
-
 
 
 
@@ -145,61 +96,31 @@ export default function Page() {
       exercises: exercises
     };
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/createWorkout`, {
-      method: 'POST',
-      body: JSON.stringify(currSession),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    })
+    
 
-    const json = await response.json();
+    const json = await addWorkoutSession(currSession); 
 
     if (json.authError) {
       redirect('/login')
     }
 
 
-    if (!response.ok) {
+    if (!json) {
       setSessionWarning('Unable to send workout to database')
       console.log('failed to post session')
     } else {
       console.log('workout posted')
-
-
-      setUpdate(s => !s)
-
-      //  reset all values 
       document.getElementById('sessionForm').reset()
       setSessionWarning('');
       setExercises(s => [])
-
     }
 
 
   }
 
 
-  function removeUpdate() {
-    setUpdate(s => !s);
-    console.log(update);
-  }
 
 
-
-  // TODO: fix for multiple words?
-  const createSessionElements = sessions.map((session, idx) => {
-
-    if (session.day.toLowerCase() === selectedDay.toLowerCase()) {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} /> // key = session.id 
-    } else if (selectedDay.trim() === "") {
-      return <SessionCard key={session._id} session={session} remove={removeUpdate} />
-    }
-
-    return "";
-
-  }).reverse()
 
 
 
@@ -208,8 +129,6 @@ export default function Page() {
 
 
     <>
-
-
       <VStack gap="12" width="100vw" color="white" padding="2rem">
 
         {/* container for form and display */}
@@ -284,23 +203,8 @@ export default function Page() {
 
 
 
-        <Field label="Filter by focus" width={{ base: "80vw", md: "30vw" }} color="white" >
-          <Input onChange={e => setSelectedDay(e.target.value)} type="text" required />
-        </Field>
 
 
-
-
-
-        <VStack width="100vw" justify="center">
-
-          {createSessionElements}
-        </VStack>
-
-      {/* <SessionCardWrapper/> */}
-     
-
-        
 
 
 

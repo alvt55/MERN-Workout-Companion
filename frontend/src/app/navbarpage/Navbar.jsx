@@ -13,20 +13,21 @@ import { usePathname } from 'next/navigation'
 
 
 
-const links = [
-    { name: 'Gym Tracker', href: '/tracker'},
-    { name: 'Search', href: '/searchpage'},
-  ];
-  
+
 
 
 // navbar that is always accessible 
-export default function Navbar(props) {
+export default function Navbar() {
 
-
+    const links = [
+        { name: 'Gym Tracker', href: '/tracker'},
+        { name: 'My Workouts', href: '/myworkouts'},
+        { name: 'Search', href: '/searchpage'},
+      ];
+      
 
     const path = usePathname();
-    const loggedIn = path === '/tracker' || path === '/searchpage'; 
+    const loggedIn = path === '/tracker' || path === '/searchpage' || path === '/myworkouts'; 
 
 
     const logoutRequest = async (e) => {
@@ -73,8 +74,10 @@ export default function Navbar(props) {
                 <Flex justifyContent="space-evenly" flex="1" alignItems='center' fontSize="1.6rem" hideBelow="lg">
                     { loggedIn ?
                         <>
-                            <Link href="/tracker" >Gym Tracker</Link>
-                            <Link href="/searchpage" >Exercise Search</Link>
+                            {links.map(obj => {
+                                return <Link href={obj.href} key={obj.href}>{obj.name}</Link>
+                            })}
+                        
                             <Button onClick={logoutRequest} >Logout</Button>
 
                         </> :
@@ -89,9 +92,10 @@ export default function Navbar(props) {
                     </MenuTrigger>
                     <MenuContent backgroundColor="#1f1f1f" color="white" outline="white" display={{ base: "flex", md: "flex", lg: "none", xl: "none" }}>
                     { loggedIn ?
-                        <VStack justify="center">
-                             <Link href="/tracker" >Gym Tracker</Link>
-                            <Link href="/searchpage" >Exercise Search</Link>
+                        <VStack justify="center" align="center">
+                              {links.map(obj => {
+                                return <Link href={obj.href} key={obj.href} >{obj.name}</Link>
+                            })}
                             <Button onClick={logoutRequest} >Logout</Button>
 
                         </VStack> :
