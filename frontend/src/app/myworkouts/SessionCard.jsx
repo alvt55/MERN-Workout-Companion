@@ -1,7 +1,15 @@
 'use client'
-import { redirect } from 'next/navigation'
-import { Card, Heading, Button } from '@chakra-ui/react';
 
+import { Card, Heading, Button } from '@chakra-ui/react';
+import {deleteWorkoutSession} from '../lib/actions'
+import {
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverRoot,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 function SessionCard(props) {
 
@@ -9,39 +17,12 @@ function SessionCard(props) {
   const session = props.session;
 
 
-
-
-
-  const deleteSession = async () => {
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}workouts/${session._id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    })
-
-    const json = await response.json();
-
-
-    // auth error handling 
-    if (json.authError) {
-      console.log(json.authError)
-      redirect('/login')
-    }
-
-    // delete errors 
-    if (json.error) {
-      console.log(json.error)
-    } else {
-      props.remove();
-      console.log('delete successful')
-    }
-
+  async function deleteSession() {
+    const res = await deleteWorkoutSession(session._id); 
 
   }
-  //
+
+
 
   // formats session cards 
   return (
@@ -67,8 +48,24 @@ function SessionCard(props) {
           })}
         </ul>
 
-          {/* TODO: add a warning before deleting */}
+        
+          {/* delete popover and button */}
+          <PopoverRoot color="white" >
+                <PopoverTrigger asChild>
+                    <Button size="xs" w="25%" p="1" h="fit-content" variant="outline" color="white" backgroundColor="red.500">
+                        Delete
+                    </Button>
+                </PopoverTrigger> 
+                <PopoverContent p="5" backgroundColor="#1f1f1d" color="white">
+                    <PopoverArrow backgroundColor="#1f1f1d"/>
+                    <PopoverTitle fontWeight="heavy">Confirm Delete?</PopoverTitle>
+                       
         <Button marginTop="3rem" h={"fit-content"} w={"fit-content"} onClick={deleteSession} color="red.500" variant="outline">Delete</Button>
+                </PopoverContent>
+            </PopoverRoot>
+
+
+            
 
 
       </Card.Body>

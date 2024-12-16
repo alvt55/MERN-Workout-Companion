@@ -26,6 +26,7 @@ export default function Page() {
   // exercise
   const [exercises, setExercises] = useState([]);
   const [sessionWarning, setSessionWarning] = useState('');
+  const [editMode, setEditMode] = useState(false); 
 
 
 
@@ -121,6 +122,34 @@ export default function Page() {
   }
 
 
+  // autofills form data with the exercise to be edited
+   function editExercise(exercise, idx) {
+
+    const name = document.querySelector('input[name="exerciseName"]');
+    const weight = document.querySelector('input[name="weight"]');
+    const sets = document.querySelector('input[name="sets"]');
+    const reps = document.querySelector('input[name="reps"]');
+  
+    console.log(exercise); 
+  
+    // Set the value of the input field
+    if (name && weight && sets && reps) {
+      name.value = exercise.name;
+      weight.value = exercise.weight;
+      sets.value = exercise.sets;
+      reps.value = exercise.reps;
+
+      const tempArr = [...exercises];
+       tempArr.splice(idx, 1);
+       console.log(tempArr)
+      setExercises(tempArr); 
+     
+      
+      
+    }
+  }
+
+
 
 
 
@@ -131,6 +160,7 @@ export default function Page() {
 
 
     <>
+   
       <VStack gap="12" width="100vw" color="white" padding="2rem">
 
         {/* container for form and display */}
@@ -171,11 +201,13 @@ export default function Page() {
                   <NumberInputField name="reps" />
                 </NumberInputRoot>
               </Field>
-              <Button type="submit">Add Exercise</Button>
+            
+               <Button type="submit">Add Exercise</Button>
+              
             </Stack>
           </form>
 
-          <DisplayExercises exercises={exercises}></DisplayExercises>
+          <DisplayExercises exercises={exercises} functionEdit={editExercise}></DisplayExercises>
         </Flex>
 
 

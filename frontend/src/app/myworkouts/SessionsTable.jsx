@@ -12,7 +12,6 @@ export default async function SessionsTable() {
 
   const createSessionElements = workouts.map((session, idx) => {
 
-
     return <SessionCard key={session._id} session={session} />
 
   });

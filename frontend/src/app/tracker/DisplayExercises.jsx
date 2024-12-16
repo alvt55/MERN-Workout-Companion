@@ -1,5 +1,5 @@
 // 'use client'
-import { Card, Text} from "@chakra-ui/react"
+import { Box, Card, HStack, Text, Button, VStack } from "@chakra-ui/react"
 
 
 
@@ -9,27 +9,13 @@ function DisplayExercises(props) {
     const exercises = props.exercises;
 
 
-    // displays exercises formatted in preview
-    function display() {
-
-        let temp = "";
-
-        for (let i = 0; i < exercises.length; i++) {
-            const obj = exercises[i];
-
-            // removes weight if 0 
-            let weight = " (" + obj.weight + obj.unit + ")";
-            if (obj.weight <= 0 || obj.unit === 'bodyweight') {
-                weight = " (Bodyweight)";
-            }
 
 
-            temp += obj.sets + "x" + obj.reps + weight + "\n" + obj.name + "\n" + "\n";
-        }
+    function edit(e, idx) {
 
-        return temp;
+        console.log('hi', e)
+        props.functionEdit(e, idx);
     }
-
 
     return (
 
@@ -37,16 +23,41 @@ function DisplayExercises(props) {
 
             <Card.Root width={{ base: "100%", lg: "40%" }} height="50vh" boxShadow="2xl" borderRadius="2xl" border="none" backgroundColor={"#181818"}>
                 <Card.Body color="white" overflowY="auto" overflowX="auto" borderRadius="xl">
-              
-                        <Text textAlign={"left"} color="teal.500">SetsxReps (Weight)</Text>
-                        
-                        <Text textAlign={"left"} color="teal.500"> Exercise</Text>
-                    
-                   
+
+                    <Text textAlign={"left"} color="teal.500">SetsxReps (Weight)</Text>
+
+                    <Text textAlign={"left"} color="teal.500" mb={5}> Exercise</Text>
 
 
-                    <br></br>
-                    <pre>{display()}</pre>
+
+
+                    <ul>
+                        {exercises.map((e, idx) => {
+
+
+                            let weight = " (" + e.weight + e.unit + ")";
+                            if (e.weight <= 0 || e.unit === 'bodyweight') {
+                                weight = " (Bodyweight)";
+                            }
+
+                            let temp = e.sets + "x" + e.reps + weight;
+
+                            return (
+                                <HStack key={idx} gap={8} mb={7}>
+                                    <Button variant="outline" color="teal.500" onClick={() => edit(e, idx)}>Edit</Button>
+
+                                    <VStack>
+                                        <Text>{temp}</Text>
+                                        <Text>{e.name}</Text>
+                                    </VStack>
+
+                                </HStack>
+
+                            );
+                        })}
+                    </ul>
+
+
                 </Card.Body>
 
             </Card.Root>
