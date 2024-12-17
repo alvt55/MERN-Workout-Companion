@@ -29,7 +29,7 @@ export default function Navbar() {
       
 
     const path = usePathname();
-    const loggedIn = path === '/tracker' || path === '/searchpage' || path === '/myworkouts'; 
+    const loggedIn = path === '/tracker' || path === '/searchpage' || path === '/myworkouts' || path === '/tracker/edit'; 
 
 
     // api request, removes jwt cookie and redirects to login page

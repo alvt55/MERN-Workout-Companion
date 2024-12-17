@@ -21,6 +21,7 @@ const getWorkouts = async (req, res) => {
 
 
 // Post a workout
+
 const createWorkout = async (req, res) => {
 
     const token = req.cookies.jwt  
@@ -36,6 +37,31 @@ const createWorkout = async (req, res) => {
         res.status(400).json({ error: err.message })
     }
 }
+
+
+const updateWorkout = async (req, res) => {
+
+    const token = req.cookies.jwt  
+    const decoded = jwt.verify(token, process.env.JWTSECRET)
+console.log('updating...')
+    const { id, date, day, exercises } = req.body // get workout properties from req obj 
+console.log(req.body); 
+    // add workout to db 
+    try {
+   
+        const workout = await Workout.findOneAndUpdate(
+            { _id: id, sessionuser: decoded.id }, // Ensure the workout belongs to the authenticated user
+            { date, day, exercises }, // Updated fields
+            { new: true } // Return the updated document
+        );       
+         res.status(201).json(workout)
+        
+    } catch (err) {
+        console.log(err); 
+        res.status(400).json({ error: err.message })
+    }
+}
+
 
 // delete a workout 
 const deleteWorkout = async (req, res) => {
@@ -60,5 +86,6 @@ const deleteWorkout = async (req, res) => {
 module.exports = {
     getWorkouts,
     createWorkout,
-    deleteWorkout
+    deleteWorkout,
+    updateWorkout
 }

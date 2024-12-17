@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react'
 
 import { redirect } from 'next/navigation'
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
-import { VStack, Input, Button, Stack, Heading, Flex, HStack} from "@chakra-ui/react"
+import { VStack, Input, Button, Stack, Heading, Flex, HStack } from "@chakra-ui/react"
 import { InputGroup } from "@/components/ui/input-group"
 import { Field } from "@/components/ui/field"
 import { NumberInputField, NumberInputRoot } from "@/components/ui/number-input"
@@ -15,38 +16,57 @@ import { GiWeightLiftingUp } from "react-icons/gi";
 import { Radio, RadioGroup } from "@/components/ui/radio"
 
 
-import {addWorkoutSession} from '../lib/actions'
-import DisplayExercises from './DisplayExercises';
+import { editWorkoutSession } from '../../lib/actions'
+import DisplayExercises from '../DisplayExercises';
 
 
 
+// Similar to main trackerpage but for updating workouts
 export default function Page() {
 
-  const searchParams = useSearchParams(); 
 
-  console.log(searchParams.get('exercises')); 
+  // initial data 
+  const searchParams = useSearchParams();
+  const tempExercises = searchParams.get('exercises');
+  const tempFocus = searchParams.get('focus');
+  const editID = searchParams.get('id');
+  const editExercises = JSON.parse(tempExercises);
+  const editFocus = JSON.parse(tempFocus);
 
-  const temp = searchParams.get('exercises'); 
-  const editExercises = JSON.parse(temp); 
-
-  console.log('edit exercises', editExercises);
+ 
 
 
   // exercise
   const [exercises, setExercises] = useState([]);
   const [sessionWarning, setSessionWarning] = useState('');
+  const [focus, setFocus] = useState();
+  
 
+  const router = useRouter();
 
 
 
   // temporary storage for exercises on device
   useEffect(() => {
-    const data = window.localStorage.getItem('MY_APP_STATE');
-    if (data !== null) setExercises(JSON.parse(data)); 
+
+    if (editExercises && editID) {
+      window.localStorage.setItem('EDIT-ID', editID);
+      window.localStorage.setItem('EDIT-FOCUS', editFocus);
+      setFocus(editFocus); 
+      setExercises(editExercises);
+      router.replace('/tracker/edit', undefined, { shallow: true });
+    } else {
+      const data = window.localStorage.getItem('EDIT-EXERCISES');
+      const focus = window.localStorage.getItem('EDIT-FOCUS');
+      if (data !== null) setExercises(JSON.parse(data));
+      if (focus !== null) setFocus(focus);
+
+    }
+
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('MY_APP_STATE', JSON.stringify(exercises));
+    window.localStorage.setItem('EDIT-EXERCISES', JSON.stringify(exercises));
   }, [exercises]);
 
 
@@ -60,7 +80,7 @@ export default function Page() {
     const reps = e.target.reps.value;
     const unit = e.target.unit.value;
 
-    
+
     let nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
     const currExercise = {
@@ -75,15 +95,13 @@ export default function Page() {
 
     document.getElementById('exerciseForm').reset();
 
-    // console.log('adding exercise', currExercise)
-    console.log(unit)
-  
+
   }
 
 
 
   // posting workout session to DB using backend API
-  async function addSession(e) {
+  async function editSession(e) {
 
     e.preventDefault();
 
@@ -100,15 +118,19 @@ export default function Page() {
     let dateCapitalized = date.charAt(0).toUpperCase() + date.slice(1);
     let dayCapitalized = day.charAt(0).toUpperCase() + day.slice(1);
 
+    const id = window.localStorage.getItem('EDIT-ID');
+
+
     const currSession = {
+      id: JSON.parse(id),
       date: dateCapitalized,
       day: dayCapitalized,
       exercises: exercises
     };
 
-    
 
-    const json = await addWorkoutSession(currSession); 
+
+    const json = await editWorkoutSession(currSession);
 
     if (json.authError) {
       redirect('/login')
@@ -123,6 +145,9 @@ export default function Page() {
       document.getElementById('sessionForm').reset()
       setSessionWarning('');
       setExercises(s => [])
+      window.localStorage.setItem('EDIT-ID', '');
+      window.localStorage.setItem('EDIT-FOCUS', '');
+      redirect('/myworkouts')
     }
 
 
@@ -130,15 +155,15 @@ export default function Page() {
 
 
   // autofills form data with the exercise to be edited
-   function editExercise(exercise, idx) {
+  function editExercise(exercise, idx) {
 
     const name = document.querySelector('input[name="exerciseName"]');
     const weight = document.querySelector('input[name="weight"]');
     const sets = document.querySelector('input[name="sets"]');
     const reps = document.querySelector('input[name="reps"]');
-  
-    console.log(exercise); 
-  
+
+    console.log(exercise);
+
     // Set the value of the input field
     if (name && weight && sets && reps) {
       name.value = exercise.name;
@@ -147,12 +172,12 @@ export default function Page() {
       reps.value = exercise.reps;
 
       const tempArr = [...exercises];
-       tempArr.splice(idx, 1);
-       console.log(tempArr)
-      setExercises(tempArr); 
-     
-      
-      
+      tempArr.splice(idx, 1);
+      console.log(tempArr)
+      setExercises(tempArr);
+
+
+
     }
   }
 
@@ -167,7 +192,7 @@ export default function Page() {
 
 
     <>
-   
+
       <VStack gap="12" width="100vw" color="white" padding="2rem">
 
         {/* container for form and display */}
@@ -175,7 +200,7 @@ export default function Page() {
 
 
           <form id="exerciseForm" onSubmit={addExercise}>
-            <Heading as="h1" size="2xl">Add Exercises Here</Heading>
+            <Heading as="h1" size="2xl">Edit Workout</Heading>
             <Stack gap="4" align="flex-start" maxW="sm" fontSize={'1.5rem'} minW="30vw" color="white">
 
               <Field label="Exercise name">
@@ -188,15 +213,15 @@ export default function Page() {
                 </NumberInputRoot>
 
                 <RadioGroup defaultValue="lbs" name="unit" required>
-                <HStack gap="6">
-                  <Radio value="lbs">Lbs</Radio>
-                  <Radio value="kg">Kgs</Radio>
-                  <Radio value="bodyweight">Bodyweight</Radio>
+                  <HStack gap="6">
+                    <Radio value="lbs">Lbs</Radio>
+                    <Radio value="kg">Kgs</Radio>
+                    <Radio value="bodyweight">Bodyweight</Radio>
 
-                </HStack>
-              </RadioGroup>
+                  </HStack>
+                </RadioGroup>
               </Field>
-              
+
 
               <Field label="Sets">
                 <NumberInputRoot defaultValue="1" width="200px" required>
@@ -208,9 +233,9 @@ export default function Page() {
                   <NumberInputField name="reps" />
                 </NumberInputRoot>
               </Field>
-            
-               <Button type="submit">Add Exercise</Button>
-              
+
+              <Button type="submit">Add Exercise</Button>
+
             </Stack>
           </form>
 
@@ -222,16 +247,16 @@ export default function Page() {
 
 
 
-        <form id="sessionForm" onSubmit={addSession}>
+        <form id="sessionForm" onSubmit={editSession}>
 
           <VStack gap={5}>
             <Field label="What did we focus on today?">
               <InputGroup flex="1" startElement={<GiWeightLiftingUp />} color="white" width={{ base: "80vw", md: "30vw" }}>
-                <Input name="day" ps="4.75em" placeholder="e.g. cardio, back/chest, legs " required />
+                <Input name="day" ps="4.75em" placeholder="e.g. cardio, back/chest, legs " defaultValue={focus} required />
               </InputGroup>
             </Field>
 
-            <Button type="submit">Finish Workout</Button>
+            <Button type="submit">Edit Workout</Button>
             {sessionWarning ? <Alert status="info" title={sessionWarning} /> : <p></p>}
 
           </VStack>

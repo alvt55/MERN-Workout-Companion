@@ -30,6 +30,30 @@ export async function addWorkoutSession(currSession) {
       return json; 
 }
 
+
+
+// edit workout
+export async function editWorkoutSession(currSession) {
+  console.log('from server action', currSession); 
+
+    const response = await fetch(`${process.env.BACKEND_URL}workouts/updateWorkout`, {
+        method: 'POST',
+        body: JSON.stringify(currSession),
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': `jwt=${jwt.value}`
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        return null; 
+      }
+  
+      const json = await response.json();
+      return json; 
+}
+
 export async function deleteWorkoutSession(id) {
     const response = await fetch(`${process.env.BACKEND_URL}workouts/${id}`, {
       method: 'DELETE',
