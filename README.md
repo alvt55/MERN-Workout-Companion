@@ -18,19 +18,19 @@ Npm install
 
 Frontend: 
 ```
-Cd frontend 
+cd frontend 
 Next dev 
 ```
 
 Backend (do this in a seperate terminal)
 ```
-Cd backend
+cd backend
 Npm run dev
 ```
 
 To run tests: 
 ```
-Cd backend
+cd backend
 Npm run test
 ```
 
