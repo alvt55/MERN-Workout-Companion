@@ -1,91 +1,87 @@
-'use server'; 
+"use server";
 
-import { cookies } from 'next/headers'
-import { revalidatePath } from 'next/cache';
-
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 
 const cookieStore = await cookies();
-const jwt = cookieStore.get('jwt');
-
-
+const jwt = cookieStore.get("jwt");
 
 // server action for adding a workout
 export async function addWorkoutSession(currSession) {
+  const response = await fetch(
+    `${process.env.BACKEND_URL}workouts/createWorkout`,
+    {
+      method: "POST",
+      body: JSON.stringify(currSession),
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `jwt=${jwt.value}`,
+      },
+      credentials: "include",
+    }
+  );
 
-    const response = await fetch(`${process.env.BACKEND_URL}workouts/createWorkout`, {
-        method: 'POST',
-        body: JSON.stringify(currSession),
-        headers: {
-          'Content-Type': 'application/json',
-          'Cookie': `jwt=${jwt.value}`
-        },
-        credentials: 'include'
-      });
+  if (!response.ok) {
+    return null;
+  }
 
-      if (!response.ok) {
-        return null; 
-      }
-  
-      const json = await response.json();
-      return json; 
+  const json = await response.json();
+  return json;
+
+  // TODO: revalidate path?
 }
-
-
 
 // edit workout
 export async function editWorkoutSession(currSession) {
-  console.log('from server action', currSession); 
+  console.log("from server action", currSession);
 
-    const response = await fetch(`${process.env.BACKEND_URL}workouts/updateWorkout`, {
-        method: 'POST',
-        body: JSON.stringify(currSession),
-        headers: {
-          'Content-Type': 'application/json',
-          'Cookie': `jwt=${jwt.value}`
-        },
-        credentials: 'include'
-      });
+  const response = await fetch(
+    `${process.env.BACKEND_URL}workouts/updateWorkout`,
+    {
+      method: "POST",
+      body: JSON.stringify(currSession),
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `jwt=${jwt.value}`,
+      },
+      credentials: "include",
+    }
+  );
 
-      if (!response.ok) {
-        return null; 
-      }
-  
-      const json = await response.json();
-      return json; 
+  if (!response.ok) {
+    return null;
+  }
+
+  const json = await response.json();
+  return json;
 }
 
 export async function deleteWorkoutSession(id) {
-    const response = await fetch(`${process.env.BACKEND_URL}workouts/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cookie': `jwt=${jwt.value}`
-      },
-      credentials: 'include'
-    })
+  const response = await fetch(`${process.env.BACKEND_URL}workouts/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `jwt=${jwt.value}`,
+    },
+    credentials: "include",
+  });
 
-    const json = await response.json();
+  const json = await response.json();
 
-
-    // auth error handling 
-    if (json.authError) {
-      console.log(json.authError)
-      redirect('/login')
-    } else {
-      console.log('delete successful')
-
-    }
-
-    // delete errors 
-    if (json.error) {
-      console.log(json.error)
-    } else {
-      // props.remove();
-      console.log('delete successful')
-      revalidatePath('/myworkouts'); 
-      
-    }
-
-
+  // auth error handling
+  if (json.authError) {
+    console.log(json.authError);
+    redirect("/login");
+  } else {
+    console.log("delete successful");
   }
 
+  // delete errors
+  if (json.error) {
+    console.log(json.error);
+  } else {
+    // props.remove();
+    console.log("delete successful");
+    revalidatePath("/myworkouts");
+  }
+}
