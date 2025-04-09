@@ -6,7 +6,6 @@ export default function DisplayExercises(props) {
 
   // TODO: is this the best practice?
   function edit(e, idx) {
-    console.log("hi", e);
     props.functionEdit(e, idx);
   }
 

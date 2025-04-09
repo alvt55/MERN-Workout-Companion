@@ -93,14 +93,15 @@ function SessionCard(props) {
         </PopoverRoot>
         {console.log(session)}
         <Link
-          href={{
-            pathname: "/tracker/edit",
-            query: {
-              id: JSON.stringify(session._id),
-              exercises: JSON.stringify(session.exercises),
-              focus: JSON.stringify(session.day),
-            },
-          }}
+          href={`/tracker?id=${session._id}`}
+          // href={{
+          //   pathname: `/tracker`,
+          //   query: {
+          //     id: JSON.stringify(session._id),
+          //     // exercises: JSON.stringify(session.exercises),
+          //     // focus: JSON.stringify(session.day),
+          //   },
+          // }}
         >
           Edit
         </Link>

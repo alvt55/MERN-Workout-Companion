@@ -75,7 +75,7 @@ export async function fetchSearchExercises(search) {
 
 // fetch workouts using client stored jwt
 export async function fetchWorkouts(jwt) {
-    console.log(jwt); 
+    console.log(jwt);
 
     const response = await fetch(`${process.env.BACKEND_URL}workouts/getWorkouts`, {
         method: 'GET',
@@ -92,8 +92,28 @@ export async function fetchWorkouts(jwt) {
         redirect('/login');
     } else {
         console.log('fetch workout successful');
-        return json; 
+        return json;
     }
+
+
+}
+
+
+export async function fetchAWorkout(id) {
+
+    const response = await fetch(`${process.env.BACKEND_URL}workouts/getAWorkout/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+
+    const json = await response.json();
+
+
+
+    return json;
+
 
 
 }

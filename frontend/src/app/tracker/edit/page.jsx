@@ -122,9 +122,7 @@ export default function Page() {
 
     if (!json) {
       setSessionWarning("Unable to send workout to database");
-      console.log("failed to post session");
     } else {
-      console.log("workout posted");
       document.getElementById("sessionForm").reset();
       setSessionWarning("");
       setExercises((s) => []);
@@ -141,8 +139,6 @@ export default function Page() {
     const sets = document.querySelector('input[name="sets"]');
     const reps = document.querySelector('input[name="reps"]');
 
-    console.log(exercise);
-
     // Set the value of the input field
     if (name && weight && sets && reps) {
       name.value = exercise.name;
@@ -152,7 +148,6 @@ export default function Page() {
 
       const tempArr = [...exercises];
       tempArr.splice(idx, 1);
-      console.log(tempArr);
       setExercises(tempArr);
     }
   }

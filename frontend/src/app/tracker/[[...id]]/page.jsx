@@ -23,18 +23,15 @@ import { Alert } from "@/components/ui/alert";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { Radio, RadioGroup } from "@/components/ui/radio";
 
-import { addWorkoutSession } from "../lib/actions";
-import DisplayExercises from "./DisplayExercises";
+import { addWorkoutSession } from "../../lib/actions";
+import { fetchAWorkout } from "../../lib/data";
+import DisplayExercises from "../DisplayExercises";
 
-export default function Page() {
+export default function Page({ params }) {
   const searchParams = useSearchParams();
 
-  console.log(searchParams.get("exercises"));
-
-  const temp = searchParams.get("exercises");
-  const editExercises = JSON.parse(temp);
-
-  console.log("edit exercises", editExercises);
+  // const temp = searchParams.get("exercises");
+  // const editExercises = JSON.parse(temp);
 
   // exercise
   const [exercises, setExercises] = useState([]);
@@ -42,6 +39,24 @@ export default function Page() {
 
   // temporary storage for exercises on device
   useEffect(() => {
+    async function edit() {
+      const id = searchParams.get("id");
+      console.log("id", id);
+
+      if (id) {
+        const result = await fetchAWorkout(id);
+        setExercises(result.exercises);
+        document.querySelector('input[name="day"]').value = result.day;
+        document.querySelector('input[name="date"]').valueAsDate = new Date(
+          result.date
+        );
+
+        console.log(result);
+      }
+    }
+
+    edit();
+
     const data = window.localStorage.getItem("MY_APP_STATE");
     if (data !== null) setExercises(JSON.parse(data));
   }, []);
@@ -71,9 +86,6 @@ export default function Page() {
     setExercises((e) => [...e, currExercise]);
 
     document.getElementById("exerciseForm").reset();
-
-    // console.log('adding exercise', currExercise)
-    console.log(unit);
   }
 
   // posting workout session to DB using backend API
@@ -81,7 +93,6 @@ export default function Page() {
     e.preventDefault();
 
     const date = new Date(e.target.date.value);
-    console.log("date for workout", date);
     const day = e.target.day.value;
     const dayCapitalized = day.charAt(0).toUpperCase() + day.slice(1);
 
@@ -104,9 +115,7 @@ export default function Page() {
 
     if (!json) {
       setSessionWarning("Unable to send workout to database");
-      console.log("failed to post session");
     } else {
-      console.log("workout posted");
       document.getElementById("sessionForm").reset();
       setSessionWarning("");
       setExercises((s) => []);
@@ -120,8 +129,6 @@ export default function Page() {
     const sets = document.querySelector('input[name="sets"]');
     const reps = document.querySelector('input[name="reps"]');
 
-    console.log(exercise);
-
     // Set the value of the input field
     if (name && weight && sets && reps) {
       name.value = exercise.name;
@@ -131,7 +138,6 @@ export default function Page() {
 
       const tempArr = [...exercises];
       tempArr.splice(idx, 1);
-      console.log(tempArr);
       setExercises(tempArr);
     }
   }
